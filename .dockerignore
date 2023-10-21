@@ -1,13 +1,14 @@
-﻿**/.dockerignore
+﻿**/.angular
+**/.dockerignore
 **/.env
 **/.git
 **/.gitignore
+**/.idea
 **/.project
 **/.settings
 **/.toolstarget
 **/.vs
 **/.vscode
-**/.idea
 **/*.*proj.user
 **/*.dbmdl
 **/*.jfm
