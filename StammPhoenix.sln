@@ -8,12 +8,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{B15BC017
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StammPhoenix.Build", "src\StammPhoenix.Build\StammPhoenix.Build.csproj", "{D4E9D645-6956-41EB-8CCA-C439E33C629C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{7385D9FB-B02E-4E99-93CE-BA0883ED1562}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4E9D645-6956-41EB-8CCA-C439E33C629C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E9D645-6956-41EB-8CCA-C439E33C629C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D4E9D645-6956-41EB-8CCA-C439E33C629C} = {7385D9FB-B02E-4E99-93CE-BA0883ED1562}
 	EndGlobalSection
 EndGlobal
