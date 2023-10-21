@@ -6,6 +6,7 @@
     <None Remove="node_modules\**" />
     <None Remove="bin\**" />
     <None Remove="obj\**" />
+    <None Remove="dist\**" />
   </ItemGroup>
 
 </Project>
