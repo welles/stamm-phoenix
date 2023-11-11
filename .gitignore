@@ -4,3 +4,5 @@ bin/
 obj/
 
 /.nuke/temp/
+
+*.csproj.user
