@@ -1,18 +1,18 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:latest AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
-COPY ["src/StammPhoenix.Api/StammPhoenix.Api.csproj", "src/StammPhoenix.Api/"]
-RUN dotnet restore "src/StammPhoenix.Api/StammPhoenix.Api.csproj"
-COPY . .
-WORKDIR "/src/src/StammPhoenix.Api"
-RUN dotnet build "StammPhoenix.Api.csproj" -c Release -o /app/build
+FROM mcr.microsoft.com/dotnet/sdk:latest AS restore
+COPY . /app
+WORKDIR /app
+RUN dotnet restore StammPhoenix.Api.csproj
 
-FROM build AS publish
-RUN dotnet publish "StammPhoenix.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+FROM restore AS publish
+ARG VERSION="0.0.0-dev.0"
+ARG ASSEMBLY_VERSION="0.0.0.0"
+ARG FILE_VERSION="0.0.0.0"
+ARG INFORMATIONAL_VERSION="0.0.0-dev.0"
+RUN dotnet publish StammPhoenix.Api.csproj -c Release -o /app/publish  /property:Version=$VERSION /property:AssemblyVersion=$ASSEMBLY_VERSION /property:FileVersion=$FILE_VERSION /property:InformationalVersion=$INFORMATIONAL_VERSION
 
 FROM base AS final
 WORKDIR /app

@@ -8,7 +8,6 @@
       "properties": {
         "Configuration": {
           "type": "string",
-          "description": "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
           "enum": [
             "Debug",
             "Release"
@@ -74,9 +73,17 @@
             "enum": [
               "Clean",
               "Compile",
+              "DockerBuild",
+              "DockerLogin",
+              "DockerPushDev",
+              "LogInfo",
               "Restore"
             ]
           }
+        },
+        "Solution": {
+          "type": "string",
+          "description": "Path to a solution file that is automatically loaded"
         },
         "Target": {
           "type": "array",
@@ -86,6 +93,10 @@
             "enum": [
               "Clean",
               "Compile",
+              "DockerBuild",
+              "DockerLogin",
+              "DockerPushDev",
+              "LogInfo",
               "Restore"
             ]
           }

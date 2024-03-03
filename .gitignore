@@ -6,3 +6,4 @@ obj/
 /.nuke/temp/
 
 *.csproj.user
+*.DotSettings.user
