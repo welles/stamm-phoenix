@@ -14,10 +14,19 @@ builder.Services
    });
 
 var app = builder.Build();
-app.UsePathBase("/api");
+// app.UsePathBase("/api");
 app.UseFastEndpoints(c =>
    {
       c.Endpoints.RoutePrefix = "api";
    })
-   .UseSwaggerGen();
+   .UseOpenApi(c =>
+   {
+      c.Path = $"/api/swagger/{{documentName}}/swagger.json";
+   })
+   .UseSwaggerUi(c =>
+   {
+      c.Path = "/api/swagger";
+      c.DocumentPath = $"/api/swagger/{{documentName}}/swagger.json";
+   });
+
 app.Run();
