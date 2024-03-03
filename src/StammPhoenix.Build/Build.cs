@@ -1,11 +1,9 @@
-using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Docker;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
@@ -62,7 +60,7 @@ class Build : NukeBuild
 
     Project ApiProject => Solution.Application.StammPhoenix_Api;
 
-    string DockerImageName => IsLocalBuild ? "stamm-phoenix:dev" : "ghcr.io/welles/stamm-phoenix:dev";
+    string DockerImageName => IsLocalBuild ? "stamm-phoenix-api:dev" : "ghcr.io/welles/stamm-phoenix-api:dev";
 
     AbsolutePath Dockerfile => ApiProject.Directory / "Dockerfile";
 
