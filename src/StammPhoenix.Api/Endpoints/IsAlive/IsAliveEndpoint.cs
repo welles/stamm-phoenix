@@ -18,6 +18,6 @@ public class IsAliveEndpoint : EndpointWithoutRequest<string>
 
     public override async Task<string> ExecuteAsync(CancellationToken ct)
     {
-        return "200 OK";
+        return await Task.FromResult("200 OK");
     }
 }
