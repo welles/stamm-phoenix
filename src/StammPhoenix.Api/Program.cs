@@ -15,23 +15,11 @@ builder.Services
    });
 
 var app = builder.Build();
-// app.UsePathBase("/api");
-app.UseFastEndpoints(c =>
-   {
-      c.Endpoints.RoutePrefix = "api";
-   })
-   .UseOpenApi(c =>
-   {
-      c.Path = $"/api/swagger/{{documentName}}/swagger.json";
-   })
-   .UseSwaggerUi(c =>
-   {
-      c.Path = "/api/swagger";
-      c.DocumentPath = $"/api/swagger/{{documentName}}/swagger.json";
-   });
+app.UseFastEndpoints()
+   .UseSwaggerGen();
 
 var option = new RewriteOptions();
-option.AddRedirect("^$", "api/swagger");
+option.AddRedirect("^$", "swagger");
 app.UseRewriter(option);
 
 app.Run();
