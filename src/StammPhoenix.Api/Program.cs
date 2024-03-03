@@ -1,5 +1,6 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Rewrite;
 
 var builder = WebApplication.CreateBuilder();
 builder.Services
@@ -28,5 +29,9 @@ app.UseFastEndpoints(c =>
       c.Path = "/api/swagger";
       c.DocumentPath = $"/api/swagger/{{documentName}}/swagger.json";
    });
+
+var option = new RewriteOptions();
+option.AddRedirect("^$", "api/swagger");
+app.UseRewriter(option);
 
 app.Run();
