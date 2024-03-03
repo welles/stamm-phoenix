@@ -13,6 +13,7 @@ public class IsAliveEndpoint : EndpointWithoutRequest<string>
         this.Description(d =>
         {
             d.Produces<string>();
+            d.WithTags("meta");
         });
     }
 

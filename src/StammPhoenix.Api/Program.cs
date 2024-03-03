@@ -16,7 +16,13 @@ builder.Services
    });
 
 var app = builder.Build();
-app.UseFastEndpoints()
+app.UseFastEndpoints(c =>
+   {
+      c.Endpoints.Configurator = ep =>
+      {
+         ep.DontAutoTag();
+      };
+   })
    .UseSwaggerGen();
 
 var option = new RewriteOptions();
