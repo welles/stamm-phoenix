@@ -16,4 +16,5 @@ builder.Services
 var app = builder.Build();
 app.UseFastEndpoints()
    .UseSwaggerGen();
+app.UsePathBase("/api");
 app.Run();
