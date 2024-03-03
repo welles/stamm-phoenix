@@ -15,6 +15,9 @@ builder.Services
 
 var app = builder.Build();
 app.UsePathBase("/api");
-app.UseFastEndpoints()
+app.UseFastEndpoints(c =>
+   {
+      c.Endpoints.RoutePrefix = "api";
+   })
    .UseSwaggerGen();
 app.Run();
