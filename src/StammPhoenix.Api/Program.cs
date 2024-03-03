@@ -10,7 +10,8 @@ builder.Services
       d.DocumentSettings = s =>
       {
          s.Title = "Stamm Phoenix API";
-         s.DocumentName = "v1";
+         s.DocumentName = "current";
+         s.Version = "Current";
       };
    });
 
