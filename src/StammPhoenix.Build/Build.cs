@@ -178,6 +178,22 @@ class Build : NukeBuild
                 .SetTag(CurrentDockerImageName));
         });
 
+    Target DockerBuildWeb => d => d
+        .Executes(() =>
+        {
+            this.CurrentDockerImageName = DockerImageNameWeb;
+            this.CurrentProject = WebProject;
+        })
+        .Triggers(DockerBuild);
+
+    Target DockerBuildApi => d => d
+        .Executes(() =>
+        {
+            this.CurrentDockerImageName = DockerImageNameApi;
+            this.CurrentProject = ApiProject;
+        })
+        .Triggers(DockerBuild);
+
     [PublicAPI]
     Target DockerLogin => d => d
         .DependsOn(DockerBuild)
