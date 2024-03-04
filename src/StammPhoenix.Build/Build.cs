@@ -24,6 +24,19 @@ using Nuke.Common.Tools.Npm;
     }
 )]
 [GitHubActions(
+    nameof(Build.CompileWeb),
+    GitHubActionsImage.UbuntuLatest,
+    OnPushBranches = new[]
+    {
+        "*"
+    },
+    FetchDepth = 0,
+    InvokedTargets = new []
+    {
+        nameof(Build.CompileWeb)
+    }
+)]
+[GitHubActions(
     nameof(Build.DockerPushDevApi),
     GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[]
@@ -142,7 +155,8 @@ class Build : NukeBuild
             // TODO NW: Use correct build command
             NpmTasks.NpmRun(s => s
                 .SetProcessWorkingDirectory(WebProject.Directory)
-                .SetCommand("astro -- build"));
+                .SetCommand("astro")
+                .SetArguments("build"));
         });
 
     [PublicAPI]
