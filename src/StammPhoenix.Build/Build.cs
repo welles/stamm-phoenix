@@ -9,7 +9,7 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
 
 [GitHubActions(
-    nameof(Build.Compile),
+    nameof(Build.CompileApi),
     GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[]
     {
@@ -18,11 +18,11 @@ using Nuke.Common.Tools.MinVer;
     FetchDepth = 0,
     InvokedTargets = new []
     {
-        nameof(Build.Compile)
+        nameof(Build.CompileApi)
     }
 )]
 [GitHubActions(
-    nameof(Build.DockerPushDev),
+    nameof(Build.DockerPushDevApi),
     GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[]
     {
@@ -31,7 +31,25 @@ using Nuke.Common.Tools.MinVer;
     FetchDepth = 0,
     InvokedTargets = new []
     {
-        nameof(Build.DockerPushDev)
+        nameof(Build.DockerPushDevApi)
+    },
+    EnableGitHubToken = true,
+    WritePermissions = new[] {
+        GitHubActionsPermissions.Contents,
+        GitHubActionsPermissions.Packages
+    }
+)]
+[GitHubActions(
+    nameof(Build.DockerPushDevWeb),
+    GitHubActionsImage.UbuntuLatest,
+    OnPushBranches = new[]
+    {
+        "*"
+    },
+    FetchDepth = 0,
+    InvokedTargets = new []
+    {
+        nameof(Build.DockerPushDevWeb)
     },
     EnableGitHubToken = true,
     WritePermissions = new[] {
@@ -41,7 +59,7 @@ using Nuke.Common.Tools.MinVer;
 )]
 class Build : NukeBuild
 {
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main () => Execute<Build>(x => x.LogInfo);
 
     [MinVer]
     readonly MinVer MinVer;
@@ -60,7 +78,15 @@ class Build : NukeBuild
 
     Project ApiProject => Solution.Application.StammPhoenix_Api;
 
-    string DockerImageName => IsLocalBuild ? "stamm-phoenix-api:dev" : "ghcr.io/welles/stamm-phoenix-api:dev";
+    Project WebProject => Solution.Application.StammPhoenix_Web;
+
+    Project CurrentProject;
+
+    string CurrentDockerImageName;
+
+    string DockerImageNameApi => IsLocalBuild ? "stamm-phoenix-api:dev" : "ghcr.io/welles/stamm-phoenix-api:dev";
+
+    string DockerImageNameWeb => IsLocalBuild ? "stamm-phoenix-web:dev" : "ghcr.io/welles/stamm-phoenix-web:dev";
 
     AbsolutePath Dockerfile => ApiProject.Directory / "Dockerfile";
 
@@ -76,7 +102,8 @@ class Build : NukeBuild
             Serilog.Log.Information($"Dockerfile = {Dockerfile}");
             Serilog.Log.Information($"GitHubActions.RepositoryOwner = {GitHubActions?.RepositoryOwner}");
             Serilog.Log.Information($"GitHubActions.ServerUrl = {GitHubActions?.ServerUrl}");
-            Serilog.Log.Information($"DockerImageName = {DockerImageName}");
+            Serilog.Log.Information($"Project = {CurrentProject}");
+            Serilog.Log.Information($"DockerImageName = {CurrentDockerImageName}");
         });
 
     [PublicAPI]
@@ -88,7 +115,7 @@ class Build : NukeBuild
         });
 
     [PublicAPI]
-    Target Compile => d=> d
+    Target CompileApi => d=> d
         .DependsOn(Clean)
         .Executes(() =>
         {
@@ -104,6 +131,8 @@ class Build : NukeBuild
     [PublicAPI]
     Target DockerBuild => d => d
         .DependsOn(LogInfo)
+        .OnlyWhenDynamic(() => CurrentProject != null)
+        .OnlyWhenDynamic(() => CurrentDockerImageName != null)
         .Executes(() =>
         {
             DockerTasks.DockerLogger = (_, e) => Serilog.Log.Information(e);
@@ -114,8 +143,8 @@ class Build : NukeBuild
                     $"ASSEMBLY_VERSION=\"{MinVer.AssemblyVersion}\"",
                     $"FILE_VERSION=\"{MinVer.FileVersion}\"",
                     $"INFORMATIONAL_VERSION=\"{MinVer.Version}\"")
-                .SetPath(ApiProject.Directory)
-                .SetTag(DockerImageName));
+                .SetPath(CurrentProject.Directory)
+                .SetTag(CurrentDockerImageName));
         });
 
     [PublicAPI]
@@ -137,6 +166,22 @@ class Build : NukeBuild
         .Executes(() =>
         {
             DockerTasks.DockerPush(s => s
-                .SetName(DockerImageName));
+                .SetName(CurrentDockerImageName));
         });
+
+    Target DockerPushDevWeb => d => d
+        .Executes(() =>
+        {
+            this.CurrentDockerImageName = DockerImageNameWeb;
+            this.CurrentProject = WebProject;
+        })
+        .Triggers(DockerPushDev);
+
+    Target DockerPushDevApi => d => d
+        .Executes(() =>
+        {
+            this.CurrentDockerImageName = DockerImageNameApi;
+            this.CurrentProject = ApiProject;
+        })
+        .Triggers(DockerPushDev);
 }

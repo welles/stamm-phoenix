@@ -72,10 +72,12 @@
             "type": "string",
             "enum": [
               "Clean",
-              "Compile",
+              "CompileApi",
               "DockerBuild",
               "DockerLogin",
               "DockerPushDev",
+              "DockerPushDevApi",
+              "DockerPushDevWeb",
               "LogInfo"
             ]
           }
@@ -91,10 +93,12 @@
             "type": "string",
             "enum": [
               "Clean",
-              "Compile",
+              "CompileApi",
               "DockerBuild",
               "DockerLogin",
               "DockerPushDev",
+              "DockerPushDevApi",
+              "DockerPushDevWeb",
               "LogInfo"
             ]
           }

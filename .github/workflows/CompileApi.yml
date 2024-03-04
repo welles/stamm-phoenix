@@ -9,21 +9,17 @@
 #
 #     - To trigger manual generation invoke:
 #
-#         nuke --generate-configuration GitHubActions_DockerPushDev --host GitHubActions
+#         nuke --generate-configuration GitHubActions_CompileApi --host GitHubActions
 #
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
-name: DockerPushDev
+name: CompileApi
 
 on:
   push:
     branches:
       - '*'
-
-permissions:
-  contents: write
-  packages: write
 
 jobs:
   ubuntu-latest:
@@ -40,7 +36,5 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
-      - name: 'Run: DockerPushDev'
-        run: ./build.cmd DockerPushDev
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'Run: CompileApi'
+        run: ./build.cmd CompileApi
