@@ -4,9 +4,11 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Docker;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
+using Nuke.Common.Tools.Npm;
 
 [GitHubActions(
     nameof(Build.CompileApi),
@@ -126,6 +128,21 @@ class Build : NukeBuild
                 .SetInformationalVersion(MinVer.Version)
                 .SetProjectFile(ApiProject)
                 .SetConfiguration(Configuration));
+        });
+
+    [PublicAPI]
+    Target CompileWeb => d => d
+        .DependsOn(LogInfo)
+        .Executes(() =>
+        {
+            // TODO NW: USE CI?
+            NpmTasks.NpmInstall(s => s
+                .SetProcessWorkingDirectory(WebProject.Directory));
+
+            // TODO NW: Use correct build command
+            NpmTasks.NpmRun(s => s
+                .SetProcessWorkingDirectory(WebProject.Directory)
+                .SetCommand("astro -- build"));
         });
 
     [PublicAPI]

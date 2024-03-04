@@ -73,6 +73,7 @@
             "enum": [
               "Clean",
               "CompileApi",
+              "CompileWeb",
               "DockerBuild",
               "DockerLogin",
               "DockerPushDev",
@@ -94,6 +95,7 @@
             "enum": [
               "Clean",
               "CompileApi",
+              "CompileWeb",
               "DockerBuild",
               "DockerLogin",
               "DockerPushDev",
