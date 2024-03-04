@@ -76,8 +76,7 @@
               "DockerBuild",
               "DockerLogin",
               "DockerPushDev",
-              "LogInfo",
-              "Restore"
+              "LogInfo"
             ]
           }
         },
@@ -96,8 +95,7 @@
               "DockerBuild",
               "DockerLogin",
               "DockerPushDev",
-              "LogInfo",
-              "Restore"
+              "LogInfo"
             ]
           }
         },

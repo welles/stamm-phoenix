@@ -80,14 +80,6 @@ class Build : NukeBuild
         });
 
     [PublicAPI]
-    Target Restore => d => d
-        .DependsOn(Clean)
-        .Executes(() =>
-        {
-            DotNetTasks.DotNetRestore();
-        });
-
-    [PublicAPI]
     Target Clean => d => d
         .DependsOn(LogInfo)
         .Executes(() =>
@@ -97,11 +89,10 @@ class Build : NukeBuild
 
     [PublicAPI]
     Target Compile => d=> d
-        .DependsOn(Restore)
+        .DependsOn(Clean)
         .Executes(() =>
         {
             DotNetTasks.DotNetBuild(s => s
-                .EnableNoRestore()
                 .SetVersion(MinVer.Version)
                 .SetAssemblyVersion(MinVer.AssemblyVersion)
                 .SetFileVersion(MinVer.FileVersion)
@@ -112,7 +103,7 @@ class Build : NukeBuild
 
     [PublicAPI]
     Target DockerBuild => d => d
-        .DependsOn(Compile)
+        .DependsOn(LogInfo)
         .Executes(() =>
         {
             DockerTasks.DockerLogger = (_, e) => Serilog.Log.Information(e);
