@@ -1,8 +1,8 @@
-FROM node:lts AS build
+FROM oven/bun:lts AS build
 WORKDIR /app
 COPY . .
-RUN npm i
-RUN npm run astro -- build # TODO NW: USE CORRECT BUILD COMMAND
+RUN bun i
+RUN bun run build
 
 FROM httpd:2.4 AS runtime
 COPY --from=build /app/dist /usr/local/apache2/htdocs/
