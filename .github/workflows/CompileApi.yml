@@ -21,6 +21,7 @@ on:
     branches:
       - '*'
     paths:
+      - 'src/StammPhoenix.Build/**'
       - 'src/StammPhoenix.Api/**'
       - 'src/StammPhoenix.Domain/**'
 
