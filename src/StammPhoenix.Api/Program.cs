@@ -25,8 +25,4 @@ app.UseFastEndpoints(c =>
    })
    .UseSwaggerGen();
 
-var option = new RewriteOptions();
-option.AddRedirect("^$", "swagger");
-app.UseRewriter(option);
-
 app.Run();
