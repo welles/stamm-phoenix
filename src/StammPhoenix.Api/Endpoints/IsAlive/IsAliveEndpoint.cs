@@ -10,6 +10,11 @@ public class IsAliveEndpoint : EndpointWithoutRequest<string>
     {
         this.Get("/is-alive");
         this.AllowAnonymous();
+        this.Summary(s =>
+        {
+            s.Summary = "Check status";
+            s.Description = "Returns a simple HTTP response if the API is running.";
+        });
         this.Description(d =>
         {
             d.Produces<string>();

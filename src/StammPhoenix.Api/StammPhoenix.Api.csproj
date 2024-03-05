@@ -6,6 +6,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
+    
+    <PropertyGroup>
+        <InformationalVersion>0.0.0-dev.0</InformationalVersion>
+    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FastEndpoints" Version="5.21.2" />
