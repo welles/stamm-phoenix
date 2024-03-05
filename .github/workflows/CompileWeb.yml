@@ -20,6 +20,8 @@ on:
   push:
     branches:
       - '*'
+    paths:
+      - 'src/StammPhoenix.Web/**'
 
 jobs:
   ubuntu-latest:

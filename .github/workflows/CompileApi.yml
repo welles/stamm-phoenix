@@ -20,6 +20,9 @@ on:
   push:
     branches:
       - '*'
+    paths:
+      - 'src/StammPhoenix.Api/**'
+      - 'src/StammPhoenix.Domain/**'
 
 jobs:
   ubuntu-latest:

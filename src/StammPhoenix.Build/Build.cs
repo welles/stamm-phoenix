@@ -18,6 +18,11 @@ using Nuke.Common.Tools.Pwsh;
     {
         "*"
     },
+    OnPushIncludePaths = new []
+    {
+        "src/StammPhoenix.Api/**",
+        "src/StammPhoenix.Domain/**"
+    },
     FetchDepth = 0,
     InvokedTargets = new []
     {
@@ -31,6 +36,10 @@ using Nuke.Common.Tools.Pwsh;
     {
         "*"
     },
+    OnPushIncludePaths = new []
+    {
+        "src/StammPhoenix.Web/**"
+    },
     FetchDepth = 0,
     InvokedTargets = new []
     {
@@ -43,6 +52,11 @@ using Nuke.Common.Tools.Pwsh;
     OnPushBranches = new[]
     {
         "*"
+    },
+    OnPushIncludePaths = new []
+    {
+        "src/StammPhoenix.Api/**",
+        "src/StammPhoenix.Domain/**"
     },
     FetchDepth = 0,
     InvokedTargets = new []
@@ -61,6 +75,10 @@ using Nuke.Common.Tools.Pwsh;
     OnPushBranches = new[]
     {
         "*"
+    },
+    OnPushIncludePaths = new []
+    {
+        "src/StammPhoenix.Web/**"
     },
     FetchDepth = 0,
     InvokedTargets = new []
