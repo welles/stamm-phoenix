@@ -28,6 +28,8 @@ jobs:
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
+    concurrency:
+      group: CompileWeb
     steps:
       - uses: actions/checkout@v3
         with:

@@ -24,6 +24,7 @@ using Nuke.Common.Tools.Pwsh;
         "src/StammPhoenix.Api/**",
         "src/StammPhoenix.Domain/**"
     },
+    JobConcurrencyGroup = nameof(Build.CompileApi),
     FetchDepth = 0,
     InvokedTargets = new []
     {
@@ -42,6 +43,7 @@ using Nuke.Common.Tools.Pwsh;
         "src/StammPhoenix.Build/**",
         "src/StammPhoenix.Web/**"
     },
+    JobConcurrencyGroup = nameof(Build.CompileWeb),
     FetchDepth = 0,
     InvokedTargets = new []
     {
@@ -61,6 +63,7 @@ using Nuke.Common.Tools.Pwsh;
         "src/StammPhoenix.Api/**",
         "src/StammPhoenix.Domain/**"
     },
+    JobConcurrencyGroup = nameof(Build.DockerPushDevApi),
     FetchDepth = 0,
     InvokedTargets = new []
     {
@@ -84,6 +87,7 @@ using Nuke.Common.Tools.Pwsh;
         "src/StammPhoenix.Build/**",
         "src/StammPhoenix.Web/**"
     },
+    JobConcurrencyGroup = nameof(Build.DockerPushDevWeb),
     FetchDepth = 0,
     InvokedTargets = new []
     {
