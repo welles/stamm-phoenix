@@ -1,5 +1,6 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using StammPhoenix.Api.Endpoints.MetaGroup;
 
 namespace StammPhoenix.Api;
 
@@ -19,6 +20,11 @@ public static class Program
                s.Title = "Stamm Phoenix API";
                s.DocumentName = "current";
                s.Version = "Current";
+            };
+
+            d.TagDescriptions = t =>
+            {
+               t[MetaGroup.GroupName] = "Endpoints concerning metadata about the API";
             };
          });
 

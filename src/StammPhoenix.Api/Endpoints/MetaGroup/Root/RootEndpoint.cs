@@ -3,7 +3,7 @@ using System.Text;
 using FastEndpoints;
 using JetBrains.Annotations;
 
-namespace StammPhoenix.Api.Endpoints.Root;
+namespace StammPhoenix.Api.Endpoints.MetaGroup.Root;
 
 [PublicAPI]
 public class RootEndpoint : EndpointWithoutRequest
@@ -17,10 +17,10 @@ public class RootEndpoint : EndpointWithoutRequest
             s.Summary = "Show metadata";
             s.Description = "Produces plain text containing metadata about the running instance of the API.";
         });
+        this.Group<MetaGroup>();
         this.Description(d =>
         {
             d.Produces<string>();
-            d.WithTags("meta");
         });
     }
 
