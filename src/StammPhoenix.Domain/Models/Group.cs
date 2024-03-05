@@ -21,6 +21,16 @@ public sealed class Group : IdentifiableEntity
     public required string Name { get; set; }
 
     /// <summary>
+    /// The usual meeting time of the group, which can be displayed on the website.
+    /// </summary>
+    public string? MeetingTime { get; set; }
+
+    /// <summary>
+    /// The usual meeting place of the group, which can be displayed on the website.
+    /// </summary>
+    public string? MeetingPlace { get; set; }
+
+    /// <summary>
     /// The members of the group. Members are considered equal inside a group.
     /// </summary>
     public IReadOnlyCollection<Leader> Members => this.members.AsReadOnly();
