@@ -36,10 +36,10 @@ public sealed class Group : IdentifiableEntity
     public IReadOnlyCollection<Leader> Members => this.members.AsReadOnly();
 
     /// <summary>
-    /// If the group is one that leads a particular age group, the age group is set here.
-    /// Only one group must be set as leaders for each age group.
+    /// A value marking the group as a special unique group. Each designation must only
+    /// have one group attached to it, so e.g. there can only be one Vorstand group.
     /// </summary>
-    public AgeGroup? AgeGroup { get; set; }
+    public GroupDesignation? Designation { get; set; }
 
     /// <summary>
     /// Adds a member to the group.
