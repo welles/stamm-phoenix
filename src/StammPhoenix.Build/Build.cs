@@ -4,6 +4,7 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Docker;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
@@ -159,7 +160,7 @@ class Build : NukeBuild
         {
             PwshTasks.Pwsh(s => s
                 .SetCommand("bun install")
-                .SetWorkingDirectory(WebProject.Directory));
+                .SetProcessWorkingDirectory(WebProject.Directory));
         });
 
     [PublicAPI]
@@ -169,7 +170,7 @@ class Build : NukeBuild
         {
             PwshTasks.Pwsh(s => s
                 .SetCommand("bun run build")
-                .SetWorkingDirectory(WebProject.Directory));
+                .SetProcessWorkingDirectory(WebProject.Directory));
         });
 
     [PublicAPI]
