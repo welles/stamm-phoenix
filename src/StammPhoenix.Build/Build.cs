@@ -4,11 +4,11 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Docker;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Tools.Npm;
+using Nuke.Common.Tools.Pwsh;
 
 [GitHubActions(
     nameof(Build.CompileApi),
@@ -144,19 +144,32 @@ class Build : NukeBuild
         });
 
     [PublicAPI]
-    Target CompileWeb => d => d
-        .DependsOn(LogInfo)
+    Target InstallBun => d => d
         .Executes(() =>
         {
-            // TODO NW: USE CI?
             NpmTasks.NpmInstall(s => s
-                .SetProcessWorkingDirectory(WebProject.Directory));
+                .SetPackages("bun")
+                .SetGlobal(true));
+        });
 
-            // TODO NW: Use correct build command
-            NpmTasks.NpmRun(s => s
-                .SetProcessWorkingDirectory(WebProject.Directory)
-                .SetCommand("astro")
-                .SetArguments("build"));
+    [PublicAPI]
+    Target RestoreBunPackages => d => d
+        .DependsOn(InstallBun)
+        .Executes(() =>
+        {
+            PwshTasks.Pwsh(s => s
+                .SetCommand("bun install")
+                .SetWorkingDirectory(WebProject.Directory));
+        });
+
+    [PublicAPI]
+    Target CompileWeb => d => d
+        .DependsOn(LogInfo, RestoreBunPackages)
+        .Executes(() =>
+        {
+            PwshTasks.Pwsh(s => s
+                .SetCommand("bun run build")
+                .SetWorkingDirectory(WebProject.Directory));
         });
 
     [PublicAPI]

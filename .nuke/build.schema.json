@@ -81,7 +81,9 @@
               "DockerPushDev",
               "DockerPushDevApi",
               "DockerPushDevWeb",
-              "LogInfo"
+              "InstallBun",
+              "LogInfo",
+              "RestoreBunPackages"
             ]
           }
         },
@@ -105,7 +107,9 @@
               "DockerPushDev",
               "DockerPushDevApi",
               "DockerPushDevWeb",
-              "LogInfo"
+              "InstallBun",
+              "LogInfo",
+              "RestoreBunPackages"
             ]
           }
         },
