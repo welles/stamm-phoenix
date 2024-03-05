@@ -33,7 +33,7 @@ public class RootEndpoint : EndpointWithoutRequest
 
         var sb = new StringBuilder();
         sb.AppendLine("STAMM PHOENIX API");
-        sb.AppendLine($"STARTUP TIME (UTC): {Program.StartupTime:dd.MM.yyyy HH:mm:ss}");
+        sb.AppendLine($"STARTUP TIME (UTC): {Program.StartupTime:yyyy-MM-dd HH:mm:ss}");
         sb.AppendLine($"VERSION: {versionText}");
         sb.AppendLine($"SWAGGER DOCS: {this.BaseURL}swagger");
 
