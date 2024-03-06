@@ -1,5 +1,6 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using NJsonSchema.Generation;
 using StammPhoenix.Api.Endpoints.MetaGroup;
 
 namespace StammPhoenix.Api;
@@ -20,6 +21,7 @@ public static class Program
                s.Title = "Stamm Phoenix API";
                s.DocumentName = "current";
                s.Version = "Current";
+               s.SchemaSettings.SchemaNameGenerator = new DefaultSchemaNameGenerator();
             };
 
             d.TagDescriptions = t =>
