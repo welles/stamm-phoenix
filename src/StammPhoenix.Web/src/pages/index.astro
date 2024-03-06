@@ -1,8 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import '@/styles/globals.css'
+
+const response = await fetch('https://dev-api.stamm-phoenix.de/');
+const data = await response.text();
 ---
 
 <Layout title="Home">
-	<main></main>
+	<main>
+<pre>{data}</pre>
+</main>
 </Layout>
