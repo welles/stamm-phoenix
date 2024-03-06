@@ -1,10 +1,11 @@
+using System.Reflection;
 using FastEndpoints;
 using JetBrains.Annotations;
 
 namespace StammPhoenix.Api.Endpoints.MetaGroup.IsAlive;
 
 [PublicAPI]
-public class IsAliveEndpoint : EndpointWithoutRequest<string>
+public class IsAliveEndpoint : EndpointWithoutRequest<IsAliveResponse>
 {
     public override void Configure()
     {
@@ -18,12 +19,24 @@ public class IsAliveEndpoint : EndpointWithoutRequest<string>
         this.Group<MetaGroup>();
         this.Description(d =>
         {
-            d.Produces<string>();
+            d.Produces<IsAliveResponse>();
         });
     }
 
-    public override async Task<string> ExecuteAsync(CancellationToken ct)
+    public override async Task<IsAliveResponse> ExecuteAsync(CancellationToken ct)
     {
-        return await Task.FromResult("200 OK");
+        var versionText = Assembly.GetAssembly(typeof(Program))?
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
+            .InformationalVersion.Split("+")
+            .FirstOrDefault() ?? "???";
+
+        var startupTime = Program.StartupTime.ToString("O");
+
+        return await Task.FromResult(new IsAliveResponse
+        {
+            Version = versionText,
+            Status = "OK",
+            StartupTime = startupTime
+        });
     }
 }
