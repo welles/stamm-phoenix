@@ -1,6 +1,7 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using NJsonSchema.Generation;
+using Serilog;
 using StammPhoenix.Api.Endpoints.MetaGroup;
 using Environment = StammPhoenix.Api.Core.Environment;
 
@@ -13,6 +14,11 @@ public static class Program
    public static void Main(string[] args)
    {
       var environment = Environment.GetVariables();
+
+      Log.Logger = new LoggerConfiguration()
+         .WriteTo.Console()
+         .WriteTo.File(Path.Combine(environment.LogPath, "log-.txt"), rollingInterval: RollingInterval.Day)
+         .CreateLogger();
 
       var builder = WebApplication.CreateBuilder();
       builder.Services
@@ -31,9 +37,13 @@ public static class Program
             {
                t[MetaGroup.GroupName] = "Endpoints concerning metadata about the API";
             };
-         });
+         })
+         .AddSerilog();
 
       var app = builder.Build();
+
+      app.UseSerilogRequestLogging();
+
       app.UseFastEndpoints(c =>
          {
             c.Endpoints.Configurator = ep =>
