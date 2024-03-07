@@ -81,6 +81,8 @@
               "DockerPushDev",
               "DockerPushDevApi",
               "DockerPushDevWeb",
+              "ExecuteApi",
+              "GenerateApiClient",
               "InstallBun",
               "LogInfo",
               "RestoreBunPackages"
@@ -107,6 +109,8 @@
               "DockerPushDev",
               "DockerPushDevApi",
               "DockerPushDevWeb",
+              "ExecuteApi",
+              "GenerateApiClient",
               "InstallBun",
               "LogInfo",
               "RestoreBunPackages"

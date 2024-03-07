@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using NuGet.Common;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
@@ -168,6 +169,25 @@ class Build : NukeBuild
                 .SetInformationalVersion(MinVer.Version)
                 .SetProjectFile(ApiProject)
                 .SetConfiguration(Configuration));
+        });
+
+    [PublicAPI] Target GenerateApiClient => d => d
+        .DependsOn(CompileApi)
+        .Executes(() =>
+        {
+            DotNetTasks.DotNetRun(s => s
+                .SetProcessWorkingDirectory(ApiProject.Directory)
+                .SetProcessEnvironmentVariable("generateclients", "true")
+                .SetProcessEnvironmentVariable("LOG_PATH", "."));
+        });
+
+    [PublicAPI] Target ExecuteApi => d => d
+        .DependsOn(CompileApi)
+        .Executes(() =>
+        {
+            DotNetTasks.DotNetRun(s => s
+                .SetProcessWorkingDirectory(ApiProject.Directory)
+                .SetProcessEnvironmentVariable("LOG_PATH", @"."));
         });
 
     [PublicAPI]
