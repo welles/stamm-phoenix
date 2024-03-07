@@ -15,7 +15,7 @@ public abstract class AuditableEntity
     /// The time this entitiy was last modified at.
     /// Never null, is set to creation time when created.
     /// </summary>
-    public required DateTime LastModifiedAt { get; set; }
+    public required DateTimeOffset LastModifiedAt { get; set; }
 
     /// <summary>
     /// The instance this entitiy was created by.
@@ -27,5 +27,5 @@ public abstract class AuditableEntity
     /// The time this entitiy was created at.
     /// Never changes after creation.
     /// </summary>
-    public required DateTime CreatedAt { get; set; }
+    public required DateTimeOffset CreatedAt { get; set; }
 }
