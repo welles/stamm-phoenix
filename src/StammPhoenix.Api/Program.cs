@@ -2,6 +2,7 @@ using FastEndpoints;
 using FastEndpoints.Swagger;
 using NJsonSchema.Generation;
 using StammPhoenix.Api.Endpoints.MetaGroup;
+using Environment = StammPhoenix.Api.Core.Environment;
 
 namespace StammPhoenix.Api;
 
@@ -11,6 +12,8 @@ public static class Program
 
    public static void Main(string[] args)
    {
+      var environment = Environment.GetVariables();
+
       var builder = WebApplication.CreateBuilder();
       builder.Services
          .AddFastEndpoints()
