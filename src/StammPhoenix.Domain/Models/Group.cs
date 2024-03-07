@@ -10,7 +10,7 @@ namespace StammPhoenix.Domain.Models;
 /// a group that has special access rights or needs to be displayed on the website (Vorstand),
 /// or even a time-restricted group that handles a special event (Georgslauf-Planer).
 /// </summary>
-public sealed class Group : IdentifiableEntity
+public sealed class Group : DomainEntity
 {
     private readonly List<Leader> members = new();
 

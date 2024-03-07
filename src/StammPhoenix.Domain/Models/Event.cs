@@ -6,7 +6,7 @@ namespace StammPhoenix.Domain.Models;
 /// Describes a single event for all or a subsection of members.
 /// Central data point for all planning and informational data surrounding a single, time-restricted activity like a camp, day trip or cabin weekend.
 /// </summary>
-public sealed class Event : IdentifiableEntity
+public sealed class Event : DomainEntity
 {
     /// <summary>
     /// Title of an event. Not required to be unique, but must be unique when including the year.

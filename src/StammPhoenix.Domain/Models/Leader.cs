@@ -6,7 +6,7 @@ namespace StammPhoenix.Domain.Models;
 /// A person that has some kind of leadership role in the tribe, who needs to be able to access planning data and/or
 /// have their public information displayed on the website.
 /// </summary>
-public sealed class Leader : IdentifiableEntity
+public sealed class Leader : DomainEntity
 {
     /// <summary>
     /// The family name of the leader.
