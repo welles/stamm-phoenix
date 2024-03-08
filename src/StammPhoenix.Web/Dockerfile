@@ -1,9 +1,34 @@
+# Build stage
 FROM oven/bun:latest AS build
+
 WORKDIR /app
+
+# Copy only the necessary files for installation
+COPY package.json package.json
+COPY bun.lockb bun.lockb
+
+# Install dependencies
+RUN bun install --production
+
+# Copy the entire application code
 COPY . .
-RUN bun i
+
+# Build the Astro application
 RUN bunx --bun astro build
 
-FROM httpd:2.4 AS runtime
-COPY --from=build /app/dist /usr/local/apache2/htdocs/
-EXPOSE 80
+# Runtime stage
+FROM oven/bun:latest AS runtime
+
+WORKDIR /app
+
+# Copy the built application from the build stage
+COPY --from=build /app/dist ./dist
+
+# Use an environment variable for the port
+ENV PORT=80
+
+# Expose the port
+EXPOSE $PORT
+
+# Start the Bun server with the Node adapter, using the environment variable for the port
+CMD ["bun", "start", "./dist/server/entry.mjs", "--port", "$PORT"]
