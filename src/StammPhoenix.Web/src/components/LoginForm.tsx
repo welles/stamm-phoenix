@@ -10,7 +10,7 @@ const LoginForm = () => {
 
     const handleLogin = async (e: Event) => {
         e.preventDefault();
-        const { token, error } = await login(email(), password());
+        const { token, error: string } = await login(email(), password());
         setToken(token);
         setError(error);
     };
@@ -20,12 +20,14 @@ const LoginForm = () => {
     });
 
     return (
-        <div>
+        <div class="rounded-md w-fit p-5 bg-sky-500 place-self-center">
             <h1>Login</h1>
             <form onSubmit={handleLogin}>
                <div>
                     <label for="email">Email:</label>
+                    <br />
                     <input
+                        class="appearance-none rounded-full cursor-text bg-sky-600 hover:bg-sky-700"
                         type="email"
                         id="email"
                         value={email()}
@@ -35,7 +37,9 @@ const LoginForm = () => {
                 </div>
                 <div>
                     <label for="password">Password:</label>
+                    <br />
                     <input
+                        class="appearance-none rounded-full cursor-text bg-sky-600 hover:bg-sky-700"
                         type="password"
                         id="password"
                         value={password()}
