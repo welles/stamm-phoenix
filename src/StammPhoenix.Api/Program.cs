@@ -4,8 +4,8 @@ using FastEndpoints.Swagger;
 using Kiota.Builder;
 using Serilog;
 using StammPhoenix.Application;
+using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Infrastructure;
-using Environment = StammPhoenix.Api.Core.Environment;
 
 namespace StammPhoenix.Api;
 
@@ -15,20 +15,21 @@ public static class Program
 
    public static async Task Main(string[] args)
    {
-      var environment = Environment.GetVariables();
-
-      Log.Logger = new LoggerConfiguration()
-         .WriteTo.Console()
-         .WriteTo.File(Path.Combine(environment.LogPath, "log-.txt"), rollingInterval: RollingInterval.Day)
-         .CreateLogger();
-
       var builder = WebApplication.CreateBuilder();
+
       builder.Services
          .AddApplicationServices()
          .AddInfrastructureServices()
          .AddApiServices();
 
       var app = builder.Build();
+
+      var appConfiguration = app.Services.GetRequiredService<IAppConfiguration>();
+
+      Log.Logger = new LoggerConfiguration()
+         .WriteTo.Console()
+         .WriteTo.File(Path.Combine(appConfiguration.LogPath, "log-.txt"), rollingInterval: RollingInterval.Day)
+         .CreateLogger();
 
       app.UseSerilogRequestLogging();
 

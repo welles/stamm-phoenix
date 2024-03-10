@@ -33,6 +33,8 @@ public static class Services
 
         services.AddScoped<IUser, CurrentUser>();
 
+        services.AddSingleton<IAppConfiguration, EnvironmentAppConfiguration>();
+
         return services;
     }
 }
