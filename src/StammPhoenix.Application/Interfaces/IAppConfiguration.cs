@@ -8,7 +8,17 @@ public interface IAppConfiguration
     public string LogPath { get; }
 
     /// <summary>
-    /// The key used for signing JWT tokens by the application.
+    /// The path where the application can put config files.
     /// </summary>
-    public string SigningKey { get; }
+    public string ConfigPath { get; }
+
+    /// <summary>
+    /// The public key used for signing JWT tokens by the application.
+    /// </summary>
+    public string PublicSigningKey { get; }
+
+    /// <summary>
+    /// The private key used for signing JWT tokens by the application.
+    /// </summary>
+    public string PrivateSigningKey { get; }
 }

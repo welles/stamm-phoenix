@@ -14,6 +14,10 @@ public static class Services
 {
     public static IServiceCollection AddApiServices(this IServiceCollection services)
     {
+        var environment = new EnvironmentAppConfiguration();
+
+        services.AddSingleton<IAppConfiguration>(environment);
+
         services
             .AddFastEndpoints()
             .SwaggerDocument(d =>
@@ -33,12 +37,15 @@ public static class Services
                 };
             })
             .AddSerilog()
-            .AddAuthenticationJwtBearer(_ => {})
+            .AddAuthenticationJwtBearer(o =>
+            {
+                o.SigningStyle = TokenSigningStyle.Asymmetric;
+                o.SigningKey = environment.PublicSigningKey;
+                // o.KeyIsPemEncoded = true;
+            })
             .AddAuthorization();
 
         services.AddScoped<IUser, CurrentUser>();
-
-        services.AddSingleton<IAppConfiguration, EnvironmentAppConfiguration>();
 
         return services;
     }

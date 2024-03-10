@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
+using System.Security.Cryptography;
 using FastEndpoints;
 using FastEndpoints.Security;
 using JetBrains.Annotations;
-using Microsoft.AspNetCore.Http.HttpResults;
 using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Domain.Models;
 
@@ -55,7 +55,8 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
             var jwtToken = JwtBearer.CreateToken(
                 o =>
                 {
-                    o.SigningKey = this.AppConfiguration.SigningKey;
+                    o.SigningKey = this.AppConfiguration.PrivateSigningKey;
+                    o.AsymmetricKeyAlgorithm = AsymmetricAlgorithm.
                     o.ExpireAt = DateTime.UtcNow.AddDays(1);
                     o.User.Roles.Add("Leader");
                     o.User.Claims.Add((ClaimTypes.Email, req.LoginEmail));
