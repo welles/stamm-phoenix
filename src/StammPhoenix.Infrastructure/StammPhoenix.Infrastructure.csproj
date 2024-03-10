@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\StammPhoenix.Domain\StammPhoenix.Domain.csproj" />
+      <ProjectReference Include="..\StammPhoenix.Application\StammPhoenix.Application.csproj" />
     </ItemGroup>
 
 </Project>

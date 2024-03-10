@@ -28,4 +28,8 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\StammPhoenix.Infrastructure\StammPhoenix.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

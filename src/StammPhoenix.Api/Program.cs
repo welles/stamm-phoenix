@@ -2,9 +2,9 @@ using FastEndpoints;
 using FastEndpoints.ClientGen.Kiota;
 using FastEndpoints.Swagger;
 using Kiota.Builder;
-using NJsonSchema.Generation;
 using Serilog;
-using StammPhoenix.Api.Endpoints.MetaGroup;
+using StammPhoenix.Application;
+using StammPhoenix.Infrastructure;
 using Environment = StammPhoenix.Api.Core.Environment;
 
 namespace StammPhoenix.Api;
@@ -24,23 +24,9 @@ public static class Program
 
       var builder = WebApplication.CreateBuilder();
       builder.Services
-         .AddFastEndpoints()
-         .SwaggerDocument(d =>
-         {
-            d.DocumentSettings = s =>
-            {
-               s.Title = "Stamm Phoenix API";
-               s.DocumentName = "current";
-               s.Version = "Current";
-               s.SchemaSettings.SchemaNameGenerator = new DefaultSchemaNameGenerator();
-            };
-
-            d.TagDescriptions = t =>
-            {
-               t[MetaGroup.GroupName] = "Endpoints concerning metadata about the API";
-            };
-         })
-         .AddSerilog();
+         .AddApplicationServices()
+         .AddInfrastructureServices()
+         .AddApiServices();
 
       var app = builder.Build();
 
