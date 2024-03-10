@@ -18,6 +18,7 @@ public sealed class CheckEndpoint : EndpointWithoutRequest
         });
         this.Description(d =>
         {
+            d.ClearDefaultProduces();
             d.Produces(StatusCodes.Status204NoContent);
             d.Produces(StatusCodes.Status401Unauthorized);
         });
