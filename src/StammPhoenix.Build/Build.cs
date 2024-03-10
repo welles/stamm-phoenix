@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using NuGet.Common;
 using Nuke.Common;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
@@ -12,45 +11,6 @@ using Nuke.Common.Tools.MinVer;
 using Nuke.Common.Tools.Npm;
 using Nuke.Common.Tools.Pwsh;
 
-[GitHubActions(
-    nameof(Build.CompileApi),
-    GitHubActionsImage.UbuntuLatest,
-    OnPushBranches = new[]
-    {
-        "*"
-    },
-    OnPushIncludePaths = new []
-    {
-        "src/StammPhoenix.Build/**",
-        "src/StammPhoenix.Api/**",
-        "src/StammPhoenix.Domain/**"
-    },
-    JobConcurrencyGroup = nameof(Build.CompileApi),
-    FetchDepth = 0,
-    InvokedTargets = new []
-    {
-        nameof(Build.CompileApi)
-    }
-)]
-[GitHubActions(
-    nameof(Build.CompileWeb),
-    GitHubActionsImage.UbuntuLatest,
-    OnPushBranches = new[]
-    {
-        "*"
-    },
-    OnPushIncludePaths = new []
-    {
-        "src/StammPhoenix.Build/**",
-        "src/StammPhoenix.Web/**"
-    },
-    JobConcurrencyGroup = nameof(Build.CompileWeb),
-    FetchDepth = 0,
-    InvokedTargets = new []
-    {
-        nameof(Build.CompileWeb)
-    }
-)]
 [GitHubActions(
     nameof(Build.DockerPushDevApi),
     GitHubActionsImage.UbuntuLatest,
@@ -102,15 +62,14 @@ using Nuke.Common.Tools.Pwsh;
 )]
 class Build : NukeBuild
 {
-    public static int Main () => Execute<Build>(x => x.LogInfo);
+    public static int Main () => Build.Execute<Build>(x => x.LogInfo);
 
     [MinVer]
     readonly MinVer MinVer;
 
     [Parameter]
-    readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+    readonly Configuration Configuration = Build.IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    [CanBeNull]
     GitHubActions GitHubActions => GitHubActions.Instance;
 
     [GitRepository]
@@ -123,15 +82,15 @@ class Build : NukeBuild
 
     Project WebProject => Solution.Application.StammPhoenix_Web;
 
-    Project CurrentProject;
+    string DockerImageNameApi => Build.IsLocalBuild ? "stamm-phoenix-api:dev" : "ghcr.io/welles/stamm-phoenix-api:dev";
 
-    string CurrentDockerImageName;
+    string DockerImageNameWeb => Build.IsLocalBuild ? "stamm-phoenix-web:dev" : "ghcr.io/welles/stamm-phoenix-web:dev";
 
-    string DockerImageNameApi => IsLocalBuild ? "stamm-phoenix-api:dev" : "ghcr.io/welles/stamm-phoenix-api:dev";
+    string CurrentDockerImageName { get; set; }
 
-    string DockerImageNameWeb => IsLocalBuild ? "stamm-phoenix-web:dev" : "ghcr.io/welles/stamm-phoenix-web:dev";
+    AbsolutePath CurrentDockerFile { get; set; }
 
-    AbsolutePath Dockerfile => ApiProject.Directory / "Dockerfile";
+    AbsolutePath CurrentDockerContext { get; set; }
 
     [PublicAPI]
     Target LogInfo => d=> d
@@ -140,12 +99,11 @@ class Build : NukeBuild
             Serilog.Log.Information($"MinVer.Version = {MinVer.Version}");
             Serilog.Log.Information($"MinVer.AssemblyVersion = {MinVer.AssemblyVersion}");
             Serilog.Log.Information($"MinVer.FileVersion = {MinVer.FileVersion}");
-            Serilog.Log.Information($"IsLocalBuild = {IsLocalBuild}");
+            Serilog.Log.Information($"IsLocalBuild = {Build.IsLocalBuild}");
             Serilog.Log.Information($"Configuration = {Configuration}");
-            Serilog.Log.Information($"Dockerfile = {Dockerfile}");
+            Serilog.Log.Information($"Dockerfile = {CurrentDockerFile}");
             Serilog.Log.Information($"GitHubActions.RepositoryOwner = {GitHubActions?.RepositoryOwner}");
             Serilog.Log.Information($"GitHubActions.ServerUrl = {GitHubActions?.ServerUrl}");
-            Serilog.Log.Information($"Project = {CurrentProject}");
             Serilog.Log.Information($"DockerImageName = {CurrentDockerImageName}");
         });
 
@@ -170,8 +128,8 @@ class Build : NukeBuild
                 .SetProjectFile(ApiProject)
                 .SetConfiguration(Configuration));
         });
-
-    [PublicAPI] Target GenerateApiClient => d => d
+ [PublicAPI]
+    Target GenerateApiClient => d => d
         .DependsOn(CompileApi)
         .Executes(() =>
         {
@@ -180,8 +138,8 @@ class Build : NukeBuild
                 .SetProcessEnvironmentVariable("generateclients", "true")
                 .SetProcessEnvironmentVariable("LOG_PATH", "."));
         });
-
-    [PublicAPI] Target ExecuteApi => d => d
+ [PublicAPI]
+    Target ExecuteApi => d => d
         .DependsOn(CompileApi)
         .Executes(() =>
         {
@@ -222,7 +180,8 @@ class Build : NukeBuild
     [PublicAPI]
     Target DockerBuild => d => d
         .DependsOn(LogInfo)
-        .OnlyWhenDynamic(() => CurrentProject != null)
+        .OnlyWhenDynamic(() => CurrentDockerFile != null)
+        .OnlyWhenDynamic(() => CurrentDockerContext != null)
         .OnlyWhenDynamic(() => CurrentDockerImageName != null)
         .Executes(() =>
         {
@@ -234,30 +193,35 @@ class Build : NukeBuild
                     $"ASSEMBLY_VERSION=\"{MinVer.AssemblyVersion}\"",
                     $"FILE_VERSION=\"{MinVer.FileVersion}\"",
                     $"INFORMATIONAL_VERSION=\"{MinVer.Version}\"")
-                .SetPath(CurrentProject.Directory)
+                .SetPath(CurrentDockerContext)
+                .SetFile(CurrentDockerFile)
                 .SetTag(CurrentDockerImageName));
         });
 
+    [PublicAPI]
     Target DockerBuildWeb => d => d
         .Executes(() =>
         {
-            this.CurrentDockerImageName = DockerImageNameWeb;
-            this.CurrentProject = WebProject;
+            CurrentDockerImageName = DockerImageNameWeb;
+            CurrentDockerContext = WebProject.Directory;
+            CurrentDockerFile = WebProject.Directory / "Dockerfile";
         })
         .Triggers(DockerBuild);
 
+    [PublicAPI]
     Target DockerBuildApi => d => d
         .Executes(() =>
         {
-            this.CurrentDockerImageName = DockerImageNameApi;
-            this.CurrentProject = ApiProject;
+            CurrentDockerImageName = DockerImageNameApi;
+            CurrentDockerContext = Solution.Directory / "src";
+            CurrentDockerFile = ApiProject.Directory / "Dockerfile";
         })
         .Triggers(DockerBuild);
 
     [PublicAPI]
     Target DockerLogin => d => d
         .DependsOn(DockerBuild)
-        .OnlyWhenStatic(() => IsServerBuild)
+        .OnlyWhenStatic(() => Build.IsServerBuild)
         .Executes(() =>
         {
             DockerTasks.DockerLogin(s => s
@@ -269,26 +233,30 @@ class Build : NukeBuild
     [PublicAPI]
     Target DockerPushDev => d => d
         .DependsOn(DockerLogin)
-        .OnlyWhenStatic(() => IsServerBuild)
+        .OnlyWhenStatic(() => Build.IsServerBuild)
         .Executes(() =>
         {
             DockerTasks.DockerPush(s => s
                 .SetName(CurrentDockerImageName));
         });
 
+    [PublicAPI]
     Target DockerPushDevWeb => d => d
         .Executes(() =>
         {
-            this.CurrentDockerImageName = DockerImageNameWeb;
-            this.CurrentProject = WebProject;
+            CurrentDockerImageName = DockerImageNameWeb;
+            CurrentDockerContext = WebProject.Directory;
+            CurrentDockerFile = WebProject.Directory / "Dockerfile";
         })
         .Triggers(DockerPushDev);
 
+    [PublicAPI]
     Target DockerPushDevApi => d => d
         .Executes(() =>
         {
-            this.CurrentDockerImageName = DockerImageNameApi;
-            this.CurrentProject = ApiProject;
+            CurrentDockerImageName = DockerImageNameApi;
+            CurrentDockerContext = Solution.Directory / "src";
+            CurrentDockerFile = ApiProject.Directory / "Dockerfile";
         })
         .Triggers(DockerPushDev);
 }
