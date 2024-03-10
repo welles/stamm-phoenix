@@ -1,8 +1,10 @@
 ﻿using FastEndpoints;
+using FastEndpoints.Security;
 using FastEndpoints.Swagger;
 using NJsonSchema.Generation;
 using Serilog;
 using StammPhoenix.Api.Core;
+using StammPhoenix.Api.Endpoints.Auth;
 using StammPhoenix.Api.Endpoints.MetaGroup;
 using StammPhoenix.Application.Interfaces;
 
@@ -24,12 +26,15 @@ public static class Services
                     s.SchemaSettings.SchemaNameGenerator = new DefaultSchemaNameGenerator();
                 };
 
-                d.TagDescriptions = t =>
+                d.TagDescriptions = tag =>
                 {
-                    t[MetaGroup.GroupName] = "Endpoints concerning metadata about the API";
+                    tag[MetaGroup.GroupName] = "Endpoints concerning metadata about the API";
+                    tag[AuthGroup.GroupName] = "Endpoints for authorizing with the API";
                 };
             })
-            .AddSerilog();
+            .AddSerilog()
+            .AddAuthenticationJwtBearer(_ => {})
+            .AddAuthorization();
 
         services.AddScoped<IUser, CurrentUser>();
 

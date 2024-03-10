@@ -33,7 +33,9 @@ public static class Program
 
       app.UseSerilogRequestLogging();
 
-      app.UseFastEndpoints(c =>
+      app.UseAuthentication()
+         .UseAuthorization()
+         .UseFastEndpoints(c =>
          {
             c.Endpoints.Configurator = ep =>
             {
