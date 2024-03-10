@@ -8,6 +8,13 @@ namespace StammPhoenix.Domain.Models;
 /// </summary>
 public sealed class Leader : DomainEntity
 {
+    private List<Group> groups = new();
+
+    /// <summary>
+    /// The groups this leader is a member of.
+    /// </summary>
+    public IReadOnlyCollection<Group> Groups => this.groups.AsReadOnly();
+
     /// <summary>
     /// The family name of the leader.
     /// </summary>
