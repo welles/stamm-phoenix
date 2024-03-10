@@ -25,10 +25,11 @@ WORKDIR /app
 COPY --from=build /app/dist ./dist
 
 # Use an environment variable for the port
-ENV PORT=443
+ENV PORT=80
+ENV HOST=0.0.0.0
 
 # Expose the port
-EXPOSE $PORT
+EXPOSE 80
 
 # Set the entry point to the Bun runtime
 ENTRYPOINT ["bun", "run"]
