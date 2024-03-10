@@ -41,6 +41,7 @@ public static class Services
             {
                 o.SigningStyle = TokenSigningStyle.Asymmetric;
                 o.SigningKey = environment.PublicSigningKey;
+                o.KeyIsPemEncoded = true;
             })
             .AddAuthorization();
 

@@ -57,6 +57,7 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
                 {
                     o.SigningKey = this.AppConfiguration.PrivateSigningKey;
                     o.SigningStyle = TokenSigningStyle.Asymmetric;
+                    o.KeyIsPemEncoded = true;
                     o.ExpireAt = DateTime.UtcNow.AddDays(1);
                     o.User.Roles.Add("Leader");
                     o.User.Claims.Add((ClaimTypes.Email, req.LoginEmail));

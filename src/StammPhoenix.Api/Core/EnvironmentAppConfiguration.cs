@@ -24,8 +24,8 @@ public class EnvironmentAppConfiguration : IAppConfiguration
         this.LogPath = logPath;
         this.ConfigPath = configPath;
 
-        var publicKeyPath = (Path.Combine(configPath, "JWT.pub"));
-        var privateKeyPath = (Path.Combine(configPath, "JWT.key"));
+        var publicKeyPath = Path.Combine(configPath, "JWT.public.pem");
+        var privateKeyPath = Path.Combine(configPath, "JWT.private.pem");
         if (File.Exists(publicKeyPath) && File.Exists(privateKeyPath))
         {
             this.PublicSigningKey = File.ReadAllText(publicKeyPath);
@@ -34,8 +34,8 @@ public class EnvironmentAppConfiguration : IAppConfiguration
         else
         {
             var rsa = RSA.Create(2048);
-            this.PublicSigningKey = Convert.ToBase64String(rsa.ExportRSAPublicKey());
-            this.PrivateSigningKey = Convert.ToBase64String(rsa.ExportRSAPrivateKey());
+            this.PublicSigningKey = rsa.ExportRSAPublicKeyPem();
+            this.PrivateSigningKey = rsa.ExportRSAPrivateKeyPem();
 
             File.WriteAllText(publicKeyPath, this.PublicSigningKey);
             File.WriteAllText(privateKeyPath, this.PrivateSigningKey);
