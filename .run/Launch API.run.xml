@@ -16,7 +16,7 @@
     <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
     <option name="PROJECT_KIND" value="DotNetCore" />
     <option name="PROJECT_TFM" value="net8.0" />
-    <browser url="http://localhost:5000/swagger" start="true" />
+    <browser url="http://localhost:5000/swagger" />
     <method v="2">
       <option name="Build" />
     </method>
