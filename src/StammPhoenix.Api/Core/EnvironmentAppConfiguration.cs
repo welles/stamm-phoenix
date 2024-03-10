@@ -33,7 +33,7 @@ public class EnvironmentAppConfiguration : IAppConfiguration
         }
         else
         {
-            var rsa = RSA.Create(4096);
+            var rsa = RSA.Create(2048);
             this.PublicSigningKey = Convert.ToBase64String(rsa.ExportRSAPublicKey());
             this.PrivateSigningKey = Convert.ToBase64String(rsa.ExportRSAPrivateKey());
 
