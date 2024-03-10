@@ -31,4 +31,4 @@ ENV PORT=80
 EXPOSE $PORT
 
 # Start the Bun server with the Node adapter, using the environment variable for the port
-CMD ["PORT=80" "bun", "run", "./dist/server/entry.mjs", "--port", "$PORT"]
+RUN PORT=80 bun run ./dist/server/entry.mjs
