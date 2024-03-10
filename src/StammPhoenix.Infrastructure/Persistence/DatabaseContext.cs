@@ -7,14 +7,16 @@ namespace StammPhoenix.Infrastructure.Persistence;
 
 public sealed class DatabaseContext : DbContext
 {
-    [PublicAPI]
-    private DbSet<Leader> Leaders => Set<Leader>();
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
     [PublicAPI]
-    private DbSet<Event> Events => Set<Event>();
+    private DbSet<Leader> Leaders => this.Set<Leader>();
 
     [PublicAPI]
-    private DbSet<Group> Groups => Set<Group>();
+    private DbSet<Event> Events => this.Set<Event>();
+
+    [PublicAPI]
+    private DbSet<Group> Groups => this.Set<Group>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
