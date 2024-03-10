@@ -7,13 +7,19 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "produce": "bun run build && bun run ./dist/server/entry.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
     "@astrojs/node": "^8.2.3",
     "@astrojs/solid-js": "^4.0.1",
     "@astrojs/tailwind": "^5.1.0",
+    "@microsoft/kiota-abstractions": "^1.0.0-preview.45",
+    "@microsoft/kiota-serialization-form": "^1.0.0-preview.34",
+    "@microsoft/kiota-serialization-json": "^1.0.0-preview.45",
+    "@microsoft/kiota-serialization-multipart": "^1.0.0-preview.24",
+    "@microsoft/kiota-serialization-text": "^1.0.0-preview.42",
     "@radix-ui/react-slot": "^1.0.2",
     "astro": "^4.2.6",
     "class-variance-authority": "^0.7.0",

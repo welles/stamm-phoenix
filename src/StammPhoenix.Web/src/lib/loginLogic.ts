@@ -1,13 +1,17 @@
 // src/utils/loginLogic.ts
 
 export const login = async (email: string, password: string) => {
-  try {
+    try {
+
+        const creds = { login_email: email, password: password };
+
     const response = await fetch("https://dev-api.stamm-phoenix.de/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ login_email: email, password }),
+      body: JSON.stringify(creds),
+      mode: 'no-cors',
     });
     const data = await response.json();
     if (response.ok) {
@@ -16,7 +20,7 @@ export const login = async (email: string, password: string) => {
       return { token: null, error: data.error };
     }
   } catch (error) {
-    return { token: null, error: "An error occurred while logging in." };
+    return { token: null, error: `An error occurred while logging in. ${error}` };
   }
 };
 

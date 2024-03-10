@@ -8,6 +8,10 @@
       "@/*": [
         "./src/*"
       ]
-    }
-  }
+    },
+    "types": ["@microsoft/kiota-abstractions"]
+  },
+   "exclude": [
+        "./src/lib/api/**"
+   ]
 }

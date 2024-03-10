@@ -14,7 +14,7 @@ RUN bun install --production
 COPY . .
 
 # Build the Astro application
-RUN bunx --bun astro build
+RUN bun run build
 
 # Runtime stage
 FROM oven/bun:latest AS runtime
@@ -31,4 +31,4 @@ ENV PORT=80
 EXPOSE $PORT
 
 # Start the Bun server with the Node adapter, using the environment variable for the port
-CMD ["bun", "start", "./dist/server/entry.mjs", "--port", "$PORT"]
+CMD ["PORT=80" "bun", "run", "./dist/server/entry.mjs", "--port", "$PORT"]
