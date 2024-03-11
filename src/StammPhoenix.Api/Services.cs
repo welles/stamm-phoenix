@@ -52,8 +52,9 @@ public static class Services
             options.AddPolicy(name: EnvironmentAppConfiguration.Names.ALLOWED_HOSTS,
                 policy  =>
                 {
-                    // policy.WithOrigins(environment.AllowedHosts);
-                    policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                    policy.WithOrigins(environment.AllowedHosts)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
                 });
         });
 
