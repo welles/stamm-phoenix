@@ -7,7 +7,7 @@ const LoginForm = () => {
   const [token, setToken] = createSignal(null);
   const [error, setError] = createSignal(null);
 
-  const handleLogin = async (e: Event) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const { token, error } = await login(email(), password());
     setToken(token);
@@ -19,18 +19,17 @@ const LoginForm = () => {
   });
 
   return (
-    <div class="max-w-sm mx-auto mt-10 bg-white rounded-lg shadow-md p-6">
-      <h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
+    <div class="max-w-md mx-auto mt-10 bg-dpsg-gray-light rounded-md shadow-md p-8">
+      <h1 class="text-3xl font-bold mb-8 text-center text-dpsg-green">
+        Anmeldung
+      </h1>
       <form onSubmit={handleLogin}>
-        <div class="mb-4">
-          <label
-            class="block text-gray-700 font-bold mb-2"
-            for="email"
-          >
-            Email:
+        <div class="mb-6">
+          <label class="block text-dpsg-gray-dark font-bold mb-2" for="email">
+            E-Mail:
           </label>
           <input
-            class="form-input rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="appearance-none rounded-md w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border border-dpsg-green"
             type="email"
             id="email"
             value={email()}
@@ -39,14 +38,11 @@ const LoginForm = () => {
           />
         </div>
         <div class="mb-6">
-          <label
-            class="block text-gray-700 font-bold mb-2"
-            for="password"
-          >
-            Password:
+          <label class="block text-dpsg-gray-dark font-bold mb-2" for="password">
+            Passwort:
           </label>
           <input
-            class="form-input rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="appearance-none rounded-md w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border border-dpsg-green"
             type="password"
             id="password"
             value={password()}
@@ -55,13 +51,13 @@ const LoginForm = () => {
           />
         </div>
         {error() && (
-          <p class="text-red-500 text-sm mb-4">{error()}</p>
+          <p class="text-dpsg-red text-sm mb-6">{error()}</p>
         )}
         <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          class="bg-dpsg-green hover:bg-dpsg-green-dark text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline transition-colors duration-base ease-in-out"
           type="submit"
         >
-          Login
+          Anmelden
         </button>
       </form>
     </div>
