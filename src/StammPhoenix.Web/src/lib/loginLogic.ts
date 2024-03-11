@@ -3,7 +3,7 @@
 export const login = async (email: string, password: string) => {
     try {
 
-        const creds = { login_email: email, password: password };
+        const creds = { "login_email": email, "password": password };
 
     const response = await fetch("https://dev-api.stamm-phoenix.de/auth/login", {
       method: "POST",
