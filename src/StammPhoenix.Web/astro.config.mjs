@@ -14,9 +14,10 @@ export default defineConfig({
     		mode: "standalone"
   	}),
 	i18n: {
-    defaultLocale: "de",
-    locales: ["de", "en"],
-    routing: {
-        prefixDefaultLocale: true
-    }
+    		defaultLocale: "de",
+    		locales: ["de", "en"],
+    		routing: {
+        		prefixDefaultLocale: true
+    		}
+	}
 });
