@@ -7,7 +7,7 @@ const LoginForm = () => {
   const [token, setToken] = createSignal(null);
   const [error, setError] = createSignal(null);
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: Event) => {
     e.preventDefault();
     const { token, error } = await login(email(), password());
     setToken(token);
@@ -25,7 +25,7 @@ const LoginForm = () => {
         <div class="mb-4">
           <label
             class="block text-gray-700 font-bold mb-2"
-            htmlFor="email"
+            for="email"
           >
             Email:
           </label>
@@ -41,7 +41,7 @@ const LoginForm = () => {
         <div class="mb-6">
           <label
             class="block text-gray-700 font-bold mb-2"
-            htmlFor="password"
+            for="password"
           >
             Password:
           </label>
