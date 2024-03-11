@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using System.Security.Cryptography;
 using FastEndpoints;
 using FastEndpoints.Security;
 using JetBrains.Annotations;
@@ -20,6 +19,7 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
 
     public override void Configure()
     {
+        this.Verbs(Http.POST);
         this.Post("/login");
         this.Group<AuthGroup>();
         this.AllowAnonymous();
