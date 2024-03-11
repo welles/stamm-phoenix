@@ -5,8 +5,9 @@
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/StammPhoenix.Api" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <envs>
-      <env name="LOG_PATH" value=".\bin\Debug\net8.0" />
       <env name="CONFIG_PATH" value=".\bin\Debug\net8.0" />
+      <env name="LOG_PATH" value=".\bin\Debug\net8.0" />
+      <env name="ALLOWED_HOSTS" value="http://localhost:5000" />
     </envs>
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <option name="USE_MONO" value="0" />
