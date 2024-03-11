@@ -1,9 +1,14 @@
 // src/utils/loginLogic.ts
 
+export interface Credentials {
+    email: string,
+    password: string
+}
+
 export const login = async (email: string, password: string) => {
     try {
 
-        const creds = { "login_email": email, "password": password };
+        const creds: Credentials = { login_email: email, password };
 
     const response = await fetch("https://dev-api.stamm-phoenix.de/auth/login", {
       method: "POST",
@@ -16,7 +21,7 @@ export const login = async (email: string, password: string) => {
     if (response.ok) {
       return { token: data.token, error: null };
     } else {
-        return { token: null, error: data.error }
+        return { token: null, error: data.error };
     }
   } catch (error) {
     return { token: null, error: `An error occurred while logging in. ${error}` };
