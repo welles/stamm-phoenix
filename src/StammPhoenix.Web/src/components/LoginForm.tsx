@@ -10,7 +10,7 @@ const LoginForm = () => {
 
     const handleLogin = async (e: Event) => {
         e.preventDefault();
-        const { token, error: string } = await login(email(), password());
+        const { token, error } = await login(email(), password());
         setToken(token);
         setError(error);
     };
