@@ -7,7 +7,7 @@ const LoginForm = () => {
   const [token, setToken] = createSignal(null);
   const [error, setError] = createSignal(null);
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: Event) => {
     e.preventDefault();
     const { token, error } = await login(email(), password());
     setToken(token);
