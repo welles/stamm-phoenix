@@ -1,0 +1,12 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '@/styles/globals.css'
+
+import LoginForm from '../components/LoginForm';
+---
+
+<Layout title="Login">
+	<main class="place-content-center w-full h-full">
+        <LoginForm client:only="solid-js" />
+    </main>
+</Layout>

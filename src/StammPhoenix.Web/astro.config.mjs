@@ -6,11 +6,17 @@ import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'server',
-  integrations: [solid(), tailwind({
-    applyBaseStyles: false
-  })],
-  adapter: node({
-    mode: "standalone"
-  })
+  	output: 'server',
+  	integrations: [solid(), tailwind({
+    		applyBaseStyles: false
+  	})],
+  	adapter: node({
+    		mode: "standalone"
+  	}),
+	i18n: {
+    defaultLocale: "de",
+    locales: ["de", "en"],
+    routing: {
+        prefixDefaultLocale: true
+    }
 });
