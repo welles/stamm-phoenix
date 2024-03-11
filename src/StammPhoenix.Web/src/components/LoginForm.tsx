@@ -30,7 +30,7 @@ const LoginForm = () => {
             Email:
           </label>
           <input
-            class="appearance-none rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="form-input rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="email"
             id="email"
             value={email()}
@@ -46,7 +46,7 @@ const LoginForm = () => {
             Password:
           </label>
           <input
-            class="appearance-none rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="form-input rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="password"
             id="password"
             value={password()}
