@@ -13,6 +13,11 @@ public interface IAppConfiguration
     public string ConfigPath { get; }
 
     /// <summary>
+    /// Defines the hosts that are allowed to access the application.
+    /// </summary>
+    public string[] AllowedHosts { get; }
+
+    /// <summary>
     /// The public key used for signing JWT tokens by the application.
     /// </summary>
     public string PublicSigningKey { get; }

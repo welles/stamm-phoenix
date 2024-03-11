@@ -40,6 +40,15 @@ public class EnvironmentAppConfiguration : IAppConfiguration
             File.WriteAllText(publicKeyPath, this.PublicSigningKey);
             File.WriteAllText(privateKeyPath, this.PrivateSigningKey);
         }
+
+        var allowedHosts = Environment.GetEnvironmentVariable(Names.ALLOWED_HOSTS);
+
+        if (string.IsNullOrWhiteSpace(allowedHosts))
+        {
+            throw new ArgumentNullException(Names.ALLOWED_HOSTS, "Environment variable must be set.");
+        }
+
+        this.AllowedHosts = allowedHosts.Split(';');
     }
 
     public static class Names
@@ -51,6 +60,8 @@ public class EnvironmentAppConfiguration : IAppConfiguration
         public const string PUBLIC_SIGNING_KEY = nameof(Names.PUBLIC_SIGNING_KEY);
 
         public const string PRIVATE_SIGNING_KEY = nameof(Names.PRIVATE_SIGNING_KEY);
+
+        public const string ALLOWED_HOSTS = nameof(Names.ALLOWED_HOSTS);
     }
 
     /// <summary>
@@ -62,6 +73,11 @@ public class EnvironmentAppConfiguration : IAppConfiguration
     /// <inheritdoc />
     /// </summary>
     public string ConfigPath { get; }
+
+    /// <summary>
+    /// <inheritdoc />
+    /// </summary>
+    public string[] AllowedHosts { get; }
 
     /// <summary>
     /// <inheritdoc />

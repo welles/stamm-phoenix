@@ -47,6 +47,15 @@ public static class Services
 
         services.AddScoped<IUser, CurrentUser>();
 
+        services.AddCors(options =>
+        {
+            options.AddPolicy(name: EnvironmentAppConfiguration.Names.ALLOWED_HOSTS,
+                policy  =>
+                {
+                    policy.WithOrigins(environment.AllowedHosts);
+                });
+        });
+
         return services;
     }
 }

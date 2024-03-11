@@ -3,6 +3,7 @@ using FastEndpoints.ClientGen.Kiota;
 using FastEndpoints.Swagger;
 using Kiota.Builder;
 using Serilog;
+using StammPhoenix.Api.Core;
 using StammPhoenix.Application;
 using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Infrastructure;
@@ -25,6 +26,8 @@ public static class Program
       var app = builder.Build();
 
       var appConfiguration = app.Services.GetRequiredService<IAppConfiguration>();
+
+      app.UseCors(EnvironmentAppConfiguration.Names.ALLOWED_HOSTS);
 
       Log.Logger = new LoggerConfiguration()
          .WriteTo.Console()
