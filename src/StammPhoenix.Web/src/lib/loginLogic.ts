@@ -11,7 +11,6 @@ export const login = async (email: string, password: string) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(creds),
-      mode: 'no-cors',
     });
     const data = await response.json();
     if (response.ok) {
