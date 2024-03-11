@@ -17,7 +17,7 @@ export const login = async (email: string, password: string) => {
     if (response.ok) {
       return { token: data.token, error: null };
     } else {
-        return { token: null, error: "an error" }
+        return { token: null, error: data.error }
     }
   } catch (error) {
     return { token: null, error: `An error occurred while logging in. ${error}` };
