@@ -1,7 +1,7 @@
 // src/utils/loginLogic.ts
 
 export interface Credentials {
-    email: string,
+    login_email: string,
     password: string
 }
 
