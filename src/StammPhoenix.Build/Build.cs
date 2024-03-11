@@ -16,7 +16,7 @@ using Nuke.Common.Tools.Pwsh;
     GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[]
     {
-        "*"
+        "main"
     },
     OnPushIncludePaths = new []
     {
@@ -41,7 +41,7 @@ using Nuke.Common.Tools.Pwsh;
     GitHubActionsImage.UbuntuLatest,
     OnPushBranches = new[]
     {
-        "*"
+        "main"
     },
     OnPushIncludePaths = new []
     {

@@ -19,7 +19,7 @@ name: DockerPushDevWeb
 on:
   push:
     branches:
-      - '*'
+      - main
     paths:
       - 'src/StammPhoenix.Build/**'
       - 'src/StammPhoenix.Web/**'
