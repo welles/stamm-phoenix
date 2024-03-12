@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import solid from "@astrojs/solid-js";
 import tailwind from "@astrojs/tailwind";
 import astroI18next from 'astro-i18next';
-
-import node from "@astrojs/node";
+import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,9 +14,7 @@ export default defineConfig({
   	    }),
         astroI18next()
     ],
-  	adapter: node({
-    		mode: "standalone"
-  	}),
+  	adapter: node({ mode: "standalone" }),
     i18n: {
         defaultLocale: "en",
         locales: ["en", "de"],
