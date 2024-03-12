@@ -1,4 +1,4 @@
-mport bun from "bun";
+import bun from "bun";
 import fs from "fs";
 import mime from "mime";
 import { handler as ssrHandler } from "../dist/server/entry.mjs";
@@ -27,16 +27,6 @@ async function handle(req, res) {
     }
   });
 }
-
-const server = createServer((req, res) => {
-  handle(req, res).catch((err) => {
-    console.error(err);
-    res.writeHead(500, {
-      "Content-Type": "text/plain",
-    });
-    res.end(err.toString());
-  });
-});
 
 const port = process.env.PORT || 80;
 
