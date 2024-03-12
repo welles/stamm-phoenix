@@ -1,4 +1,4 @@
-import { createServer } from "http";
+mport bun from "bun";
 import fs from "fs";
 import mime from "mime";
 import { handler as ssrHandler } from "../dist/server/entry.mjs";
@@ -38,11 +38,13 @@ const server = createServer((req, res) => {
   });
 });
 
-// Use the PORT environment variable, or fallback to 80 if not set
 const port = process.env.PORT || 80;
 
-server.listen(port, () => {
-  console.log(`Serving at http://localhost:${port}`);
+bun.listen({
+  port,
+  hostname: "0.0.0.0",
+  handler: handle,
+  development: true,
 });
 
 // Silence weird <time> warning
