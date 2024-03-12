@@ -1,0 +1,29 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+// Define the navigation links
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/imprint', label: 'Imprint' },
+  { href: '/login', label: 'Login' },
+];
+
+const currentLocale = Astro.currentLocale;
+const locale: string = currentLocale ?? 'de'; 
+---
+
+<nav class="bg-gray-800 py-4 rounded-lg">
+  <div class="container mx-auto px-4 flex justify-between items-center">
+    <div class="navbar-brand">
+      <a href="/" class="text-white font-bold"><img>Logo</img></a>
+    </div>
+    <ul class="navbar-nav flex space-x-4">
+      {navLinks.map(({ href, label }) => (
+        <li class="nav-item">
+          <a class="nav-link text-white hover:text-gray-300" href={getRelativeLocaleUrl(locale, href)}>{label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
