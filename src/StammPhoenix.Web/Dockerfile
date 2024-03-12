@@ -25,8 +25,8 @@ WORKDIR /app
 COPY --from=build /app/dist ./dist
 
 # Use an environment variable for the port
-ENV PORT=80
 ENV HOST=0.0.0.0
+ENV PORT=80
 
 # Expose the port
 EXPOSE 80
