@@ -1,4 +1,4 @@
-import bun from "bun";
+import { createServer } from "http";
 import fs from "fs";
 import mime from "mime";
 import { handler as ssrHandler } from "../dist/server/entry.mjs";
@@ -28,13 +28,11 @@ async function handle(req, res) {
   });
 }
 
+const server = createServer(handle);
 const port = process.env.PORT || 80;
 
-bun.listen({
-  port,
-  hostname: "0.0.0.0",
-  handler: handle,
-  development: true,
+server.listen(port, "0.0.0.0", () => {
+  console.log(`Serving at http://localhost:${port}`);
 });
 
 // Silence weird <time> warning
