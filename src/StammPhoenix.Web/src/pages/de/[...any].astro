@@ -4,12 +4,7 @@ import '@/styles/globals.css'
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const currentLocale = Astro.currentLocale;
-let locale: string
-if (currentLocale == undefined) { 
-	locale = 'de'
-} else {
-	locale = currentLocale
-}
+const locale: string = currentLocale ?? 'de';
 ---
 
 <Layout title="404">
