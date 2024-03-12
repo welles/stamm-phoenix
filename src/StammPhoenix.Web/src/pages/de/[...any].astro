@@ -3,8 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import '@/styles/globals.css'
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
-const currentLocale = Astro.currentLocale;
-if (currentLocale == undefined) { currentLocale = i18n.defaultLocale }
+let currentLocale = Astro.currentLocale;
+if (currentLocale == undefined) { let currentLocale = i18n.defaultLocale }
 ---
 
 <Layout title="404">
