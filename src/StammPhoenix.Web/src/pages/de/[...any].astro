@@ -1,9 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import '@/styles/globals.css'
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getRelativeLocaleUrl, defaultLocale } from 'astro:i18n';
 
 const currentLocale = Astro.currentLocale;
+if (currentLocale == undefined) { currentLocale = defaultLocale }
 ---
 
 <Layout title="404">
