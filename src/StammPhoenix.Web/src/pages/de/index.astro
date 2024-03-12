@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import '@/styles/globals.css'
 
+const currentLocale = Astro.currentLocale;
+
 const response = await fetch('https://dev-api.stamm-phoenix.de/is-alive');
 const data = await response.json();
 ---

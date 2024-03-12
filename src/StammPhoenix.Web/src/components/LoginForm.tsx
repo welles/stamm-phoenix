@@ -53,6 +53,9 @@ const LoginForm = () => {
         {error() && (
           <p class="text-dpsg-red text-sm mb-6">{error()}</p>
         )}
+        {token() && (
+            <p class="text-dpsg-red text-sm mb-6">{token()}</p>
+        )}
         <button
           class="bg-dpsg-green hover:bg-dpsg-green-dark text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline transition-colors duration-base ease-in-out"
           type="submit"

@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import '@/styles/globals.css'
 import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const currentLocale = Astro.currentLocale;
 ---
 
 <Layout title="404">
@@ -11,8 +13,8 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
     <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Seite nicht gefunden</h1>
     <p class="mt-6 text-base leading-7 text-gray-600">Leider konnten wir diese Seite nicht finden</p>
     <div class="mt-10 flex items-center justify-center gap-x-6">
-      <a href={getRelativeLocaleUrl('de', "")} class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Zurück zur Startseite</a>
-      <a href={getRelativeLocaleUrl('de', 'kontakt')} class="text-sm font-semibold text-gray-900">Kontakt <span aria-hidden="true">&rarr;</span></a>
+      <a href={getRelativeLocaleUrl({currentLocale}, "")} class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Zurück zur Startseite</a>
+      <a href={getRelativeLocaleUrl({currentLocale}, 'kontakt')} class="text-sm font-semibold text-gray-900">Kontakt <span aria-hidden="true">&rarr;</span></a>
     </div>
   </div>
 </main>
