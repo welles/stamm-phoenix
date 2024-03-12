@@ -4,6 +4,7 @@ import { HeadHrefLangs } from 'astro-i18next/components'
 
 import Navbar from '../components/Navbar.astro'
 import Footer from '../components/Footer.astro'
+import AnimatedBackground from '../components/AnimatedBackground.astro';
 
 interface Props {
 	title: string;
@@ -24,6 +25,7 @@ const { title } = Astro.props;
         <HeadHrefLangs />
 	</head>
 	<body class="w-full min-h-screen h-fit place-content-center justify-center">
+        <AnimatedBackground />
         <Navbar />
 		<slot />
         <Footer />
