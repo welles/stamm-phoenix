@@ -24,10 +24,6 @@ WORKDIR /app
 # Copy the built application from the build stage
 COPY --from=build /app/dist ./dist
 
-# Use an environment variable for the port
-ENV HOST=0.0.0.0
-ENV PORT=80
-
 # Expose the port
 EXPOSE 80
 
@@ -35,4 +31,4 @@ EXPOSE 80
 ENTRYPOINT ["bun", "run"]
 
 # Set the command to run the built application
-CMD ["dev --port 80 --host"]
+CMD ["dev --port 80"]
