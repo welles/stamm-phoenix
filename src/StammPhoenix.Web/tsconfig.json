@@ -5,6 +5,9 @@
     "tsx": "preserve",
     "jsxImportSource": "solid-js",
     "tsxImportSource": "solid-js",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": false,
     "baseUrl": ".",
     "paths": {
       "@/*": [

@@ -1,27 +1,26 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import i18next, { t } from 'i18next'
+import { getRelativeLocaleUrl } from "astro:i18n";
 
-// Define the navigation links
+const locale: string = i18next.language;
+
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/privacy', label: 'Privacy' },
-  { href: '/imprint', label: 'Imprint' },
-  { href: '/login', label: 'Login' },
+  { href: getRelativeLocaleUrl(locale, ''), label: t('navbar.home') },
+  { href: getRelativeLocaleUrl(locale, '/privacy'), label: t('navbar.privacy') },
+  { href: getRelativeLocaleUrl(locale, '/imprint'), label: t('navbar.imprint') },
+  { href: getRelativeLocaleUrl(locale, '/login'), label: t('navbar.login') },
 ];
-
-const currentLocale = Astro.currentLocale;
-const locale: string = currentLocale ?? 'de'; 
 ---
 
 <nav class="bg-gray-800 py-4 rounded-lg">
   <div class="container mx-auto px-4 flex justify-between items-center">
     <div class="navbar-brand">
-      <a href="/" class="text-white font-bold"><img>Logo</img></a>
+      <a href={getRelativeLocaleUrl(locale, '')} class="text-white font-bold"><img>Logo</img></a>
     </div>
     <ul class="navbar-nav flex space-x-4">
       {navLinks.map(({ href, label }) => (
         <li class="nav-item">
-          <a class="nav-link text-white hover:text-gray-300" href={getRelativeLocaleUrl(locale, href)}>{label}</a>
+          <a class="nav-link text-white hover:text-gray-300" href={href}>{label}</a>
         </li>
       ))}
     </ul>

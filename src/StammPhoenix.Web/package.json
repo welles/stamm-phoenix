@@ -3,9 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "bunx astro-i18next generate && astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "bunx astro-i18next generate && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "produce": "bun run build && bun run ./dist/server/entry.mjs"
@@ -23,6 +23,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@tailwindcss/forms": "^0.5.7",
     "astro": "^4.2.6",
+    "astro-i18next": "^1.0.0-beta.21",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.316.0",
