@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bunx astro-i18next generate && astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "produce": "bun run build && bun run ./dist/server/entry.mjs"

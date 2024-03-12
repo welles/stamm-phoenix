@@ -8,7 +8,7 @@ COPY package.json package.json
 COPY bun.lockb bun.lockb
 
 # Install dependencies
-RUN bun install --production
+RUN bun i
 
 # Copy the entire application code
 COPY . .
