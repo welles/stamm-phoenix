@@ -8,7 +8,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "produce": "bun run build && bun run ./dist/server/entry.mjs"
+    "produce": "bun run build && bun run server/server.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
@@ -22,11 +22,14 @@
     "@microsoft/kiota-serialization-text": "^1.0.0-preview.42",
     "@radix-ui/react-slot": "^1.0.2",
     "@tailwindcss/forms": "^0.5.7",
+    "@types/node": "^20.11.26",
     "astro": "^4.2.6",
     "astro-i18next": "^1.0.0-beta.21",
+    "bun": "^1.0.30",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.316.0",
+    "mime": "^4.0.1",
     "solid-js": "^1.8.12",
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "^3.4.1",

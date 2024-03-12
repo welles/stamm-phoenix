@@ -35,4 +35,4 @@ EXPOSE 80
 ENTRYPOINT ["bun", "run"]
 
 # Set the command to run the built application
-CMD ["./dist/server/entry.mjs"]
+CMD ["server/server.mjs"]

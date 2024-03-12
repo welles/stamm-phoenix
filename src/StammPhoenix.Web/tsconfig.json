@@ -14,7 +14,7 @@
         "./src/*"
       ]
     },
-    "types": ["@microsoft/kiota-abstractions"]
+    "types": ["@microsoft/kiota-abstractions", "node"]
   },
    "exclude": [
         "./src/lib/api/**"
