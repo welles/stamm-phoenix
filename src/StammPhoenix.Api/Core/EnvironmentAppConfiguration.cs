@@ -37,6 +37,11 @@ public class EnvironmentAppConfiguration : IAppConfiguration
             this.PublicSigningKey = rsa.ExportRSAPublicKeyPem();
             this.PrivateSigningKey = rsa.ExportRSAPrivateKeyPem();
 
+            if (!Directory.Exists(configPath))
+            {
+                Directory.CreateDirectory(configPath);
+            }
+
             File.WriteAllText(publicKeyPath, this.PublicSigningKey);
             File.WriteAllText(privateKeyPath, this.PrivateSigningKey);
         }
