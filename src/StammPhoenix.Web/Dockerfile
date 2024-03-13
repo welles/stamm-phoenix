@@ -20,6 +20,9 @@ EXPOSE 80
 
 RUN ["chmod", "+x", "/usr/local/bin/bun"]
 
+CMD ["npm", "install", "-g", "bun"]
+CMD ["bun", "install"]
+
 #CMD ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "80"]
 
 CMD ["bun", "--version"]
