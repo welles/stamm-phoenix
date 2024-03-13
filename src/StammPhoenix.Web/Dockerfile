@@ -1,4 +1,4 @@
-FROM node:lts-iron AS base
+FROM node:latest AS base
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -20,4 +20,6 @@ RUN ["chmod", "+x", "/usr/local/bin/bun"]
 
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
 
-CMD ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "80"]
+#CMD ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "80"]
+
+CMD ["bun", "--version"]
