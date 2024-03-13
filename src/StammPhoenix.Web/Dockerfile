@@ -22,10 +22,12 @@ FROM oven/bun:latest AS runtime
 WORKDIR /app
 
 # Copy the built application from the build stage
-COPY --from=build /app/dist ./dist
+COPY --from=build /app ./
 
 # Expose the port
 EXPOSE 80
 
+ENTRYPOINT ["bun", "run"]
+
 # Set the command to run the built application
-CMD ["bun run dev --host --port 80"]
+CMD ["dev --host --port 80"]
