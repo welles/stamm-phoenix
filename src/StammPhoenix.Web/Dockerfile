@@ -1,4 +1,4 @@
-FROM debian:buster AS base
+FROM alpine:latest AS base
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -6,9 +6,8 @@ WORKDIR /usr/src/app
 # Copy project files
 COPY /src/StammPhoenix.Web/. .
 
-# Install curl
-RUN ["apt-get", "update"]
-RUN ["apt-get", "install", "-y", "curl", "bash", "unzip"]
+# Install dependencies
+RUN apk add --no-cache curl bash unzip
 
 # Expose port
 EXPOSE 80
