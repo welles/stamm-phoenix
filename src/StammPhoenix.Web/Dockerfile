@@ -1,5 +1,4 @@
-# Use the official Bun image (replace with desired version if needed)
-FROM node:latest AS base
+FROM node:lts AS base
 
 # Set working directory
 WORKDIR /usr/src/app
