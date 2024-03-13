@@ -1,4 +1,4 @@
-FROM bash:devel AS base
+FROM bash:devel
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -8,6 +8,10 @@ COPY /src/StammPhoenix.Web/. .
 
 # Expose port
 EXPOSE 80
+
+# Install curl
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "-y", "curl"]
 
 # Install bun
 RUN ["curl", "-fsSL", "https://bun.sh/install", "|", "bash"]
