@@ -1,4 +1,4 @@
-FROM alpine:latest AS base
+FROM oven/bun:alpine AS base
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -6,14 +6,8 @@ WORKDIR /usr/src/app
 # Copy project files
 COPY /src/StammPhoenix.Web/. .
 
-# Install dependencies
-RUN apk add --no-cache curl bash unzip
-
 # Expose port
 EXPOSE 80
-
-# Install bun
-RUN ["curl", "-fsSL", "https://bun.sh/install", "|", "bash"]
 
 # Verify bun installation
 RUN ["bun", "--version"]
