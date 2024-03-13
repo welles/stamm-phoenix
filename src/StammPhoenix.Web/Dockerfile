@@ -7,15 +7,15 @@ WORKDIR /usr/src/app
 COPY /src/StammPhoenix.Web/. .
 
 # Install dependencies
-RUN npm install --global bun
-RUN bun install
+RUN npm install bun
+RUN npm run bun install
 
 # Build the Astro project
-RUN bun run build
+RUN npm run bun run build
 
 # Expose port and run the Astro app
 EXPOSE 80
 
 ENTRYPOINT ["/bin/bash"]
 
-CMD ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "80"]
+CMD ["npm", "run", "bun", "run", "dev", "--host", "0.0.0.0", "--port", "80"]
