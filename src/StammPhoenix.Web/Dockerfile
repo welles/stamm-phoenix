@@ -18,4 +18,6 @@ EXPOSE 80
 
 RUN ["chmod", "+x", "/usr/local/bin/bun"]
 
+ENTRYPOINT ["/bin/bash", "-l", "-c"]
+
 CMD ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "80"]
