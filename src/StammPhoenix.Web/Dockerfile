@@ -15,6 +15,6 @@ RUN bun run build
 COPY . .
 
 # Expose port and run the app
-EXPOSE 80/tcp  # Expose port 80
+EXPOSE 80/tcp
 USER bun
-ENTRYPOINT [ "bun", "run", "start", "--port", "80", "--host" ]  # Pass arguments to start script
+ENTRYPOINT [ "bun", "run", "start", "--port", "80", "--host" ]
