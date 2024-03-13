@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 COPY . .
 
 # Install dependencies
-RUN nom install --global bun
+RUN npm install --global bun
 RUN bun install
 
 # Build the Astro project
