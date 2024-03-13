@@ -27,8 +27,5 @@ COPY --from=build /app/dist ./dist
 # Expose the port
 EXPOSE 80
 
-# Set the entry point to the Bun runtime
-ENTRYPOINT ["bun", "run"]
-
 # Set the command to run the built application
-CMD ["dev --host --port 80"]
+CMD ["bun run dev --host --port 80"]
