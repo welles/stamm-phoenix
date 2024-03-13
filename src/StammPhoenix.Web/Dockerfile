@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 COPY /src/StammPhoenix.Web/. .
 
 # Install dependencies
-RUN npm install bun
+RUN npm install
 RUN npm run bun install
 
 # Build the Astro project
