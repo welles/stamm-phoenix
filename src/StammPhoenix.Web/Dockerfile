@@ -6,6 +6,10 @@ WORKDIR /usr/src/app
 # Copy project files
 COPY /src/StammPhoenix.Web/. .
 
+# Install curl
+RUN ["apt-get", "update"]
+RUN ["apt-get", "install", "-y", "curl"]
+
 # Expose port
 EXPOSE 80
 
