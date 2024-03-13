@@ -4,15 +4,15 @@ FROM oven/bun:latest AS base
 # Set working directory
 WORKDIR /usr/src/app
 
+# Copy project files
+COPY . .
+
 # Install dependencies
 RUN bun install
 
 # [Optional] Tests & Build (modify commands as needed)
 ENV NODE_ENV=production
 RUN bun run build
-
-# Copy project files
-COPY . .
 
 # Expose port and run the app
 EXPOSE 80/tcp
