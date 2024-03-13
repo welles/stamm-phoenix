@@ -6,23 +6,13 @@ WORKDIR /usr/src/app
 # Copy project files
 COPY /src/StammPhoenix.Web/. .
 
-ENTRYPOINT ["/bin/bash", "-l", "-c"]
-
-# Install dependencies
-RUN ["npm", "install", "-g", "bun"]
-RUN ["bun", "install"]
-
-# Build the Astro project
-RUN ["bun", "run", "build"]
-
 # Expose port and run the Astro app
 EXPOSE 80
 
-RUN ["chmod", "+x", "/usr/local/bin/bun"]
+RUN chmod +x /usr/src/app/start.sh
 
-CMD ["npm", "install", "-g", "bun"]
-CMD ["bun", "install"]
+# Set entrypoint
+ENTRYPOINT /bin/bash -c
 
-#CMD ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "80"]
-
-CMD ["bun", "--version"]
+# Run start script
+CMD /usr/src/app/start.sh
