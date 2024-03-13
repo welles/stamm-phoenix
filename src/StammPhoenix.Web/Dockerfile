@@ -1,33 +1,20 @@
-# Build stage
-FROM oven/bun:latest AS build
+# Use the official Bun image (replace with desired version if needed)
+FROM oven/bun:latest AS base
 
-WORKDIR /app
-
-# Copy only the necessary files for installation
-COPY package.json package.json
-COPY bun.lockb bun.lockb
+# Set working directory
+WORKDIR /usr/src/app
 
 # Install dependencies
-RUN bun i
+RUN bun install
 
-# Copy the entire application code
-COPY . .
-
-# Build the Astro application
+# [Optional] Tests & Build (modify commands as needed)
+ENV NODE_ENV=production
 RUN bun run build
 
-# Runtime stage
-FROM oven/bun:latest AS runtime
+# Copy project files
+COPY . .
 
-WORKDIR /app
-
-# Copy the built application from the build stage
-COPY --from=build /app ./
-
-# Expose the port
-EXPOSE 80
-
-ENTRYPOINT ["bun", "run"]
-
-# Set the command to run the built application
-CMD ["dev", "--host", "--port 80"]
+# Expose port and run the app
+EXPOSE 80/tcp  # Expose port 80
+USER bun
+ENTRYPOINT [ "bun", "run", "start", "--port", "80", "--host" ]  # Pass arguments to start script
