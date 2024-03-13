@@ -16,6 +16,6 @@ RUN bun run build
 # Expose port and run the Astro app
 EXPOSE 80
 
-ENTRYPOINT ["/bin/bash"]
+RUN ["chmod", "+x", "/usr/local/bin/bun"]
 
 CMD ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "80"]
