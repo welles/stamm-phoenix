@@ -90,8 +90,6 @@ class Build : NukeBuild
 
     AbsolutePath CurrentDockerFile { get; set; }
 
-    AbsolutePath CurrentDockerContext { get; set; }
-
     [PublicAPI]
     Target LogInfo => d=> d
         .Executes(() =>
@@ -181,7 +179,6 @@ class Build : NukeBuild
     Target DockerBuild => d => d
         .DependsOn(LogInfo)
         .OnlyWhenDynamic(() => CurrentDockerFile != null)
-        .OnlyWhenDynamic(() => CurrentDockerContext != null)
         .OnlyWhenDynamic(() => CurrentDockerImageName != null)
         .Executes(() =>
         {
@@ -193,7 +190,7 @@ class Build : NukeBuild
                     $"ASSEMBLY_VERSION=\"{MinVer.AssemblyVersion}\"",
                     $"FILE_VERSION=\"{MinVer.FileVersion}\"",
                     $"INFORMATIONAL_VERSION=\"{MinVer.Version}\"")
-                .SetPath(CurrentDockerContext)
+                .SetPath(Solution.Directory)
                 .SetFile(CurrentDockerFile)
                 .SetTag(CurrentDockerImageName));
         });
@@ -203,7 +200,6 @@ class Build : NukeBuild
         .Executes(() =>
         {
             CurrentDockerImageName = DockerImageNameWeb;
-            CurrentDockerContext = WebProject.Directory;
             CurrentDockerFile = WebProject.Directory / "Dockerfile";
         })
         .Triggers(DockerBuild);
@@ -213,7 +209,6 @@ class Build : NukeBuild
         .Executes(() =>
         {
             CurrentDockerImageName = DockerImageNameApi;
-            CurrentDockerContext = Solution.Directory / "src";
             CurrentDockerFile = ApiProject.Directory / "Dockerfile";
         })
         .Triggers(DockerBuild);
@@ -245,7 +240,6 @@ class Build : NukeBuild
         .Executes(() =>
         {
             CurrentDockerImageName = DockerImageNameWeb;
-            CurrentDockerContext = WebProject.Directory;
             CurrentDockerFile = WebProject.Directory / "Dockerfile";
         })
         .Triggers(DockerPushDev);
@@ -255,7 +249,6 @@ class Build : NukeBuild
         .Executes(() =>
         {
             CurrentDockerImageName = DockerImageNameApi;
-            CurrentDockerContext = Solution.Directory / "src";
             CurrentDockerFile = ApiProject.Directory / "Dockerfile";
         })
         .Triggers(DockerPushDev);

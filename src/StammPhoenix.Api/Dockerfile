@@ -1,6 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:latest as publish
 WORKDIR /src
-COPY . .
+COPY /src .
 ARG VERSION="0.0.0-dev.0"
 ARG ASSEMBLY_VERSION="0.0.0.0"
 ARG FILE_VERSION="0.0.0.0"

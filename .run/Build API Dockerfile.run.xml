@@ -2,9 +2,33 @@
   <configuration default="false" name="Build API Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
-        <option name="imageTag" value="stamm-phoenix:debug" />
-        <option name="buildOnly" value="true" />
-        <option name="contextFolderPath" value="src" />
+        <option name="imageTag" value="stamm-phoenix-api:debug" />
+        <option name="containerName" value="stamm-phoenix-api" />
+        <option name="contextFolderPath" value="." />
+        <option name="envVars">
+          <list>
+            <DockerEnvVarImpl>
+              <option name="name" value="CONFIG_PATH" />
+              <option name="value" value="/api/config" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="LOG_PATH" />
+              <option name="value" value="/api/log" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="ALLOWED_HOSTS" />
+              <option name="value" value="http://localhost" />
+            </DockerEnvVarImpl>
+          </list>
+        </option>
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="8080" />
+              <option name="hostPort" value="5050" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
         <option name="sourceFilePath" value="src/StammPhoenix.Api/Dockerfile" />
       </settings>
     </deployment>

@@ -5,7 +5,7 @@ FROM node:latest AS base
 WORKDIR /usr/src/app
 
 # Copy project files
-COPY . .
+COPY /src/StammPhoenix.Web/. .
 
 # Install dependencies
 RUN npm install --global bun
