@@ -30,4 +30,4 @@ EXPOSE 80
 ENTRYPOINT ["bun", "run"]
 
 # Set the command to run the built application
-CMD ["dev --host --port 80"]
+CMD ["dev", "--host", "--port 80"]
