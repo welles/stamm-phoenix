@@ -1,4 +1,4 @@
-FROM node:current-alpine AS base
+FROM node:lts-iron AS base
 
 # Set working directory
 WORKDIR /usr/src/app
