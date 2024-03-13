@@ -10,11 +10,11 @@ COPY . .
 # Install dependencies
 RUN bun install
 
-# [Optional] Tests & Build (modify commands as needed)
-ENV NODE_ENV=production
+# Build the Astro project
 RUN bun run build
 
-# Expose port and run the app
-EXPOSE 80/tcp
+# Expose port and run the Astro app
+EXPOSE 80
+
 USER bun
-ENTRYPOINT [ "bun", "run", "start", "--port", "80", "--host" ]
+ENTRYPOINT ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "80"]
