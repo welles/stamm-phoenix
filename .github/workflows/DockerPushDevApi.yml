@@ -24,6 +24,11 @@ on:
       - 'src/StammPhoenix.Build/**'
       - 'src/StammPhoenix.Api/**'
       - 'src/StammPhoenix.Domain/**'
+  workflow_dispatch:
+    inputs:
+      description:
+        description: "description"
+        required: false
 
 permissions:
   contents: write
@@ -49,4 +54,5 @@ jobs:
       - name: 'Run: DockerPushDevApi'
         run: ./build.cmd DockerPushDevApi
         env:
+          description: ${{ github.event.inputs.description }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

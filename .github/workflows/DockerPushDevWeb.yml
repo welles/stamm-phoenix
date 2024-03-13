@@ -23,6 +23,11 @@ on:
     paths:
       - 'src/StammPhoenix.Build/**'
       - 'src/StammPhoenix.Web/**'
+  workflow_dispatch:
+    inputs:
+      description:
+        description: "description"
+        required: false
 
 permissions:
   contents: write
@@ -48,4 +53,5 @@ jobs:
       - name: 'Run: DockerPushDevWeb'
         run: ./build.cmd DockerPushDevWeb
         env:
+          description: ${{ github.event.inputs.description }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

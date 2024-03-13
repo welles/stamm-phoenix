@@ -24,6 +24,10 @@ using Nuke.Common.Tools.Pwsh;
         "src/StammPhoenix.Api/**",
         "src/StammPhoenix.Domain/**"
     },
+    OnWorkflowDispatchOptionalInputs = new []
+    {
+        "description"
+    },
     JobConcurrencyGroup = nameof(Build.DockerPushDevApi),
     FetchDepth = 0,
     InvokedTargets = new []
@@ -47,6 +51,10 @@ using Nuke.Common.Tools.Pwsh;
     {
         "src/StammPhoenix.Build/**",
         "src/StammPhoenix.Web/**"
+    },
+    OnWorkflowDispatchOptionalInputs = new []
+    {
+        "description"
     },
     JobConcurrencyGroup = nameof(Build.DockerPushDevWeb),
     FetchDepth = 0,
