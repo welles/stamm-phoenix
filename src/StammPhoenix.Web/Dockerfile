@@ -3,6 +3,9 @@ FROM oven/bun:alpine AS base
 # Set working directory
 WORKDIR /usr/src/app
 
+# install node and npm
+RUN ["apk", "add", "--update", "nodejs", "npm"]
+
 # Copy project files
 COPY /src/StammPhoenix.Web/. .
 
