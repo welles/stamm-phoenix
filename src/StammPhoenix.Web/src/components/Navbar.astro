@@ -1,6 +1,7 @@
 ---
 import i18next, { t } from 'i18next'
 import { getRelativeLocaleUrl } from "astro:i18n";
+import GlassMorphism from './GlassMorphism.astro'
 
 const locale: string = i18next.language;
 
@@ -12,17 +13,19 @@ const navLinks = [
 ];
 ---
 
-<nav class="bg-gray-800 py-4 rounded-lg">
-  <div class="container mx-auto px-4 flex justify-between items-center">
-    <div class="navbar-brand">
-      <a href={getRelativeLocaleUrl(locale, '')} class="text-white font-bold"><img>Logo</img></a>
-    </div>
-    <ul class="navbar-nav flex space-x-4">
-      {navLinks.map(({ href, label }) => (
-        <li class="nav-item">
-          <a class="nav-link text-white hover:text-gray-300" href={href}>{label}</a>
-        </li>
-      ))}
-    </ul>
-  </div>
+<nav class="rounded-lg">
+    <GlassMorphism class="py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="navbar-brand">
+                <a href={getRelativeLocaleUrl(locale, '')} class="text-black font-bold"><img class="w-[27px]" src="/favicon.ico"></img></a>
+            </div>
+            <ul class="navbar-nav flex space-x-4">
+                {navLinks.map(({ href, label }) => (
+                    <li class="nav-item">
+                        <a class="nav-link text-black hover:text-gray-600" href={href}>{label}</a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </GlassMorphism>
 </nav>

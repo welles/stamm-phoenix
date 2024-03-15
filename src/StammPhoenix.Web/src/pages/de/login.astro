@@ -2,13 +2,13 @@
 import { changeLanguage } from "i18next";
 import Layout from "../../layouts/Layout.astro";
 import "@/styles/globals.css";
-import LoginForm from "../../components/LoginForm";
+import LoginForm from "../../components/LoginForm.astro";
 
 changeLanguage("de");
 ---
 
 <Layout title="Login">
 	<main class="place-content-center w-full h-full">
-        <LoginForm client:only="solid-js" />
+        <LoginForm />
     </main>
 </Layout>

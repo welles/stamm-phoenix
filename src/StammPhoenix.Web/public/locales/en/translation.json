@@ -4,5 +4,9 @@
         "privacy": "Privacy",
         "imprint": "Imprint",
         "login": "Login"
+    },
+    "login": {
+        "title": "Login",
+        "submit-button": "Login"
     }
 }

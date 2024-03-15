@@ -1,4 +1,5 @@
 import { createSignal, onMount } from "solid-js";
+import i18next, { t } from 'i18next'
 import { login, checkToken } from "../lib/loginLogic";
 
 const LoginForm = () => {
@@ -21,7 +22,7 @@ const LoginForm = () => {
   return (
     <div class="max-w-md mx-auto mt-10 bg-dpsg-gray-light rounded-md shadow-md p-8">
       <h1 class="text-3xl font-bold mb-8 text-center text-dpsg-green">
-        Anmeldung
+        {t('login.title')}
       </h1>
       <form onSubmit={handleLogin}>
         <div class="mb-6">
@@ -60,7 +61,7 @@ const LoginForm = () => {
           class="bg-dpsg-green hover:bg-dpsg-green-dark text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline transition-colors duration-base ease-in-out"
           type="submit"
         >
-          Anmelden
+          {t('login.submit-button')}
         </button>
       </form>
     </div>
