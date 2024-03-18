@@ -19,7 +19,7 @@ checkToken(token);
 ---
 
 <GlassMorphism class="max-w-md mx-auto m-10 p-8">
-  <h1 class="text-3xl font-bold mb-8 text-center text-dpsg-green">
+  <h1 class="text-3xl font-bold mb-8 text-center text-dpsg-blue">
     {t('login.title')}
   </h1>
   <form client:only on:submit={handleLogin}>
@@ -28,7 +28,7 @@ checkToken(token);
         E-Mail:
       </label>
       <input
-        class="bg-transparent rounded-md bg-clip-padding border w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-green"
+        class="bg-transparent rounded-md bg-clip-padding border w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
         type="email"
         id="email"
         value={email}
@@ -41,7 +41,7 @@ checkToken(token);
         Passwort:
       </label>
       <input
-        class="bg-transparent rounded-md bg-clip-padding border w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-green"
+        class="bg-transparent rounded-md bg-clip-padding border w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
         type="password"
         id="password"
         value={password}
