@@ -19,6 +19,7 @@ export default {
         "dpsg-gray": "#ccc",
         "dpsg-gray-dark": "#333",
         "dpsg-red": "#cc0000",
+        "dpsg-blue": "#003056",
       },
       fontFamily: {
         sans: ["Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-serif"],
