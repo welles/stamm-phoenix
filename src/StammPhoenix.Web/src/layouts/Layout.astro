@@ -24,10 +24,10 @@ const { title } = Astro.props;
 		<title>{title} | DPSG Stamm Phoenix</title>
         <HeadHrefLangs />
 	</head>
-	<body class="max-w-screen min-h-svh p-[1rem] place-content-center justify-center">
+	<body class="flex flex-col max-w-screen min-h-svh p-[1rem] place-content-center justify-center">
         <AnimatedBackground />
         <Navbar class="sticky top-0"/>
-		<slot />
+		<slot class="flex-grow"/>
         <Footer class="absolute bottom-0"/>
 	</body>
 </html>
