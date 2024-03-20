@@ -84,8 +84,10 @@
               "ExecuteApi",
               "GenerateApiClient",
               "InstallBun",
+              "InstallPlaywright",
               "LogInfo",
-              "RestoreBunPackages"
+              "RestoreBunPackages",
+              "TestWeb"
             ]
           }
         },
@@ -112,8 +114,10 @@
               "ExecuteApi",
               "GenerateApiClient",
               "InstallBun",
+              "InstallPlaywright",
               "LogInfo",
-              "RestoreBunPackages"
+              "RestoreBunPackages",
+              "TestWeb"
             ]
           }
         },

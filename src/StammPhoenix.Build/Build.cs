@@ -171,7 +171,27 @@ class Build : NukeBuild
         .Executes(() =>
         {
             PwshTasks.Pwsh(s => s
-                .SetCommand("bun run build")
+                .SetCommand("bunx astro build")
+                .SetProcessWorkingDirectory(WebProject.Directory));
+        });
+
+    [PublicAPI]
+    Target InstallPlaywright => d => d
+        .DependsOn(LogInfo, CompileWeb)
+        .Executes(() =>
+        {
+            PwshTasks.Pwsh(s => s
+                .SetCommand("bunx playwright install --with-deps")
+                .SetProcessWorkingDirectory(WebProject.Directory));
+        });
+
+    [PublicAPI]
+    Target TestWeb => d => d
+        .DependsOn(LogInfo, InstallPlaywright)
+        .Executes(() =>
+        {
+            PwshTasks.Pwsh(s => s
+                .SetCommand("bunx playwright test")
                 .SetProcessWorkingDirectory(WebProject.Directory));
         });
 
@@ -237,6 +257,7 @@ class Build : NukeBuild
 
     [PublicAPI]
     Target DockerPushDevWeb => d => d
+        .DependsOn(TestWeb)
         .Executes(() =>
         {
             CurrentDockerImageName = DockerImageNameWeb;
