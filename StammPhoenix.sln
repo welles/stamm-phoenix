@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StammPhoenix.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StammPhoenix.Application", "src\StammPhoenix.Application\StammPhoenix.Application.csproj", "{1FA480B8-76D8-4652-8040-196FD67899C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StammPhoenix.Cli", "src\StammPhoenix.Cli\StammPhoenix.Cli.csproj", "{57E992F6-68F2-4367-BB71-4088ACED6E5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,10 @@ Global
 		{1FA480B8-76D8-4652-8040-196FD67899C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FA480B8-76D8-4652-8040-196FD67899C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FA480B8-76D8-4652-8040-196FD67899C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E992F6-68F2-4367-BB71-4088ACED6E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E992F6-68F2-4367-BB71-4088ACED6E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E992F6-68F2-4367-BB71-4088ACED6E5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E992F6-68F2-4367-BB71-4088ACED6E5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,5 +71,6 @@ Global
 		{04A414CC-8A81-4384-AA95-1950AA224887} = {7385D9FB-B02E-4E99-93CE-BA0883ED1562}
 		{779D0AC5-AE3B-4E79-86B4-B733337FB181} = {7385D9FB-B02E-4E99-93CE-BA0883ED1562}
 		{1FA480B8-76D8-4652-8040-196FD67899C0} = {7385D9FB-B02E-4E99-93CE-BA0883ED1562}
+		{57E992F6-68F2-4367-BB71-4088ACED6E5A} = {FBDC10F7-D8EB-40F0-A05E-2C300845E7A0}
 	EndGlobalSection
 EndGlobal
