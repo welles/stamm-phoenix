@@ -73,5 +73,6 @@ export default defineConfig({
     command: "bunx astro dev",
     url: "http://127.0.0.1:4321/",
     reuseExistingServer: !process.env.CI,
+    timeout: 60 * 60 * 60 * 3,
   },
 });
