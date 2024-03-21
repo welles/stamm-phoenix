@@ -10,7 +10,7 @@ test("test login", async ({ page }) => {
   await page.getByRole("button", { name: "Login" }).click();
   const success = await page.locator('#login-token').count() > 0;
 
-  if (elementExists) {
+  if (success) {
     console.log('everything is fine');
     // Perform additional operations on the element
   } else {
