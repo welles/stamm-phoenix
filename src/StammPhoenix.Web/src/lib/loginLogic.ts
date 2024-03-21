@@ -36,6 +36,12 @@ export const checkToken = async (token: string): Promise<boolean> => {
       },
     });
 
+    // Check if the response is valid JSON
+    if (!response.ok) {
+      console.error("Token is invalid:", response.statusText);
+      return false;
+    }
+
     const data = await response.json();
 
     if (response.ok) {
