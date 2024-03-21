@@ -8,4 +8,5 @@ test("test login", async ({ page }) => {
   await page.getByLabel("Passwort:").click();
   await page.getByLabel("Passwort:").fill("admin");
   await page.getByRole("button", { name: "Login" }).click();
+  await expect(page.getByTestId('login-token')).toContainText()
 });
