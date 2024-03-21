@@ -12,7 +12,7 @@ export default defineConfig({
         tailwind({
     		applyBaseStyles: false
   	    }),
-        astroI18next()
+        astroI18next(),
     ],
   	adapter: node({ mode: "standalone" }),
     i18n: {
