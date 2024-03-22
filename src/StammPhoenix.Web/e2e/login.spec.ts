@@ -1,20 +1,30 @@
 import { test, expect } from "@playwright/test";
 
-test("test login", async ({ page }) => {
+test("Login Test", async ({ page }) => {
+  // Navigate to the website
   await page.goto("/");
+
+  // Click on the Login link in the navbar
   await page.getByRole("link", { name: "Login" }).click();
+
+  // Fill in the email and password fields
   await page.getByLabel("E-Mail:").click();
   await page.getByLabel("E-Mail:").fill("admin@stamm-phoenix.de");
   await page.getByLabel("Passwort:").click();
   await page.getByLabel("Passwort:").fill("admin");
-  await page.getByRole("button", { name: "Login" }).click();
-  const success = await page.locator('#login-token').count() > 0;
 
-  if (success) {
-    console.log('everything is fine');
-    // Perform additional operations on the element
+  // Click the Login button
+  await page.getByRole("button", { name: "Login" }).click();
+
+  // Check if there is a cookie named jwt or if the URL is /success
+  const cookies = await page.context().cookies();
+  const jwtCookie = cookies.find((cookie) => cookie.name === "jwt");
+
+  if (jwtCookie) {
+    console.log("JWT cookie found:", jwtCookie.value);
   } else {
-    console.error('Something went wrong');
-    // Handle the case when the element is not found
+    throw new Error(
+      "Login failed, no JWT cookie and not redirected to /success",
+    );
   }
 });
