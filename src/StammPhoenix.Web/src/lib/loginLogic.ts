@@ -47,7 +47,7 @@ export const checkToken = async (token: string): Promise<boolean> => {
 			},
 		)
 
-		if (response.status === 200) {
+		if (response.status === 204) {
 			console.log('Token is valid:', response.data)
 			return true
 		} else {

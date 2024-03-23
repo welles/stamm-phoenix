@@ -7,6 +7,11 @@ import GlassMorphism from "../../components/GlassMorphism.astro";
 
 changeLanguage("de");
 
+const jwt_token: string | undefined = Astro.cookies.get("jwt")?.value;
+console.log(jwt_token);
+if (jwt_token) {
+    Astro.redirect("/");
+}
 let email: string = "";
 let password: string = "";
 let token_: string | null = null;
@@ -44,7 +49,7 @@ if (Astro.request.method === "POST") {
 			<form method="POST">
 				<div class="mb-6">
 					<label
-						class="block text-dpsg-gray-dark font-bold mb-2"
+						class="block text-dpsg-blue font-bold mb-2"
 						for="email"
 					>
 						E-Mail:
@@ -60,7 +65,7 @@ if (Astro.request.method === "POST") {
 				</div>
 				<div class="mb-6">
 					<label
-						class="block text-dpsg-gray-dark font-bold mb-2"
+						class="block text-dpsg-blue font-bold mb-2"
 						for="password"
 					>
 						Passwort:
@@ -74,11 +79,10 @@ if (Astro.request.method === "POST") {
 						required
 					/>
 				</div>
-				{error_ && <p class="text-dpsg-red text-sm mb-6">{error_}</p>}
 				{
-					token_ && (
-						<p id="login-token" class="text-dpsg-red text-sm mb-6">
-							{token_}
+					error_ && (
+						<p class="text-dpsg-red text-sm mb-6 max-w-md">
+							{error_}
 						</p>
 					)
 				}
