@@ -44,7 +44,7 @@ if (Astro.request.method === "POST") {
 			<form method="POST">
 				<div class="mb-6">
 					<label
-						class="block text-dpsg-gray-dark font-bold mb-2"
+						class="block text-dpsg-blue font-bold mb-2"
 						for="email"
 					>
 						E-Mail:
@@ -60,7 +60,7 @@ if (Astro.request.method === "POST") {
 				</div>
 				<div class="mb-6">
 					<label
-						class="block text-dpsg-gray-dark font-bold mb-2"
+						class="block text-dpsg-blue font-bold mb-2"
 						for="password"
 					>
 						Passwort:
@@ -74,14 +74,7 @@ if (Astro.request.method === "POST") {
 						required
 					/>
 				</div>
-				{error_ && <p class="text-dpsg-red text-sm mb-6">{error_}</p>}
-				{
-					token_ && (
-						<p id="login-token" class="text-dpsg-red text-sm mb-6">
-							{token_}
-						</p>
-					)
-				}
+				{error_ && <p class="text-dpsg-red text-sm mb-6 max-w-md">{error_}</p>}
 				<button
 					class="bg-dpsg-green hover:bg-dpsg-green-dark text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline transition-colors duration-base ease-in-out"
 					type="submit"
