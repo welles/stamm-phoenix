@@ -8,17 +8,19 @@ let password = ''
 let token_ = null
 let error_ = null
 
-const handleLogin = async (email: string | null, password: string | null) => {
+const handleLogin = async (email: string, password: string) => {
 	const { token, error } = await login(email, password)
 	token_ = token
 	error_ = error
+
+	console.log(token_)
 }
 
 if (Astro.request.method === 'POST') {
 	try {
 		const data = await Astro.request.formData()
-		const email: string | null = data.get('email')
-		const password: string | null = data.get('password')
+		const email: string = data.get('email')?.toString()
+		const password: string = data.get('password')?.toString()
 
 		handleLogin(email, password)
 	} catch (err: Error | any) {
