@@ -1,14 +1,94 @@
 ---
-import { changeLanguage } from "i18next";
+import i18next, { t, changeLanguage } from "i18next";
 import Layout from "../../layouts/Layout.astro";
 import "@/styles/globals.css";
-import LoginForm from "../../components/LoginForm.astro";
+import { login, checkToken } from "../../lib/loginLogic";
+import GlassMorphism from "../../components/GlassMorphism.astro";
 
 changeLanguage("de");
+
+let email: string = "";
+let password: string = "";
+let token_: string | null = null;
+let error_: string | null = null;
+if (Astro.request.method === "POST") {
+    try {
+        const data = await Astro.request.formData();
+        const email: string | undefined = data.get("email")?.toString();
+        const password: string | undefined = data.get("password")?.toString();
+        if (email && password) {
+            const { token, error } = await login(email, password);
+            token_ = token;
+            error_ = error;
+            if (token_) {
+                const expiring_date = Date.now() + 60 * 60 * 24 * 1000; // Expiring in 1 day
+                const options = { expires: new Date(expiring_date) };
+                Astro.cookies.set("jwt", token_, options);
+            }
+        }
+    }
+    catch (err: Error | any) {
+        if (err instanceof Error) {
+            console.error(err.message);
+        }
+    }
+}
 ---
 
 <Layout title="Login">
 	<main class="place-content-center w-full h-full">
-        <LoginForm />
-    </main>
+		<GlassMorphism class="max-w-md mx-auto m-10 p-8">
+			<h1 class="text-3xl font-bold mb-8 text-center text-dpsg-blue">
+				{t('login.title')}
+			</h1>
+			<form method="POST">
+				<div class="mb-6">
+					<label
+						class="block text-dpsg-gray-dark font-bold mb-2"
+						for="email"
+					>
+						E-Mail:
+					</label>
+					<input
+						class="bg-transparent rounded-md bg-clip-padding border w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
+						type="email"
+						id="email"
+						value={email}
+						required
+						name="email"
+					/>
+				</div>
+				<div class="mb-6">
+					<label
+						class="block text-dpsg-gray-dark font-bold mb-2"
+						for="password"
+					>
+						Passwort:
+					</label>
+					<input
+						class="bg-transparent rounded-md bg-clip-padding border w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
+						type="password"
+						id="password"
+						value={password}
+						name="password"
+						required
+					/>
+				</div>
+				{error_ && <p class="text-dpsg-red text-sm mb-6">{error_}</p>}
+				{
+					token_ && (
+						<p id="login-token" class="text-dpsg-red text-sm mb-6">
+							{token_}
+						</p>
+					)
+				}
+				<button
+					class="bg-dpsg-green hover:bg-dpsg-green-dark text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline transition-colors duration-base ease-in-out"
+					type="submit"
+				>
+					{t('login.submit-button')}
+				</button>
+			</form>
+		</GlassMorphism>
+	</main>
 </Layout>
