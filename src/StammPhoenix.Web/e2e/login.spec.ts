@@ -5,7 +5,7 @@ test('Login Test', async ({ page }) => {
 	await page.goto('/')
 
 	// Click on the Login link in the navbar
-	await page.getByRole('link', { name: 'Login' }).click()
+	await page.getByRole('link', { name: 'Anmeldung' }).click()
 
 	// Fill in the email and password fields
 	await page.getByLabel('E-Mail:').click()
