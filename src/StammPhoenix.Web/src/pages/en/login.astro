@@ -5,12 +5,13 @@ import "@/styles/globals.css";
 import { login, checkToken } from "../../lib/loginLogic";
 import GlassMorphism from "../../components/GlassMorphism.astro";
 
-changeLanguage("de");
+changeLanguage("en");
 
 const jwt_token: string | undefined = Astro.cookies.get("jwt")?.value;
-console.log(jwt_token);
-if (jwt_token) {
-    Astro.redirect("/");
+if (typeof jwt_token === "string") {
+    if (checkToken(jwt_token)) {
+        Astro.redirect("/");
+    }
 }
 let email: string = "";
 let password: string = "";

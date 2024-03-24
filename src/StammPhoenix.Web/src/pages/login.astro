@@ -1,41 +1,43 @@
 ---
-import i18next, { t, changeLanguage } from 'i18next'
-import Layout from '../layouts/Layout.astro'
-import '@/styles/globals.css'
-import { login, checkToken } from '../lib/loginLogic'
-import GlassMorphism from '../components/GlassMorphism.astro'
+import i18next, { t, changeLanguage } from "i18next";
+import Layout from "../layouts/Layout.astro";
+import "@/styles/globals.css";
+import { login, checkToken } from "../lib/loginLogic";
+import GlassMorphism from "../components/GlassMorphism.astro";
 
-changeLanguage('en')
+changeLanguage("de");
 
-const jwt_token: string | undefined = Astro.cookies.get('jwt')?.value
-
-if (checkToken(jwt_token)) {
-	Astro.redirect('/')
+const jwt_token: string | undefined = Astro.cookies.get("jwt")?.value;
+if (typeof jwt_token === "string") {
+    if (checkToken(jwt_token)) {
+        Astro.redirect("/");
+    }
 }
-let email: string = ''
-let password: string = ''
-let token_: string | null = null
-let error_: string | null = null
-if (Astro.request.method === 'POST') {
-	try {
-		const data = await Astro.request.formData()
-		const email: string | undefined = data.get('email')?.toString()
-		const password: string | undefined = data.get('password')?.toString()
-		if (email && password) {
-			const { token, error } = await login(email, password)
-			token_ = token
-			error_ = error
-			if (token_) {
-				const expiring_date = Date.now() + 60 * 60 * 24 * 1000 // Expiring in 1 day
-				const options = { expires: new Date(expiring_date) }
-				Astro.cookies.set('jwt', token_, options)
-			}
-		}
-	} catch (err: Error | any) {
-		if (err instanceof Error) {
-			console.error(err.message)
-		}
-	}
+let email: string = "";
+let password: string = "";
+let token_: string | null = null;
+let error_: string | null = null;
+if (Astro.request.method === "POST") {
+    try {
+        const data = await Astro.request.formData();
+        const email: string | undefined = data.get("email")?.toString();
+        const password: string | undefined = data.get("password")?.toString();
+        if (email && password) {
+            const { token, error } = await login(email, password);
+            token_ = token;
+            error_ = error;
+            if (token_) {
+                const expiring_date = Date.now() + 60 * 60 * 24 * 1000; // Expiring in 1 day
+                const options = { expires: new Date(expiring_date) };
+                Astro.cookies.set("jwt", token_, options);
+            }
+        }
+    }
+    catch (err: Error | any) {
+        if (err instanceof Error) {
+            console.error(err.message);
+        }
+    }
 }
 ---
 

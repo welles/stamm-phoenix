@@ -1,44 +1,20 @@
 ---
-import { changeLanguage } from 'i18next'
-import Layout from '../layouts/Layout.astro'
-import '@/styles/globals.css'
-import GlassMorphism from '@/components/GlassMorphism.astro'
+import { changeLanguage } from "i18next";
+import Layout from "../../layouts/Layout.astro";
 
-interface Contact {
-	name: string
-	phoneNumber: string
-	addressStreet: string
-	addressCity: string
-}
-
-const contacts: Contact[] = [
-	{
-		name: 'Dominik Schmid',
-		phoneNumber: '+49 177 6092939',
-		addressStreet: 'Föhrenstraße 105',
-		addressCity: '83052 Bruckmühl',
-	},
-	{
-		name: 'Simon Schmid',
-		phoneNumber: '+49 1516 4331848',
-		addressStreet: 'Oberwertach 8',
-		addressCity: '83620 Feldkirchen-Westerham',
-	},
-]
-
-changeLanguage('de')
+changeLanguage("en");
 ---
 
 <Layout title="Impressum">
-	<GlassMorphism class="items-center">
+	<div class="bg-white rounded-md shadow-sm mb-4 p-4">
 		<h5 class="text-lg font-semibold mb-2">Veröffentlicher</h5>
 		<p class="text-sm">
 			Deutsche Pfadfinderschaft Sankt Georg 13/19/12 Stamm Phoenix
 			Feldkirchen-Westerham
 		</p>
-	</GlassMorphism>
+	</div>
 
-	<GlassMorphism class="items-center">
+	<div class="bg-white rounded-md shadow-sm mb-4 p-4">
 		<h5 class="text-lg font-semibold mb-2">Vorstand</h5>
 		<div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 			{
@@ -55,17 +31,18 @@ changeLanguage('de')
 				))
 			}
 		</div>
-	</GlassMorphism>
-	<GlassMorphism>
+	</div>
+
+	<div class="bg-white rounded-md shadow-sm mb-4 p-4">
 		<h5 class="text-lg font-semibold mb-2">Verfasser</h5>
 		<p class="text-sm">
 			Design und Layout: Hugo Berendi<br />Inhalte (soweit Autor nicht
 			explizit angegeben): Andreas Schartner, Andreas Schlott, Nico
 			Welles, Bernhard Jobst
 		</p>
-	</GlassMorphism>
+	</div>
 
-	<GlassMorphism class="items-center">
+	<div class="bg-white rounded-md shadow-sm mb-4 p-4">
 		<h5 class="text-lg font-semibold mb-2">Icons</h5>
 		<div class="flex items-center">
 			<div class="mr-4">
@@ -79,9 +56,9 @@ changeLanguage('de')
 				>
 			</div>
 		</div>
-	</GlassMorphism>
+	</div>
 
-	<GlassMorphism class="items-center">
+	<div class="bg-white rounded-md shadow-sm p-4">
 		<div class="flex flex-col md:flex-row">
 			<div class="md:w-3/4 md:mr-4 mb-4 md:mb-0">
 				<p class="text-justify">
@@ -101,5 +78,5 @@ changeLanguage('de')
 				<img src="/dpsg.png" height="100" alt="DPSG Logo" />
 			</div>
 		</div>
-	</GlassMorphism>
+	</div>
 </Layout>
