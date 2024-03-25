@@ -3,6 +3,7 @@ import i18next, { t } from 'i18next'
 import { HeadHrefLangs } from 'astro-i18next/components'
 
 import Navbar from '../components/Navbar.astro'
+∆∆∆∆∆∆ MobileNavbar from '../components/MobileNavbar.astro'
 import Footer from '../components/Footer.astro'
 import AnimatedBackground from '../components/AnimatedBackground.astro'
 
@@ -11,6 +12,16 @@ interface Props {
 }
 
 const { title } = Astro.props
+
+function isMobile(): boolean {
+  // User agent check for mobile devices
+  if (typeof window !== 'undefined') {
+    const userAgent: string = window.navigator.userAgent;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+  }
+  // Return false if the window is not defined (e.g., during SSR)
+  return false;
+}
 ---
 
 <!doctype html>
@@ -28,7 +39,14 @@ const { title } = Astro.props
 		class="flex flex-col max-w-screen min-h-svh p-[1rem] place-content-center justify-center"
 	>
 		<AnimatedBackground />
+<div client:only>
+{() => {
+if (isMobile()) {
+<MobileNavbar class="sticky top-0" />
+} else {
 		<Navbar class="sticky top-0" />
+}}}
+</div>
 		<slot
 			class="h-fit min-h-svh max-w-screen w-2/3 items-center flex-grow"
 		/>
