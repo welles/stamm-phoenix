@@ -1,9 +1,10 @@
 ---
 // src/components/GlassMorphism.astro
-const { class: className = '' } = Astro.props
+const { class: className = '', id: idName = '' } = Astro.props
 ---
 
 <div
+	id={`${idName}`}
 	class={`m-[1rem] p-[0.5rem] bg-gray-300 rounded-lg bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-30 border ${className}`}
 >
 	<slot />
