@@ -19,7 +19,7 @@ const navLinks = [
 ]
 ---
 
-<nav class="rounded-lg">
+<nav class="d-nav rounded-lg">
 	<GlassMorphism class="py-4">
 		<div class="container mx-auto px-4 flex justify-between items-center">
 			<div class="navbar-brand float-left">
@@ -36,20 +36,20 @@ const navLinks = [
 					</div></a
 				>
 			</div>
+			<ul class="navbar-nav flex space-x-4 float-right">
+				{
+					navLinks.map(({ href, label }) => (
+						<li class="nav-item">
+							<a
+								class="nav-link text-black hover:text-gray-600"
+								href={href}
+							>
+								{label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
 		</div>
-		<ul class="navbar-nav flex space-x-4 float-right">
-			{
-				navLinks.map(({ href, label }) => (
-					<li class="nav-item">
-						<a
-							class="nav-link text-black hover:text-gray-600"
-							href={href}
-						>
-							{label}
-						</a>
-					</li>
-				))
-			}
-		</ul>
 	</GlassMorphism>
 </nav>

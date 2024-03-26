@@ -1,43 +1,42 @@
 ---
-import i18next, { t, changeLanguage } from "i18next";
-import Layout from "../layouts/Layout.astro";
-import "@/styles/globals.css";
-import { login, checkToken } from "../lib/loginLogic";
-import GlassMorphism from "../components/GlassMorphism.astro";
+import i18next, { t, changeLanguage } from 'i18next'
+import Layout from '../layouts/Layout.astro'
+import '@/styles/globals.css'
+import { login, checkToken } from '../lib/loginLogic'
+import GlassMorphism from '../components/GlassMorphism.astro'
 
-changeLanguage("de");
+changeLanguage('de')
 
-const jwt_token: string | undefined = Astro.cookies.get("jwt")?.value;
-if (typeof jwt_token === "string") {
-    if (checkToken(jwt_token)) {
-        Astro.redirect("/");
-    }
+const jwt_token: string | undefined = Astro.cookies.get('jwt')?.value
+if (typeof jwt_token === 'string') {
+	if (checkToken(jwt_token)) {
+		Astro.redirect('/')
+	}
 }
-let email: string = "";
-let password: string = "";
-let token_: string | null = null;
-let error_: string | null = null;
-if (Astro.request.method === "POST") {
-    try {
-        const data = await Astro.request.formData();
-        const email: string | undefined = data.get("email")?.toString();
-        const password: string | undefined = data.get("password")?.toString();
-        if (email && password) {
-            const { token, error } = await login(email, password);
-            token_ = token;
-            error_ = error;
-            if (token_) {
-                const expiring_date = Date.now() + 60 * 60 * 24 * 1000; // Expiring in 1 day
-                const options = { expires: new Date(expiring_date) };
-                Astro.cookies.set("jwt", token_, options);
-            }
-        }
-    }
-    catch (err: Error | any) {
-        if (err instanceof Error) {
-            console.error(err.message);
-        }
-    }
+let email: string = ''
+let password: string = ''
+let token_: string | null = null
+let error_: string | null = null
+if (Astro.request.method === 'POST') {
+	try {
+		const data = await Astro.request.formData()
+		const email: string | undefined = data.get('email')?.toString()
+		const password: string | undefined = data.get('password')?.toString()
+		if (email && password) {
+			const { token, error } = await login(email, password)
+			token_ = token
+			error_ = error
+			if (token_) {
+				const expiring_date = Date.now() + 60 * 60 * 24 * 1000 // Expiring in 1 day
+				const options = { expires: new Date(expiring_date) }
+				Astro.cookies.set('jwt', token_, options)
+			}
+		}
+	} catch (err: Error | any) {
+		if (err instanceof Error) {
+			console.error(err.message)
+		}
+	}
 }
 ---
 
@@ -56,7 +55,7 @@ if (Astro.request.method === "POST") {
 						E-Mail:
 					</label>
 					<input
-						class="bg-transparent rounded-md bg-clip-padding border w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
+						class="bg-transparent rounded-md bg-clip-padding w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
 						type="email"
 						id="email"
 						value={email}
@@ -72,7 +71,7 @@ if (Astro.request.method === "POST") {
 						Passwort:
 					</label>
 					<input
-						class="bg-transparent rounded-md bg-clip-padding border w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
+						class="bg-transparent rounded-md bg-clip-padding w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
 						type="password"
 						id="password"
 						value={password}

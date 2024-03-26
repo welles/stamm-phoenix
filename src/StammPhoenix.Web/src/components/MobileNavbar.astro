@@ -19,7 +19,7 @@ const navLinks = [
 ]
 ---
 
-<nav class="rounded-lg">
+<nav class="m-nav rounded-lg top-0 sticky">
 	<GlassMorphism class="py-4">
 		<div class="container mx-auto px-4 flex justify-between items-center">
 			<div class="navbar-brand float-left">
@@ -27,7 +27,7 @@ const navLinks = [
 					href={getRelativeLocaleUrl(locale, '')}
 					class="text-black font-bold"
 				>
-					<div class="backdrop-blur-md bg-[url('/fav icon.ico')]">
+					<div class="">
 						<img
 							data-twe-animation-start="onLoad"
 							class="animate-bounce w-[27px] z-1"
@@ -36,22 +36,43 @@ const navLinks = [
 					</div></a
 				>
 			</div>
-		</div>
-		<div>
-      <button class="relative group">
-        <div class="relative flex overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-slate-700 ring-0 ring-gray-300 hover:ring-8 group-focus:ring-4 ring-opacity-30 duration-200 shadow-md">
-          <div class="flex flex-col justify-between w-[20px] h-[20px] transform transition-all duration-300 origin-center overflow-hidden">
-            <div class="bg-white h-[2px] w-7 transform transition-all duration-300 origin-left group-focus:translate-x-10"></div>
-            <div class="bg-white h-[2px] w-7 rounded transform transition-all duration-300 group-focus:translate-x-10 delay-75"></div>
-            <div class="bg-white h-[2px] w-7 transform transition-all duration-300 origin-left group-focus:translate-x-10 delay-150"></div>
+			<div class="float-right h-[30px] w-[30px]">
+				<button class="absolute group">
+					<div
+						class="relative flex overflow-hidden items-center justify-center rounded-full w-[30px] h-[30px] transform transition-all bg-none duration-200"
+					>
+						<div
+							class="flex flex-col justify-between w-[20px] h-[20px] transform transition-all duration-300 origin-center overflow-hidden"
+						>
+							<div
+								class="bg-dpsg-gray-dark h-[2px] w-7 transform transition-all duration-300 origin-left group-focus:translate-x-10"
+							>
+							</div>
+							<div
+								class="bg-dpsg-gray-dark h-[2px] w-7 rounded transform transition-all duration-300 group-focus:translate-x-10 delay-75"
+							>
+							</div>
+							<div
+								class="bg-dpsg-gray-dark h-[2px] w-7 transform transition-all duration-300 origin-left group-focus:translate-x-10 delay-150"
+							>
+							</div>
 
-            <div class="absolute items-center justify-between transform transition-all duration-500 top-2.5 -translate-x-10 group-focus:translate-x-0 flex w-0 group-focus:w-12">
-              <div class="absolute bg-white h-[2px] w-5 transform transition-all duration-500 rotate-0 delay-300 group-focus:rotate-45"></div>
-              <div class="absolute bg-white h-[2px] w-5 transform transition-all duration-500 -rotate-0 delay-300 group-focus:-rotate-45"></div>
-            </div>
-          </div>
-        </div>
-      </button>
-    </div>
+							<div
+								class="absolute items-center justify-between transform transition-all duration-500 top-2.5 -translate-x-10 group-focus:translate-x-0 flex w-0 group-focus:w-12"
+							>
+								<div
+									class="absolute bg-dpsg-gray-dark h-[2px] w-5 transform transition-all duration-500 rotate-0 delay-300 group-focus:rotate-45"
+								>
+								</div>
+								<div
+									class="absolute bg-dpsg-gray-dark h-[2px] w-5 transform transition-all duration-500 -rotate-0 delay-300 group-focus:-rotate-45"
+								>
+								</div>
+							</div>
+						</div>
+					</div>
+				</button>
+			</div>
+		</div>
 	</GlassMorphism>
 </nav>

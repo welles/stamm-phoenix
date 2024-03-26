@@ -1,13 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
-/* css global vars */
+	/* css global vars */
 }
- 
+
 @layer base {
-/*
+	/*
   * {
     @apply border-border;
   }
@@ -15,4 +15,22 @@
     @apply bg-background text-foreground;
   }
 */
+}
+
+@media (min-width: 550px) {
+	.m-nav {
+		display: none;
+	}
+	.d-nav {
+		display: block;
+	}
+}
+
+@media (max-width: 550px) {
+	.m-nav {
+		display: block;
+	}
+	.d-nav {
+		display: none;
+	}
 }
