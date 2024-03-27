@@ -7,7 +7,7 @@
 		"gen-i18n": "bunx astro-i18next generate",
 		"dev": "astro dev",
 		"start": "astro dev",
-		"build": "astro build",
+		"build": "bun run gen-i18n && astro build",
 		"preview": "astro preview",
 		"astro": "astro",
 		"produce": "bun run build && bun run ./dist/server/entry.mjs"
