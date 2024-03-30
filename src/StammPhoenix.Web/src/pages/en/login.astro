@@ -1,10 +1,13 @@
 ---
+import { Show } from "solid-js";
 import i18next, { t, changeLanguage } from "i18next";
 import Layout from "../../layouts/Layout.astro";
 import "@/styles/globals.css";
 import { login, checkToken } from "../../lib/loginLogic";
 import GlassMorphism from "../../components/GlassMorphism.astro";
-import type { AstroCookieSetOptions, AstroCookies } from "astro";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
+import type { AstroCookieSetOptions } from "astro";
 
 changeLanguage("en");
 
@@ -28,9 +31,9 @@ if (Astro.request.method === "POST") {
             token_ = token;
             error_ = error;
             if (token_) {
-                const expiring_date = Date.now() + 60 * 60 * 24 * 1000; // Expiring in 1 day
+                const expiringDate = Date.now() + 60 * 60 * 24 * 1000; // Expiring in 1 day
                 const options: AstroCookieSetOptions = {
-                    expires: new Date(expiring_date),
+                    expires: new Date(expiringDate),
                     sameSite: "strict",
                     path: "/",
                 };
@@ -61,13 +64,14 @@ if (Astro.request.method === "POST") {
 					>
 						E-Mail:
 					</label>
-					<input
-						class="bg-transparent rounded-md bg-clip-padding w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
+					<Input
 						type="email"
 						id="email"
 						value={email}
+						error={error_ !== null}
 						required
 						name="email"
+						classes="bg-transparent rounded-md bg-clip-padding w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem]"
 					/>
 				</div>
 				<div class="mb-6">
@@ -77,28 +81,25 @@ if (Astro.request.method === "POST") {
 					>
 						Passwort:
 					</label>
-					<input
-						class="bg-transparent rounded-md bg-clip-padding w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem] border-dpsg-blue"
+					<Input
 						type="password"
 						id="password"
 						value={password}
-						name="password"
+						error={error_ !== null}
 						required
+						name="password"
+						classes="bg-transparent rounded-md bg-clip-padding w-full py-3 px-4 text-dpsg-gray-dark leading-tight focus:outline-none focus:shadow-outline border-[0.13rem]"
 					/>
 				</div>
-				{
-					error_ && (
-						<p class="text-dpsg-red text-sm mb-6 max-w-md">
-							{error_}
-						</p>
-					)
-				}
-				<button
-					class="bg-dpsg-green hover:bg-dpsg-green-dark text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline transition-colors duration-base ease-in-out"
+				<Show when={error_ !== null}>
+					<p class="text-dpsg-red text-sm mb-6 max-w-md">{error_}</p>
+				</Show>
+				<Button
 					type="submit"
+					classes="bg-dpsg-green hover:bg-dpsg-green-dark text-white font-bold py-3 px-6 rounded-md focus:outline-none focus:shadow-outline transition-colors duration-base ease-in-out"
 				>
 					{t('login.submit-button')}
-				</button>
+				</Button>
 			</form>
 		</GlassMorphism>
 	</main>

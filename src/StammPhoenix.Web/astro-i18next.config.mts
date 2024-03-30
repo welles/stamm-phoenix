@@ -1,5 +1,14 @@
 /** @type {import('astro-i18next').AstroI18nextConfig} */
-export default {
+
+interface ConfigType {
+	defaultLocale: string
+	locales: string[]
+	routes: {
+		[locale: string]: { [route: string]: string | {} }
+	}
+}
+
+const config: ConfigType = {
 	defaultLocale: 'de',
 	locales: ['en', 'de'],
 	routes: {
@@ -8,7 +17,8 @@ export default {
 			datenschutz: 'privacy',
 			impressum: 'legal-notice',
 			kontakt: 'contact',
-			dashboard: {},
 		},
 	},
 }
+
+export default config
