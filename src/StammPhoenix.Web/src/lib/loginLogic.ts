@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError, type AxiosResponse } from 'axios'
 
 export interface Credentials {
 	login_email: string
@@ -21,7 +21,7 @@ export const login = async (
 		} else {
 			return { token: null, error: response.data.error }
 		}
-	} catch (error) {
+	} catch (error: AxiosError | any) {
 		if (axios.isAxiosError(error)) {
 			return {
 				token: null,
@@ -38,7 +38,7 @@ export const login = async (
 
 export const checkToken = async (token: string): Promise<boolean> => {
 	try {
-		const response = await axios.get(
+		const response: AxiosResponse = await axios.get(
 			'https://dev-api.stamm-phoenix.de/auth/check',
 			{
 				headers: {
@@ -54,7 +54,7 @@ export const checkToken = async (token: string): Promise<boolean> => {
 			console.error('Token is invalid:', response.data.error)
 			return false
 		}
-	} catch (error) {
+	} catch (error: AxiosError | any) {
 		if (axios.isAxiosError(error)) {
 			console.error(
 				'An error occurred while checking the token:',

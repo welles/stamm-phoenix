@@ -10,13 +10,15 @@
 		"build": "bun run gen-i18n && astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"produce": "bun run build && bun run ./dist/server/entry.mjs"
+		"produce": "bun run build && bun run ./server/server.ts"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.4.1",
 		"@astrojs/node": "^8.2.3",
 		"@astrojs/solid-js": "^4.0.1",
 		"@astrojs/tailwind": "^5.1.0",
+		"@fastify/middie": "^8.3.0",
+		"@fastify/static": "^7.0.2",
 		"@playwright/test": "^1.42.1",
 		"@radix-ui/react-slot": "^1.0.2",
 		"@tailwindcss/forms": "^0.5.7",
@@ -29,6 +31,7 @@
 		"bun": "^1.0.30",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.0",
+		"fastify": "^4.26.2",
 		"lucide-react": "^0.316.0",
 		"mime": "^4.0.1",
 		"prettier": "^3.2.5",

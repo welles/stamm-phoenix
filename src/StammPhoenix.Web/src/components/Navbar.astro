@@ -1,21 +1,29 @@
 ---
-import i18next, { t } from 'i18next'
+import i18next from 'i18next'
+import { localizePath } from 'node_modules/astro-i18next/src'
 import { getRelativeLocaleUrl } from 'astro:i18n'
+
 import GlassMorphism from './GlassMorphism.astro'
 
 let locale: string = i18next.language
 
 const navLinks = [
-	{ href: getRelativeLocaleUrl(locale, ''), label: t('navbar.home') },
 	{
-		href: getRelativeLocaleUrl(locale, '/privacy'),
-		label: t('navbar.privacy'),
+		href: getRelativeLocaleUrl(locale, localizePath('/')),
+		label: i18next.t('navbar.home'),
 	},
 	{
-		href: getRelativeLocaleUrl(locale, '/imprint'),
-		label: t('navbar.imprint'),
+		href: getRelativeLocaleUrl(locale, localizePath('/datenschutz')),
+		label: i18next.t('navbar.privacy'),
 	},
-	{ href: getRelativeLocaleUrl(locale, '/login'), label: t('navbar.login') },
+	{
+		href: getRelativeLocaleUrl(locale, localizePath('/impressum')),
+		label: i18next.t('navbar.imprint'),
+	},
+	{
+		href: getRelativeLocaleUrl(locale, localizePath('/anmeldung')),
+		label: i18next.t('navbar.login'),
+	},
 ]
 ---
 
@@ -27,14 +35,14 @@ const navLinks = [
 					href={getRelativeLocaleUrl(locale, '')}
 					class="text-black font-bold"
 				>
-					<div class="backdrop-blur-md bg-[url('/fav icon.ico')]">
+					<div class="backdrop-blur-md bg-[url('/favicon.ico')]">
 						<img
 							data-twe-animation-start="onLoad"
 							class="animate-bounce w-[27px] z-1"
 							src="/favicon.ico"
 						/>
-					</div></a
-				>
+					</div>
+				</a>
 			</div>
 			<ul class="navbar-nav flex space-x-4 float-right">
 				{
@@ -49,7 +57,89 @@ const navLinks = [
 						</li>
 					))
 				}
+				<li class="nav-item">
+					<button id="change-lang-btn"><span>ChangeLang</span></button
+					>
+				</li>
 			</ul>
 		</div>
 	</GlassMorphism>
 </nav>
+
+<script>
+	import i18nConfig from '../../astro-i18next.config.mts'
+
+	export const handleTrailingSlash = (
+		path: string,
+		trailingSlash: string,
+	) => {
+		if (path === '/') {
+			return path
+		}
+
+		switch (trailingSlash) {
+			case 'always':
+				return path.endsWith('/') ? path : path + '/'
+			case 'never':
+				return path.replace(/\/$/, '')
+			default:
+				return path
+		}
+	}
+
+	const localizePath = (path: string = '/', locale: string): string => {
+		const { defaultLocale, locales, trailingSlash } = {
+			defaultLocale: i18nConfig.defaultLocale,
+			locales: i18nConfig.locales,
+			trailingSlash: 'ignore',
+		}
+
+		if (!locales.includes(locale)) {
+			return handleTrailingSlash(path, trailingSlash)
+		}
+
+		const pathSegments = path.split('/').filter((segment) => segment !== '')
+
+		// remove locale from pathSegments (if there is any)
+		for (const loc of locales) {
+			if (pathSegments[0] === loc) {
+				pathSegments.shift()
+				break
+			}
+		}
+
+		// prepend the given locale if it's not the base one
+		if (locale !== defaultLocale) {
+			pathSegments.unshift(locale)
+		}
+
+		const localizedPath = pathSegments.join('/')
+
+		return handleTrailingSlash(localizedPath, trailingSlash)
+	}
+
+	const getLanguageTarget = (pathname: string) => {
+		const isEnglish = pathname.startsWith('/en')
+		return {
+			currentLang: isEnglish ? 'en' : 'de',
+			currentPath: isEnglish ? '/en' : '/',
+			targetLang: isEnglish ? 'de' : 'en',
+			targetPath: isEnglish ? '/' : '/en/',
+		}
+	}
+
+	const btn = document.getElementById('change-lang-btn')
+	btn?.addEventListener('click', () => {
+		const pathname: string = window.location.pathname
+		const languageTarget = getLanguageTarget(pathname)
+		const pathWithoutLang: string = pathname.slice(
+			languageTarget.currentPath.length - 1,
+			pathname.length,
+		)
+
+		window.location.pathname = localizePath(
+			pathWithoutLang,
+			languageTarget.targetLang,
+		)
+	})
+</script>

@@ -1,21 +1,28 @@
 ---
 import i18next, { t } from 'i18next'
+import { localizePath } from 'node_modules/astro-i18next/src'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import GlassMorphism from './GlassMorphism.astro'
 
 let locale: string = i18next.language
 
 const navLinks = [
-	{ href: getRelativeLocaleUrl(locale, ''), label: t('navbar.home') },
 	{
-		href: getRelativeLocaleUrl(locale, '/privacy'),
+		href: getRelativeLocaleUrl(locale, localizePath('')),
+		label: t('navbar.home'),
+	},
+	{
+		href: getRelativeLocaleUrl(locale, localizePath('/datenschutz')),
 		label: t('navbar.privacy'),
 	},
 	{
-		href: getRelativeLocaleUrl(locale, '/imprint'),
+		href: getRelativeLocaleUrl(locale, localizePath('/impressum')),
 		label: t('navbar.imprint'),
 	},
-	{ href: getRelativeLocaleUrl(locale, '/login'), label: t('navbar.login') },
+	{
+		href: getRelativeLocaleUrl(locale, localizePath('/anmeldung')),
+		label: t('navbar.login'),
+	},
 ]
 ---
 
@@ -75,7 +82,7 @@ const navLinks = [
 			</div>
 			<GlassMorphism
 				id="navbar-nav"
-				class="hidden z-50 fixed top-[1rem] left-[75%]"
+				class="hidden z-50 fixed top-[1.5rem] left-[50%]"
 			>
 				<ul class="flex flex-col items-center space-y-2 w-full">
 					{
