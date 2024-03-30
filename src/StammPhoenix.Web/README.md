@@ -1,10 +1,11 @@
 # Website for DPSG Stamm Phoenix
 
-- **Framework**: Astro + solidjs
-- **Styling**: tailwindcss
+-   **Framework**: Astro + solidjs
+-   **Styling**: tailwindcss
 
 ## Structure
-```
+
+```plaintext
 .
 ├── astro.config.mjs
 ├── bun.lockb
@@ -33,8 +34,9 @@
 └── tsconfig.json
 ```
 
-## To-Do:
-- [ ] Create basic layout
-- [ ] Create solidjs components
-- [x] Basic styling based on the CD
-- [ ] Add API integration
+## To-Do
+
+-   [ ] Create basic layout
+-   [ ] Create solidjs components
+-   [x] Basic styling based on the CD
+-   [ ] Add API integration

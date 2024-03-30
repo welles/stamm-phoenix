@@ -2,7 +2,7 @@
 import i18next, { t } from 'i18next'
 import { HeadHrefLangs } from 'astro-i18next/components'
 
-import Navbar from '../components/Navbar.astro'
+import Navbar from '../components/Navbar'
 import MobileNavbar from '../components/MobileNavbar.astro'
 import Footer from '../components/Footer.astro'
 import AnimatedBackground from '../components/AnimatedBackground.astro'
@@ -41,7 +41,7 @@ function isMobile(): boolean {
 		<div class="wrapper h-fit min-w-[75%] items-center">
 			<AnimatedBackground />
 			<MobileNavbar class="sticky top-0" />
-			<Navbar class="sticky top-0" />
+			<Navbar class:list="sticky top-0" />
 			<div
 				class="content h-fit min-h-fit max-w-screen mx-[1rem] items-center flex-grow"
 			>
