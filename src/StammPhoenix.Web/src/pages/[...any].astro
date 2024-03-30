@@ -1,12 +1,12 @@
 ---
-import i18next, { changeLanguage } from 'i18next'
-import { getRelativeLocaleUrl } from 'astro:i18n'
-import Layout from '../layouts/Layout.astro'
-import '@/styles/globals.css'
+import i18next, { changeLanguage } from "i18next";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Layout from "../layouts/Layout.astro";
+import "@/styles/globals.css";
 
-changeLanguage('de')
+changeLanguage("de");
 
-const locale: string = i18next.language
+const locale: string = i18next.language;
 ---
 
 <Layout title="404">

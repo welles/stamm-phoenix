@@ -14,7 +14,7 @@ export default defineConfig({
 		}),
 		astroI18next(),
 	],
-	adapter: node({ mode: 'standalone' }),
+	adapter: node({ mode: 'middleware' }),
 	i18n: {
 		defaultLocale: 'de',
 		locales: ['en', 'de'],

@@ -37,16 +37,31 @@ function isMobile(): boolean {
 		<title>{title} | DPSG Stamm Phoenix</title>
 		<HeadHrefLangs />
 	</head>
-	<body
-		class="flex flex-col max-w-screen min-h-svh p-[1rem] place-content-center justify-center"
-	>
-		<AnimatedBackground />
-		<MobileNavbar class="sticky top-0" />
-		<Navbar class="sticky top-0" />
-		<slot
-			class="h-fit min-h-svh max-w-screen w-2/3 items-center flex-grow"
-		/>
-		<Footer class="relative bottom-0 object-bottom" />
-		<style is:global></style>
+	<body class="flex flex-col max-w-screen min-h-svh p-[1rem] items-center">
+		<div class="wrapper h-fit min-w-[75%] items-center">
+			<AnimatedBackground />
+			<MobileNavbar class="sticky top-0" />
+			<Navbar class="sticky top-0" />
+			<div
+				class="content h-fit min-h-fit max-w-screen mx-[1rem] items-center flex-grow"
+			>
+				<slot />
+			</div>
+
+			<Footer class="relative bottom-0 object-bottom" />
+		</div>
+		<style>
+			@media (max-width: 1000px) {
+				.wrapper {
+					width: 100%;
+				}
+			}
+
+			@media (min-width: 1000px) {
+				.wrapper {
+					max-width: 75%;
+				}
+			}
+		</style>
 	</body><!-- global styles -->
 </html>

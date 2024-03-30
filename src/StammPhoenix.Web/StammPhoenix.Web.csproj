@@ -1,7 +1,6 @@
 <Project>
   <ItemGroup>
     <None Include="**\*" />
-    <None Remove=".angular\**" />
     <None Remove=".vscode\**" />
     <None Remove="node_modules\**" />
     <None Remove="bin\**" />

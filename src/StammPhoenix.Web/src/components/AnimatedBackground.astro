@@ -1,44 +1,52 @@
 <div class="fixed top-0 left-0 w-full h-full bg-white overflow-hidden z-[-1]">
-    <div client:only id="ball" class="absolute w-[100px] h-[100px] bg-gradient-radial from-orange-500 via-orange-300 to-transparent animate-moveBall rounded-full z[0]"></div>
+	<div
+		client:only
+		id="ball"
+		class="absolute w-[100px] h-[100px] bg-gradient-radial from-orange-500 via-orange-300 to-transparent animate-moveBall rounded-full z[0]"
+	>
+	</div>
 </div>
 
 <script>
-  let ball;
-  let ballX;
-  let ballY;
-  const speed = 1; // Adjust this value to control the ball's speed (0 to 1)
+	let ball: any
+	let ballX: number
+	let ballY: number
+	const speed = 1 // Adjust this value to control the ball's speed (0 to 1)
 
-  const init = () => {
-    ball = document.getElementById('ball');
-    ballX = window.innerWidth / 2 - ball.offsetWidth / 2;
-    ballY = window.innerHeight / 2 - ball.offsetHeight / 2;
-    ball.style.left = `${ballX}px`;
-    ball.style.top = `${ballY}px`;
+	const init = () => {
+		ball = document.getElementById('ball')
+		ballX = window.innerWidth / 2 - ball!.offsetWidth / 2
+		ballY = window.innerHeight / 2 - ball!.offsetHeight / 2
+		ball!.style.left = `${ballX}px`
+		ball!.style.top = `${ballY}px`
 
-    document.addEventListener('mousemove', moveBall);
-    animateBall();
-  };
+		document.addEventListener('mousemove', moveBall)
+		animateBall()
+	}
 
-  const moveBall = (e) => {
-    const targetX = e.clientX - ball.offsetWidth / 2;
-    const targetY = e.clientY - ball.offsetHeight / 2;
-    ballX += (targetX - ballX) * speed;
-    ballY += (targetY - ballY) * speed;
-  };
+	const moveBall = (e: any) => {
+		const targetX = e.clientX - ball!.offsetWidth / 2
+		const targetY = e.clientY - ball!.offsetHeight / 2
+		ballX += (targetX - ballX) * speed
+		ballY += (targetY - ballY) * speed
+	}
 
-  const animateBall = () => {
-    ball.style.left = `${ballX}px`;
-    ball.style.top = `${ballY}px`;
-    requestAnimationFrame(animateBall);
-  };
+	const animateBall = () => {
+		ball!.style.left = `${ballX}px`
+		ball!.style.top = `${ballY}px`
+		requestAnimationFrame(animateBall)
+	}
 
-  window.addEventListener('load', init);
+	window.addEventListener('load', init)
 </script>
 
-
 <style>
-  .bg-gradient-radial {
-    background-image: radial-gradient(circle, rgba(255, 165, 0, 0.9) 5%, rgba(255, 165, 0, 0.01) 60%, rgba(255, 165, 0, 0) 100%);
-  }
+	.bg-gradient-radial {
+		background-image: radial-gradient(
+			circle,
+			rgba(255, 165, 0, 0.9) 5%,
+			rgba(255, 165, 0, 0.01) 60%,
+			rgba(255, 165, 0, 0) 100%
+		);
+	}
 </style>
-
