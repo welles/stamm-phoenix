@@ -13,4 +13,4 @@ await app
 	.register(fastifyMiddie)
 app.use(ssrHandler)
 
-app.listen({ port: 8080 })
+app.listen({ port: 80 })
