@@ -98,7 +98,7 @@ const navLinks = [
 			return translatedSegment
 		})
 
-		return `/${translatedSegments.join('/')}`
+		return `${translatedSegments.join('/')}`
 	}
 
 	const handleTrailingSlash = (
@@ -151,7 +151,7 @@ const navLinks = [
 			currentLang,
 			targetLang,
 		)
-		window.location.pathname = `${targetPath}${translatedPath}`
+		window.location.pathname = `${targetPath}/${translatedPath}`
 	}
 
 	const btn = document.getElementById('change-lang-btn')
