@@ -8,38 +8,32 @@ using StammPhoenix.Infrastructure;
 
 namespace StammPhoenix.Cli;
 
-public class Program
+public static class Program
 {
     public static async Task<int> Main(string[] args)
     {
-        DatabaseOptionsBase? databaseOptions = null;
+        var result = Parser.Default.ParseArguments<CreateDatabaseOptions, UpdateDatabaseOptions>(args);
 
-        Parser.Default.ParseArguments<CreateDatabaseOptions, UpdateDatabaseOptions>(args)
-            .WithParsed<CreateDatabaseOptions>(options => databaseOptions = options)
-            .WithParsed<UpdateDatabaseOptions>(options => databaseOptions = options)
-            .WithNotParsed(errors =>
-            {
-                // TODO
-            });
+        var databaseOptions = result.Value as DatabaseOptionsBase;
 
         if (databaseOptions == null)
         {
-            throw new InvalidOperationException();
+            return 1;
         }
 
-        var app = GetApp(databaseOptions);
+        var app = Program.GetApp(databaseOptions);
 
         if (databaseOptions is CreateDatabaseOptions)
         {
             return await app.CreateDatase();
         }
-        else if (databaseOptions is UpdateDatabaseOptions)
+
+        if (databaseOptions is UpdateDatabaseOptions)
         {
             return await app.UpdateDatabase();
         }
 
-        // TODO
-        throw new NotImplementedException();
+        return 255;
     }
 
     private static CliApp GetApp(DatabaseOptionsBase options)
