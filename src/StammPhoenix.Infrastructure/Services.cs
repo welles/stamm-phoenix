@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Infrastructure.Persistence;
 using StammPhoenix.Infrastructure.Persistence.Interceptors;
 
@@ -13,15 +15,9 @@ public static class Services
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
-        services.AddDbContext<DatabaseContext>((sp, options) =>
-        {
-            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+        services.AddDbContext<DatabaseContext>();
 
-            options.UseNpgsql()
-                .UseSnakeCaseNamingConvention();
-        });
-
-        services.AddScoped<DatabaseContext>(provider => provider.GetRequiredService<DatabaseContext>());
+        services.AddScoped<IDatabaseManager>(provider => provider.GetRequiredService<DatabaseContext>());
 
         return services;
     }

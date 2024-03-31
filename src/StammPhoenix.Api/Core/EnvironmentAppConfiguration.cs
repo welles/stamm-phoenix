@@ -7,18 +7,18 @@ public class EnvironmentAppConfiguration : IAppConfiguration
 {
     public EnvironmentAppConfiguration()
     {
-        var logPath = Environment.GetEnvironmentVariable(Names.LOG_PATH);
+        var logPath = Environment.GetEnvironmentVariable(EnvironmentNames.LOG_PATH);
 
         if (string.IsNullOrWhiteSpace(logPath))
         {
-            throw new ArgumentNullException(Names.LOG_PATH, "Environment variable must be set.");
+            throw new ArgumentNullException(EnvironmentNames.LOG_PATH, "Environment variable must be set.");
         }
 
-        var configPath = Environment.GetEnvironmentVariable(Names.CONFIG_PATH);
+        var configPath = Environment.GetEnvironmentVariable(EnvironmentNames.CONFIG_PATH);
 
         if (string.IsNullOrWhiteSpace(configPath))
         {
-            throw new ArgumentNullException(Names.CONFIG_PATH, "Environment variable must be set.");
+            throw new ArgumentNullException(EnvironmentNames.CONFIG_PATH, "Environment variable must be set.");
         }
 
         this.LogPath = logPath;
@@ -46,27 +46,14 @@ public class EnvironmentAppConfiguration : IAppConfiguration
             File.WriteAllText(privateKeyPath, this.PrivateSigningKey);
         }
 
-        var allowedHosts = Environment.GetEnvironmentVariable(Names.ALLOWED_HOSTS);
+        var allowedHosts = Environment.GetEnvironmentVariable(EnvironmentNames.ALLOWED_HOSTS);
 
         if (string.IsNullOrWhiteSpace(allowedHosts))
         {
-            throw new ArgumentNullException(Names.ALLOWED_HOSTS, "Environment variable must be set.");
+            throw new ArgumentNullException(EnvironmentNames.ALLOWED_HOSTS, "Environment variable must be set.");
         }
 
         this.AllowedHosts = allowedHosts.Split(';');
-    }
-
-    public static class Names
-    {
-        public const string LOG_PATH = nameof(Names.LOG_PATH);
-
-        public const string CONFIG_PATH = nameof(Names.CONFIG_PATH);
-
-        public const string PUBLIC_SIGNING_KEY = nameof(Names.PUBLIC_SIGNING_KEY);
-
-        public const string PRIVATE_SIGNING_KEY = nameof(Names.PRIVATE_SIGNING_KEY);
-
-        public const string ALLOWED_HOSTS = nameof(Names.ALLOWED_HOSTS);
     }
 
     /// <summary>

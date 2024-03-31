@@ -1,13 +1,24 @@
 ﻿using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Npgsql;
+using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Domain.Models;
 
 namespace StammPhoenix.Infrastructure.Persistence;
 
-public sealed class DatabaseContext : DbContext
+public sealed class DatabaseContext : DbContext, IDatabaseManager
 {
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+    public DatabaseContext(IDatabaseConfiguration databaseConfiguration, ISaveChangesInterceptor saveChangesInterceptor)
+    {
+        this.DatabaseConfiguration = databaseConfiguration;
+        this.SaveChangesInterceptor = saveChangesInterceptor;
+    }
+
+    private IDatabaseConfiguration DatabaseConfiguration { get; }
+
+    private ISaveChangesInterceptor SaveChangesInterceptor { get; }
 
     [PublicAPI]
     private DbSet<Leader> Leaders => this.Set<Leader>();
@@ -23,5 +34,33 @@ public sealed class DatabaseContext : DbContext
         base.OnModelCreating(builder);
 
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.AddInterceptors(this.SaveChangesInterceptor);
+
+        var connectionString = new NpgsqlConnectionStringBuilder
+        {
+            Host = this.DatabaseConfiguration.Host,
+            Port =  this.DatabaseConfiguration.Port,
+            Database = this.DatabaseConfiguration.Database,
+            Username = this.DatabaseConfiguration.User,
+            Password = this.DatabaseConfiguration.Password
+        };
+
+        optionsBuilder
+            .UseNpgsql(connectionString.ConnectionString)
+            .UseSnakeCaseNamingConvention();
+    }
+
+    public async Task MigrateDatabaseAsync(CancellationToken cancellationToken)
+    {
+        await this.Database.MigrateAsync(cancellationToken);
+    }
+
+    public async Task<bool> EnsureCreatedAsync(CancellationToken cancellationToken)
+    {
+        return await this.Database.EnsureCreatedAsync(cancellationToken);
     }
 }

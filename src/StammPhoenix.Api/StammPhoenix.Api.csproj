@@ -6,14 +6,13 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
-    
+
     <PropertyGroup>
         <InformationalVersion>0.0.0-dev.0</InformationalVersion>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FastEndpoints" Version="5.23.0" />
-        <PackageReference Include="FastEndpoints.ClientGen.Kiota" Version="5.23.0" />
         <PackageReference Include="FastEndpoints.Security" Version="5.23.0" />
         <PackageReference Include="FastEndpoints.Swagger" Version="5.23.0" />
         <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />

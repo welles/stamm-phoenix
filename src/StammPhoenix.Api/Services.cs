@@ -18,6 +18,8 @@ public static class Services
 
         services.AddSingleton<IAppConfiguration>(environment);
 
+        services.AddSingleton<IDatabaseConfiguration, EnvironmentDatabaseConfiguration>();
+
         services
             .AddFastEndpoints()
             .SwaggerDocument(d =>
@@ -49,7 +51,7 @@ public static class Services
 
         services.AddCors(options =>
         {
-            options.AddPolicy(name: EnvironmentAppConfiguration.Names.ALLOWED_HOSTS,
+            options.AddPolicy(name: EnvironmentNames.ALLOWED_HOSTS,
                 policy  =>
                 {
                     policy.WithOrigins(environment.AllowedHosts)

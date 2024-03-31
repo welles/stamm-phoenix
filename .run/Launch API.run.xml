@@ -5,9 +5,13 @@
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/StammPhoenix.Api" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <envs>
+      <env name="ALLOWED_HOSTS" value="http://localhost:5000" />
       <env name="CONFIG_PATH" value=".\bin\Debug\net8.0" />
       <env name="LOG_PATH" value=".\bin\Debug\net8.0" />
-      <env name="ALLOWED_HOSTS" value="http://localhost:5000" />
+      <env name="DATABASE_HOST" value="localhost" />
+      <env name="DATABASE_PORT" value="5001" />
+      <env name="DATABASE_NAME" value="stamm-phoenix" />
+      <env name="DATABASE_PASSWORD" value="mysecretpassword" />
     </envs>
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <option name="USE_MONO" value="0" />
