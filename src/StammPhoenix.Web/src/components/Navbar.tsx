@@ -7,6 +7,19 @@ import GlassMorphism from './GlassMorphism'
 const Navbar = () => {
 	const [locale, setLocale] = createSignal(i18next.language)
 
+	const btn = document.getElementById('change-lang-btn')
+	btn?.addEventListener('click', () => {
+		const newLocale = locale() === 'de' ? 'en' : 'de'
+		setLocale(newLocale)
+
+		const currentPath = window.location.pathname
+		const newPath = currentPath.includes('/en')
+			? currentPath.replace('/en', '')
+			: `/en${currentPath}`
+
+		window.location.pathname = newPath
+	})
+
 	const navLinks = [
 		{
 			href: getRelativeLocaleUrl(locale(), localizePath('/')),
