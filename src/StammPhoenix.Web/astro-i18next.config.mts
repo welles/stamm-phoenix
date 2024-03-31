@@ -4,7 +4,7 @@ interface ConfigType {
 	defaultLocale: string
 	locales: string[]
 	routes: {
-		[locale: string]: { [route: string]: string | {} }
+		[locale: string]: { [route: string]: string }
 	}
 }
 
