@@ -47,26 +47,6 @@ public static class Program
          })
          .UseSwaggerGen();
 
-      if (app.Configuration["generateclients"] == "true")
-      {
-         if (Directory.Exists("../StammPhoenix.Web/src/lib/api"))
-         {
-            Directory.Delete("../StammPhoenix.Web/src/lib/api", true);
-         }
-
-         Directory.CreateDirectory("../StammPhoenix.Web/src/lib/api");
-
-         await app.GenerateApiClientsAndExitAsync(
-            c =>
-            {
-               c.SwaggerDocumentName = "current";
-               c.Language = GenerationLanguage.TypeScript;
-               c.OutputPath = "../StammPhoenix.Web/src/lib/api";
-               c.ClientNamespaceName = "StammPhoenix";
-               c.ClientClassName = "ApiClient";
-            });
-      }
-
       await app.RunAsync();
    }
 }
