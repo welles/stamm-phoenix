@@ -60,6 +60,29 @@ using Nuke.Common.Tools.Pwsh;
         GitHubActionsPermissions.Packages
     }
 )]
+[GitHubActions(
+    nameof(Build.DockerPushDevCli),
+    GitHubActionsImage.UbuntuLatest,
+    OnPushBranches = new[]
+    {
+        "main"
+    },
+    OnPushIncludePaths = new []
+    {
+        "src/**"
+    },
+    JobConcurrencyGroup = nameof(Build.DockerPushDevCli),
+    FetchDepth = 0,
+    InvokedTargets = new []
+    {
+        nameof(Build.DockerPushDevCli)
+    },
+    EnableGitHubToken = true,
+    WritePermissions = new[] {
+        GitHubActionsPermissions.Contents,
+        GitHubActionsPermissions.Packages
+    }
+)]
 class Build : NukeBuild
 {
     public static int Main () => Build.Execute<Build>(x => x.LogInfo);
@@ -82,9 +105,13 @@ class Build : NukeBuild
 
     Project WebProject => Solution.Application.StammPhoenix_Web;
 
+    Project CliProject => Solution.Application.StammPhoenix_Cli;
+
     string DockerImageNameApi => Build.IsLocalBuild ? "stamm-phoenix-api:dev" : "ghcr.io/welles/stamm-phoenix-api:dev";
 
     string DockerImageNameWeb => Build.IsLocalBuild ? "stamm-phoenix-web:dev" : "ghcr.io/welles/stamm-phoenix-web:dev";
+
+    string DockerImageNameCli => Build.IsLocalBuild ? "stamm-phoenix-cli:dev" : "ghcr.io/welles/stamm-phoenix-cli:dev";
 
     string CurrentDockerImageName { get; set; }
 
@@ -271,6 +298,15 @@ class Build : NukeBuild
         {
             CurrentDockerImageName = DockerImageNameApi;
             CurrentDockerFile = ApiProject.Directory / "Dockerfile";
+        })
+        .Triggers(DockerPushDev);
+
+    [PublicAPI]
+    Target DockerPushDevCli => d => d
+        .Executes(() =>
+        {
+            CurrentDockerImageName = DockerImageNameCli;
+            CurrentDockerFile = CliProject.Directory / "Dockerfile";
         })
         .Triggers(DockerPushDev);
 }
