@@ -36,4 +36,9 @@ public sealed class Event : DomainEntity
     /// Am diesjährgen Hüttenwochenende fahren wir auf die Berghütte in Bergenhausen.
     /// </example>
     public string? Description { get; set; }
+
+    /// <summary>
+    /// A simple and short unique name for the event that can be used in URLs.
+    /// </summary>
+    public required string Link { get; set; }
 }
