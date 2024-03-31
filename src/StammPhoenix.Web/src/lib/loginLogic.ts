@@ -1,4 +1,4 @@
-import axios, { AxiosError, type AxiosResponse } from 'axios'
+import axios, { type AxiosError, type AxiosResponse } from 'axios'
 
 export interface Credentials {
 	login_email: string
