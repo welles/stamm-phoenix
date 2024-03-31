@@ -1,46 +1,44 @@
 {
-  "name": "src",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "bun": "bun",
-    "gen-i18n": "bunx astro-i18next generate",
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "bun run gen-i18n && astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "produce": "bun run build && bun run ./server/server.ts"
-  },
-  "dependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/node": "^8.2.3",
-    "@astrojs/solid-js": "^4.0.1",
-    "@astrojs/tailwind": "^5.1.0",
-    "@fastify/middie": "^8.3.0",
-    "@fastify/static": "^7.0.2",
-    "@playwright/test": "^1.42.1",
-    "@solidjs/router": "^0.13.1",
-    "@tailwindcss/forms": "^0.5.7",
-    "astro": "^4.2.6",
-    "astro-bun-adapter": "^1.0.2",
-    "astro-i18next": "^1.0.0-beta.21",
-    "astro-seo": "^0.8.3",
-    "axios": "^1.6.8",
-    "bun": "^1.0.30",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
-    "escalade": "",
-    "fastify": "^4.26.2",
-    "prettier": "^3.2.5",
-    "prettier-plugin-astro": "^0.13.0",
-    "solid-js": "^1.8.12",
-    "tailwind-merge": "^2.2.1",
-    "tailwindcss": "^3.4.1",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.3.3"
-  },
-  "devDependencies": {
-    "@types/bun": "^1.0.8"
-  }
+	"name": "src",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"bun": "bun",
+		"gen-i18n": "bunx astro-i18next generate",
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "bun run gen-i18n && astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"produce": "bun run build && bun run ./server/server.ts"
+	},
+	"dependencies": {
+		"@astrojs/check": "^0.4.1",
+		"@astrojs/node": "^8.2.3",
+		"@astrojs/solid-js": "^4.0.1",
+		"@astrojs/tailwind": "^5.1.0",
+		"@fastify/middie": "^8.3.0",
+		"@fastify/static": "^7.0.2",
+		"@playwright/test": "^1.42.1",
+		"@tailwindcss/forms": "^0.5.7",
+		"astro": "^4.2.6",
+		"astro-bun-adapter": "^1.0.2",
+		"astro-i18next": "^1.0.0-beta.21",
+		"astro-seo": "^0.8.3",
+		"axios": "^1.6.8",
+		"bun": "^1.0.30",
+		"class-variance-authority": "^0.7.0",
+		"clsx": "^2.1.0",
+		"fastify": "^4.26.2",
+		"prettier": "^3.2.5",
+		"prettier-plugin-astro": "^0.13.0",
+		"solid-js": "^1.8.12",
+		"tailwind-merge": "^2.2.1",
+		"tailwindcss": "^3.4.1",
+		"tailwindcss-animate": "^1.0.7",
+		"typescript": "^5.3.3"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.0.8"
+	}
 }
