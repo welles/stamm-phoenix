@@ -10,15 +10,15 @@ namespace StammPhoenix.Infrastructure.Persistence;
 
 public sealed class DatabaseContext : DbContext, IDatabaseManager
 {
-    public DatabaseContext(IDatabaseConfiguration databaseConfiguration, ISaveChangesInterceptor saveChangesInterceptor)
+    public DatabaseContext(IDatabaseConfiguration databaseConfiguration, ISaveChangesInterceptor[] saveChangesInterceptors)
     {
         this.DatabaseConfiguration = databaseConfiguration;
-        this.SaveChangesInterceptor = saveChangesInterceptor;
+        this.SaveChangesInterceptors = saveChangesInterceptors;
     }
 
     private IDatabaseConfiguration DatabaseConfiguration { get; }
 
-    private ISaveChangesInterceptor SaveChangesInterceptor { get; }
+    private ISaveChangesInterceptor[] SaveChangesInterceptors { get; }
 
     [PublicAPI]
     private DbSet<Leader> Leaders => this.Set<Leader>();
@@ -38,7 +38,8 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.AddInterceptors(this.SaveChangesInterceptor);
+        var interceptors = this.SaveChangesInterceptors.OfType<IInterceptor>().ToArray();
+        optionsBuilder.AddInterceptors(interceptors);
 
         var connectionString = new NpgsqlConnectionStringBuilder
         {
