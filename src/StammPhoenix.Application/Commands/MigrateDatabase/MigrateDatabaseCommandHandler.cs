@@ -9,6 +9,11 @@ public class MigrateDatabaseCommandHandler(IDatabaseManager databaseManager) : I
 
     public async Task Handle(MigrateDatabaseCommand request, CancellationToken cancellationToken)
     {
+        if (await this.DatabaseManager.EnsureCreatedAsync(cancellationToken) == false)
+        {
+            throw new InvalidOperationException("Database does not exist");
+        }
+
         await this.DatabaseManager.MigrateDatabaseAsync(cancellationToken);
     }
 }
