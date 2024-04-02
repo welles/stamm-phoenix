@@ -18,6 +18,6 @@ public class DesignTimeContextFactory : IDesignTimeDbContextFactory<DatabaseCont
             User = string.Empty
         };
 
-        return new DatabaseContext(databaseConfiguration, Array.Empty<ISaveChangesInterceptor>());
+        return new DatabaseContext(databaseConfiguration, []);
     }
 }
