@@ -45,6 +45,7 @@ public static class Program
             .AddApplicationServices()
             .AddInfrastructureServices()
             .AddSingleton<CliApp>()
+            .AddSingleton<IUser, CliUser>()
             .BuildServiceProvider();
 
         var app = services.GetRequiredService<CliApp>();
