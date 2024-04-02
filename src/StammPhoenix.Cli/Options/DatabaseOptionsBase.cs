@@ -1,7 +1,9 @@
 using CommandLine;
+using JetBrains.Annotations;
 
 namespace StammPhoenix.Cli.Options;
 
+[PublicAPI]
 public abstract class DatabaseOptionsBase
 {
     [Option("host", Required = true)]
