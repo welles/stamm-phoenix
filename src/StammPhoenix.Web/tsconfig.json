@@ -5,10 +5,11 @@
 		"jsxImportSource": "solid-js",
 		"resolveJsonModule": true,
 		"allowJs": true,
+		"module": "esnext",
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"]
 		},
-		"types": ["astro/client", "bun-types"]
+		"types": ["@types/bun"]
 	}
 }

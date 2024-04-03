@@ -4,7 +4,7 @@ FROM oven/bun:alpine AS base
 WORKDIR /usr/src/app
 
 # install node and npm
-RUN ["apk", "add", "--update", "nodejs", "npm"]
+RUN ["apk", "add", "--no-cache", "nodejs", "npm"]
 
 # Copy project files
 COPY /src/StammPhoenix.Web/. .
@@ -15,8 +15,10 @@ EXPOSE 80
 # Verify bun installation
 RUN ["bun", "--version"]
 
-# Install dependencies and build the project
+# Install dependencies
 RUN ["bun", "install"]
+
+# Build the project
 RUN ["bun", "run", "build"]
 
 # Start the application

@@ -4,7 +4,7 @@ test('Login Test', async ({ page }) => {
 	// Navigate to the website
 	await page.goto('/')
 
-	if (page.viewportSize()?.width <= 550) {
+	if (page.viewportSize()!.width <= 550) {
 		await page.locator('#menu').click()
 	}
 
