@@ -1,8 +1,6 @@
-# Nuxt dev/build outputs
+# dev/build outputs
 .output
 .data
-.nuxt
-.nitro
 .cache
 dist
 
@@ -18,9 +16,6 @@ logs
 .fleet
 .idea
 
-# do-the-needful.nvim tasks
-.tasks.json
-
 # Local env files
 .env
 .env.*
@@ -29,4 +24,3 @@ logs
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-$HOME

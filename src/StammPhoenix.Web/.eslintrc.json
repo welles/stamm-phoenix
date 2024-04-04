@@ -1,0 +1,33 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:astro/recommended"
+		// Add other configurations here if needed
+	],
+	"parser": "astro-eslint-parser",
+	"parserOptions": {
+		"parser": "@typescript-eslint/parser",
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"project": "tsconfig.json",
+		"extraFileExtensions": [".astro"],
+		"parser": "@typescript-eslint/parser"
+	},
+	"rules": {},
+	"overrides": [
+		{
+			"files": ["**/*.ts", "**/*.tsx", "**/*.astro"],
+			"parser": "astro-eslint-parser",
+			"parserOptions": {
+				"project": "tsconfig.json",
+				"extraFileExtensions": [".astro"],
+				"parser": "@typescript-eslint/parser"
+			}
+		}
+	]
+}
