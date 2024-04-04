@@ -1,9 +1,9 @@
 ---
 import { Show } from "solid-js";
-import i18next, { t, changeLanguage } from "i18next";
+import { t, changeLanguage } from "i18next";
 import Layout from "../../layouts/Layout.astro";
 import "@/styles/globals.css";
-import { login, checkToken } from "../../lib/loginLogic";
+import { login, checkToken } from "../../lib/api";
 import GlassMorphism from "../../components/GlassMorphism";
 import Input from "../../components/Input";
 import Button from "../../components/Button";

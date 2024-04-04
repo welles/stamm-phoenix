@@ -1,5 +1,5 @@
 ---
-import i18next, { t } from 'i18next'
+import i18next from 'i18next'
 import { HeadHrefLangs } from 'astro-i18next/components'
 
 import Navbar from '../components/Navbar'
@@ -12,18 +12,6 @@ interface Props {
 }
 
 const { title } = Astro.props
-
-function isMobile(): boolean {
-	// User agent check for mobile devices
-	if (typeof window !== 'undefined') {
-		const userAgent: string = window.navigator.userAgent
-		return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-			userAgent,
-		)
-	}
-	// Return false if the window is not defined (e.g., during SSR)
-	return false
-}
 ---
 
 <!doctype html>

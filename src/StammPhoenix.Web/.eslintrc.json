@@ -3,6 +3,11 @@
 		"browser": true,
 		"es2021": true
 	},
+	"plugins": [
+		"@typescript-eslint/eslint-plugin",
+		"eslint-plugin-tsdoc",
+		"eslint-plugin-astro"
+	],
 	"extends": [
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",

@@ -1,12 +1,12 @@
 {
-    "navbar": {
-        "home": "Home",
-        "privacy": "Privacy",
-        "imprint": "Imprint",
-        "login": "Login"
-    },
-    "login": {
-        "title": "Login",
-        "submit-button": "Login"
-    }
+	"navbar": {
+		"home": "Home",
+		"privacy": "Privacy",
+		"imprint": "Imprint",
+		"login": "Login"
+	},
+	"login": {
+		"title": "Login",
+		"submit-button": "Login"
+	}
 }

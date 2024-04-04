@@ -12,7 +12,7 @@
 				"relative": "after"
 			}
 		},
-        {
+		{
 			"name": "run build",
 			"cmd": "bun run build",
 			"tags": ["bun", "build"],
@@ -24,7 +24,7 @@
 				"relative": "after"
 			}
 		},
-        {
+		{
 			"name": "run start",
 			"cmd": "bun run start",
 			"tags": ["bun", "start"],

@@ -9,8 +9,9 @@
 		"build": "bun run gen-i18n && astro check && astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"produce": "bun run build && bun run ./server/server.ts",
-		"lint": "eslint"
+		"produce": "bun run build && bun run ./dist/server/entry.mjs",
+		"lint": "eslint",
+		"prettier": "prettier --write ."
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.4.1",
@@ -24,6 +25,7 @@
 		"astro-seo": "^0.8.3",
 		"axios": "^1.6.8",
 		"eslint-plugin-astro": "^0.33.1",
+		"eslint-plugin-tsdoc": "^0.2.17",
 		"prettier": "^3.2.5",
 		"prettier-plugin-astro": "^0.13.0",
 		"rollup-plugin-node-polyfills": "^0.2.1",
