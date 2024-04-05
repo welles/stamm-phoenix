@@ -21,5 +21,12 @@ RUN ["bun", "install"]
 # Build the project
 RUN ["bun", "run", "build"]
 
+# Set ENV variables 
+ENV PORT=80
+ENV HOST=0.0.0.0
+
+# expose port
+EXPOSE 80
+
 # Start the application
 CMD ["bun", "run", "produce"]
