@@ -2,5 +2,5 @@
 
 export default {
 	defaultLocale: 'de',
-	locales: ['en', 'de'],
+	locales: ['de', 'en'],
 }

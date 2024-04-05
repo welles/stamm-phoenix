@@ -17,7 +17,7 @@ export default defineConfig({
 	adapter: node({ mode: 'standalone' }),
 	i18n: {
 		defaultLocale: 'de',
-		locales: ['en', 'de'],
+		locales: ['de', 'en'],
 		routing: {
 			prefixDefaultLocale: false,
 		},
