@@ -8,11 +8,11 @@ namespace StammPhoenix.Infrastructure.Persistence.Interceptors;
 
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {
-    private readonly IUser user;
+    private readonly ICurrentUser currentUser;
 
-    public AuditableEntityInterceptor(IUser user)
+    public AuditableEntityInterceptor(ICurrentUser currentUser)
     {
-        this.user = user;
+        this.currentUser = currentUser;
     }
 
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
@@ -43,10 +43,10 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
                 var utcNow = DateTimeOffset.Now;
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Entity.CreatedBy = this.user.LoginEmail ?? "Unknown";
+                    entry.Entity.CreatedBy = this.currentUser.Name ?? "Unknown";
                     entry.Entity.CreatedAt = utcNow;
                 }
-                entry.Entity.LastModifiedBy = this.user.LoginEmail ?? "Unknown";
+                entry.Entity.LastModifiedBy = this.currentUser.Name ?? "Unknown";
                 entry.Entity.LastModifiedAt = utcNow;
             }
         }

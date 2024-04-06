@@ -47,7 +47,7 @@ public static class Services
             })
             .AddAuthorization();
 
-        services.AddScoped<IUser, CurrentUser>();
+        services.AddScoped<ICurrentUser, ApiCurrentUser>();
 
         services.AddCors(options =>
         {
