@@ -1,6 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n'
-import Layout from '../layouts/Layout.astro'
+import Layout from '@/layouts/Layout.astro'
 import '@/styles/globals.css'
 import { astroI18n, t } from 'astro-i18n'
 
@@ -17,7 +17,7 @@ const locale: string = astroI18n.locale
 				class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl"
 			>
 				{t('404.title')}
-            </h1>
+			</h1>
 			<p class="mt-6 text-base leading-7 text-gray-600">
 				Sorry, we couldn’t find the page you’re looking for.
 			</p>

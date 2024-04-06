@@ -1,13 +1,13 @@
 ---
 import { Show } from 'solid-js'
-import Layout from '../layouts/Layout.astro'
+import Layout from '@/layouts/Layout.astro'
 import '@/styles/globals.css'
-import { login, checkToken } from '../lib/api'
-import GlassMorphism from '../components/GlassMorphism'
-import Input from '../components/Input'
-import Button from '../components/Button'
+import { login, checkToken } from '@/lib/api'
+import GlassMorphism from '@/components/GlassMorphism'
+import Input from '@/components/Input'
+import Button from '@/components/Button'
 import type { AstroCookieSetOptions } from 'astro'
-import { astroI18n, t } from 'astro-i18n'
+import { t } from 'astro-i18n'
 
 const jwtCookie = Astro.cookies.get('jwt')
 const jwt: string = jwtCookie ? jwtCookie.value : ''
