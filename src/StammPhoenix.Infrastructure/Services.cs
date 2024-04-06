@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using StammPhoenix.Application.Interfaces;
+using StammPhoenix.Infrastructure.Core;
 using StammPhoenix.Infrastructure.Persistence;
 using StammPhoenix.Infrastructure.Persistence.Interceptors;
 
@@ -18,6 +19,8 @@ public static class Services
         services.AddDbContext<DatabaseContext>();
 
         services.AddScoped<IDatabaseManager>(provider => provider.GetRequiredService<DatabaseContext>());
+
+        services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
 
         return services;
     }
