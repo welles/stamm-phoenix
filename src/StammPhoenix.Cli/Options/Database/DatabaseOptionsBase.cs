@@ -1,7 +1,7 @@
 using CommandLine;
 using JetBrains.Annotations;
 
-namespace StammPhoenix.Cli.Options;
+namespace StammPhoenix.Cli.Options.Database;
 
 [PublicAPI]
 public abstract class DatabaseOptionsBase

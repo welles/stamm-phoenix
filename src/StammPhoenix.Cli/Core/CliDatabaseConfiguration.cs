@@ -1,5 +1,5 @@
 using StammPhoenix.Application.Interfaces;
-using StammPhoenix.Cli.Options;
+using StammPhoenix.Cli.Options.Database;
 
 namespace StammPhoenix.Cli.Core;
 

@@ -4,6 +4,8 @@ using StammPhoenix.Application;
 using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Cli.Core;
 using StammPhoenix.Cli.Options;
+using StammPhoenix.Cli.Options.Database;
+using StammPhoenix.Cli.Options.Leaders;
 using StammPhoenix.Infrastructure;
 
 namespace StammPhoenix.Cli;
@@ -31,6 +33,11 @@ public static class Program
         if (databaseOptions is UpdateDatabaseOptions)
         {
             return await app.UpdateDatabase();
+        }
+
+        if (databaseOptions is CreateLeaderOptions options)
+        {
+            return await app.CreateLeader(options);
         }
 
         return 255;

@@ -4,19 +4,26 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql;
 using StammPhoenix.Application.Interfaces;
+using StammPhoenix.Domain.Exceptions;
 using StammPhoenix.Domain.Models;
 
 namespace StammPhoenix.Infrastructure.Persistence;
 
-public sealed class DatabaseContext : DbContext, IDatabaseManager
+public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderRepository
 {
-    public DatabaseContext(IDatabaseConfiguration databaseConfiguration, IEnumerable<ISaveChangesInterceptor> saveChangesInterceptors)
+    public DatabaseContext(IDatabaseConfiguration databaseConfiguration, IEnumerable<ISaveChangesInterceptor> saveChangesInterceptors, IPasswordHasher passwordHasher, ICurrentUser currentUser)
     {
         this.DatabaseConfiguration = databaseConfiguration;
         this.Interceptors = saveChangesInterceptors.OfType<IInterceptor>().ToArray();
+        this.PasswordHasher = passwordHasher;
+        this.CurrentUser = currentUser;
     }
 
     private IDatabaseConfiguration DatabaseConfiguration { get; }
+
+    private IPasswordHasher PasswordHasher { get; }
+
+    private ICurrentUser CurrentUser { get; }
 
     private IInterceptor[] Interceptors { get; }
 
@@ -62,5 +69,41 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager
     public async Task<bool> EnsureCreatedAsync(CancellationToken cancellationToken)
     {
         return await this.Database.EnsureCreatedAsync(cancellationToken);
+    }
+
+    public async Task<IReadOnlyCollection<Leader>> GetLeaders(CancellationToken cancellationToken)
+    {
+        return (await this.Leaders.ToArrayAsync(cancellationToken)).AsReadOnly();
+    }
+
+    public async Task<Leader> CreateLeader(string loginEmail, string firstName, string lastName, string password, string? phoneNumber,
+        string? address)
+    {
+        if (this.Leaders.Any(x => x.LoginEmail.Equals(loginEmail, StringComparison.OrdinalIgnoreCase)))
+        {
+            throw new LeaderAlreadyExistsException(loginEmail);
+        }
+
+        var leader = new Leader
+        {
+            LoginEmail = loginEmail,
+            FirstName = firstName,
+            LastName = lastName,
+            PasswordHash = this.PasswordHasher.HashPassword(password),
+            PhoneNumber = phoneNumber,
+            Address = address,
+
+            Id = Guid.Empty,
+            CreatedAt = DateTimeOffset.Now,
+            CreatedBy = this.CurrentUser.Name,
+            LastModifiedAt = DateTimeOffset.Now,
+            LastModifiedBy = this.CurrentUser.Name
+        };
+
+        var leaderResult = await this.Leaders.AddAsync(leader);
+
+        await this.Database.CommitTransactionAsync();
+
+        return leaderResult.Entity;
     }
 }
