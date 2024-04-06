@@ -3,15 +3,17 @@
 	"type": "module",
 	"version": "0.0.1",
 	"scripts": {
-		"gen-i18n": "bunx astro-i18next generate",
-		"dev": "astro dev",
-		"start": "astro dev",
-		"build": "bun run gen-i18n && astro check && astro build",
+		"dev": "bun run i18n:sync && astro dev",
+		"build": "bun run i18n:sync  && astro check && astro build",
 		"preview": "astro preview",
 		"astro": "astro",
 		"produce": "bun run build && bun run ./dist/server/entry.mjs",
 		"lint": "eslint",
-		"prettier": "prettier --write ."
+		"prettier": "prettier --write .",
+		"i18n:extract": "astro-i18n extract",
+		"i18n:generate:pages": "astro-i18n generate:pages --purge",
+		"i18n:generate:types": "astro-i18n generate:types",
+		"i18n:sync": "npm run i18n:generate:pages && npm run i18n:generate:types"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.4.1",
@@ -21,7 +23,7 @@
 		"@playwright/test": "^1.42.1",
 		"@tailwindcss/forms": "^0.5.7",
 		"astro": "^4.5.15",
-		"astro-i18next": "^1.0.0-beta.21",
+		"astro-i18n": "^2.2.4",
 		"astro-seo": "^0.8.3",
 		"axios": "^1.6.8",
 		"eslint-plugin-astro": "^0.33.1",

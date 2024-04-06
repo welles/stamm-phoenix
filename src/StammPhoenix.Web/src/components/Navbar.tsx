@@ -1,50 +1,27 @@
-import i18next from 'i18next'
-import { localizePath } from 'node_modules/astro-i18next/src'
-import { getRelativeLocaleUrl } from 'astro:i18n'
 import GlassMorphism from './GlassMorphism'
+import LocaleSwitcher from './LocaleSwitcher'
 import { type Component } from 'solid-js'
+import { astroI18n, t, l } from 'astro-i18n'
 
 const Navbar: Component = () => {
-	//	const btn = document.getElementById('change-lang-btn')
-	//	btn?.addEventListener('click', () => {
-	//		const newLocale = i18next.language === 'de' ? 'en' : 'de'
-	//
-	//		const currentPath = window.location.pathname
-	//		const path = currentPath.includes('/en')
-	//			? currentPath.replace('/en', '')
-	//			: `${currentPath}`
-	//
-	//		window.location.href = getRelativeLocaleUrl(
-	//			newLocale,
-	//			localizePath(path),
-	//		)
-	//	})
+	const baseURL: string = `${window.location.origin}${astroI18n.locale === 'de' ? '' : '/' + astroI18n.locale}`
 
 	const navLinks = [
 		{
-			href: getRelativeLocaleUrl(i18next.language, localizePath('/')),
-			label: i18next.t('navbar.home'),
+			route: baseURL + l('/'),
+			label: t('navbar.links.home'),
 		},
 		{
-			href: getRelativeLocaleUrl(
-				i18next.language,
-				localizePath('/datenschutz'),
-			),
-			label: i18next.t('navbar.privacy'),
+			route: baseURL + l('/anmeldung'),
+			label: t('navbar.links.login'),
 		},
 		{
-			href: getRelativeLocaleUrl(
-				i18next.language,
-				localizePath('/impressum'),
-			),
-			label: i18next.t('navbar.imprint'),
+			route: baseURL + l('/datenschutz'),
+			label: t('navbar.links.privacy'),
 		},
 		{
-			href: getRelativeLocaleUrl(
-				i18next.language,
-				localizePath('/anmeldung'),
-			),
-			label: i18next.t('navbar.login'),
+			route: baseURL + l('/impressum'),
+			label: t('navbar.links.legal-notice'),
 		},
 	]
 
@@ -53,10 +30,7 @@ const Navbar: Component = () => {
 			<GlassMorphism>
 				<div class="container mx-auto px-4 flex justify-between items-center">
 					<div class="navbar-brand float-left">
-						<a
-							href={getRelativeLocaleUrl(i18next.language, '')}
-							class="text-black font-bold"
-						>
+						<a href={baseURL + l('/')} class="text-black font-bold">
 							<img
 								data-twe-animation-start="onLoad"
 								class="animate-bounce w-[2rem] z-1"
@@ -65,20 +39,21 @@ const Navbar: Component = () => {
 						</a>
 					</div>
 					<ul class="navbar-nav flex space-x-4 float-right">
-						{navLinks.map(({ href, label }) => (
+						{navLinks.map(({ route, label }) => (
 							<li class="nav-item">
 								<a
 									class="nav-link text-black hover:text-gray-600"
-									href={href}
+									href={route}
 								>
 									{label}
 								</a>
 							</li>
 						))}
 						<li class="nav-item">
-							<button id="change-lang-btn">
-								<span>ChangeLang</span>
-							</button>
+							<LocaleSwitcher
+								showCurrent={false}
+								labels={{ de: 'German', en: 'English' }}
+							/>
 						</li>
 					</ul>
 				</div>

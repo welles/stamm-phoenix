@@ -1,31 +1,28 @@
 ---
-import { changeLanguage } from "i18next";
-import Layout from "../../layouts/Layout.astro";
-import "@/styles/globals.css";
-import GlassMorphism from "@/components/GlassMorphism";
-
-changeLanguage("en");
+import Layout from '../layouts/Layout.astro'
+import '@/styles/globals.css'
+import GlassMorphism from '@/components/GlassMorphism'
 
 interface Contact {
-    name: string;
-    phoneNumber: string;
-    addressStreet: string;
-    addressCity: string;
+	name: string
+	phoneNumber: string
+	addressStreet: string
+	addressCity: string
 }
 const contacts: Contact[] = [
-    {
-        name: "Dominik Schmid",
-        phoneNumber: "+49 177 6092939",
-        addressStreet: "F\u00F6hrenstra\u00DFe 105",
-        addressCity: "83052 Bruckm\u00FChl",
-    },
-    {
-        name: "Simon Schmid",
-        phoneNumber: "+49 1516 4331848",
-        addressStreet: "Oberwertach 8",
-        addressCity: "83620 Feldkirchen-Westerham",
-    },
-];
+	{
+		name: 'Dominik Schmid',
+		phoneNumber: '+49 177 6092939',
+		addressStreet: 'F\u00F6hrenstra\u00DFe 105',
+		addressCity: '83052 Bruckm\u00FChl',
+	},
+	{
+		name: 'Simon Schmid',
+		phoneNumber: '+49 1516 4331848',
+		addressStreet: 'Oberwertach 8',
+		addressCity: '83620 Feldkirchen-Westerham',
+	},
+]
 ---
 
 <Layout title="Impressum">

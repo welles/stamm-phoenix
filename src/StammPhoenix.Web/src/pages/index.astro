@@ -1,16 +1,14 @@
 ---
-import { changeLanguage } from "i18next";
-import Layout from "../layouts/Layout.astro";
-import "@/styles/globals.css";
-import { isAlive } from "../lib/api";
+import Layout from '../layouts/Layout.astro'
+import '@/styles/globals.css'
+import { isAlive } from '../lib/api'
+import { astroI18n, t } from 'astro-i18n'
 
-changeLanguage("de");
-
-console.log(isAlive());
+console.log(isAlive())
 ---
 
-<Layout title="Home">
+<Layout title={t('index.title')}>
 	<main>
-		<p>Hello World!</p>
+		<p>{t('index.hello')}</p>
 	</main>
 </Layout>

@@ -3,7 +3,6 @@ import i18next from 'i18next'
 import { HeadHrefLangs } from 'astro-i18next/components'
 
 import Navbar from '../components/Navbar'
-import MobileNavbar from '../components/MobileNavbar.astro'
 import Footer from '../components/Footer.astro'
 import AnimatedBackground from '../components/AnimatedBackground.astro'
 
@@ -28,8 +27,7 @@ const { title } = Astro.props
 	<body class="flex flex-col max-w-screen min-h-svh p-[1rem] items-center">
 		<div class="wrapper h-fit min-w-[75%] items-center">
 			<AnimatedBackground />
-			<MobileNavbar class="sticky top-0" />
-			<Navbar class:list="sticky top-0" />
+			<Navbar client:only='solid-js' class:list="sticky top-0" />
 			<div
 				class="content h-fit min-h-fit max-w-screen mx-[1rem] items-center flex-grow"
 			>
