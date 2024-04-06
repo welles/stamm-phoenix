@@ -4,6 +4,10 @@
 .cache
 dist
 
+# node and bun lock files
+package-lock.json
+bun.lockb
+
 # Node dependencies
 node_modules
 
