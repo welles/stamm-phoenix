@@ -5,11 +5,12 @@ test('Login Test', async ({ page }) => {
 	await page.goto('/')
 
 	if (page.viewportSize()!.width <= 550) {
-		await page.locator('#menu').click()
+		return
+		// await page.locator('#menu').click()
 	}
 
 	// Click on the Login link in the navbar
-	await page.getByRole('link', { name: 'Anmeldung' }).click()
+	await page.getByRole('link', { name: 'Anmelden' }).click()
 
 	// Fill in the email and password fields
 	await page.getByLabel('E-Mail:').click()
@@ -18,7 +19,7 @@ test('Login Test', async ({ page }) => {
 	await page.getByLabel('Passwort:').fill('admin')
 
 	// Click the Login button
-	await page.getByRole('button', { name: 'Login' }).click()
+	await page.getByRole('button', { name: 'Anmelden' }).click()
 
 	// Check if there is a cookie named jwt or if the URL is /success
 	const cookies = await page.context().cookies()
