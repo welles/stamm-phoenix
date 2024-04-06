@@ -6,4 +6,4 @@ namespace StammPhoenix.Cli.Options.Leaders;
 
 [PublicAPI]
 [Verb("leaders")]
-public abstract class LeaderOptionsBase : DatabaseOptionsBase;
+public abstract record LeaderOptionsBase : DatabaseOptionsBase;

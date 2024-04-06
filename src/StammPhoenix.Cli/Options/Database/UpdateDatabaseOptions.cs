@@ -5,4 +5,4 @@ namespace StammPhoenix.Cli.Options.Database;
 
 [PublicAPI]
 [Verb("update")]
-public class UpdateDatabaseOptions : DatabaseOptionsBase;
+public record UpdateDatabaseOptions : DatabaseOptionsBase;

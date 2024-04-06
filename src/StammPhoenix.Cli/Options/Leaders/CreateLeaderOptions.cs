@@ -5,7 +5,7 @@ namespace StammPhoenix.Cli.Options.Leaders;
 
 [PublicAPI]
 [Verb("create")]
-public class CreateLeaderOptions : LeaderOptionsBase
+public record CreateLeaderOptions : LeaderOptionsBase
 {
     [Option("login-email", Required = true)]
     public required string LoginEmail { get; set; }

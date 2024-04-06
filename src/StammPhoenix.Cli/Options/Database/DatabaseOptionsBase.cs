@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace StammPhoenix.Cli.Options.Database;
 
 [PublicAPI]
-public abstract class DatabaseOptionsBase
+public abstract record DatabaseOptionsBase
 {
     [Option("host", Required = true)]
     public required string Host { get; set; }
