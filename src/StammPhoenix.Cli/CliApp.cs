@@ -48,23 +48,30 @@ public class CliApp
         }
     }
 
-    public async Task<int> CreateLeader(CreateLeaderOptions options)
+    public async Task<int> CreateLeader(string loginEmail, string firstName, string lastName, string password, string? address, string? phoneNumber)
     {
         try
         {
             var command = new CreateLeaderCommand
             {
-                LoginEmail = options.LoginEmail,
-                FirstName = options.FirstName,
-                LastName = options.LastName,
-                LoginPassword = options.LoginPassword,
-                Address = options.Address,
-                PhoneNumber = options.PhoneNumber
+                LoginEmail = loginEmail,
+                FirstName = firstName,
+                LastName = lastName,
+                LoginPassword = password,
+                Address = address,
+                PhoneNumber = phoneNumber
             };
 
-            var leader = await this.Mediator.Send(command);
+            await AnsiConsole.Progress().AutoClear(true).StartAsync(async context =>
+            {
+                var createTask = context.AddTask("Creating leader...").IsIndeterminate().MaxValue(1);
 
-            AnsiConsole.MarkupLine($"[green]Leader {leader.FirstName} {leader.LastName} with ID {leader.Id} was created.[/]");
+                var leader = await this.Mediator.Send(command);
+
+                createTask.Value(1);
+
+                AnsiConsole.MarkupLine($"[green]Leader {leader.FirstName} {leader.LastName} with ID {leader.Id} was created.[/]");
+            });
 
             return 0;
         }
