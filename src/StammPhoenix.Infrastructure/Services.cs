@@ -19,6 +19,7 @@ public static class Services
         services.AddDbContext<DatabaseContext>();
 
         services.AddScoped<IDatabaseManager>(provider => provider.GetRequiredService<DatabaseContext>());
+        services.AddScoped<ILeaderRepository>(provider => provider.GetRequiredService<DatabaseContext>());
 
         services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
 

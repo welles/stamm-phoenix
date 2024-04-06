@@ -79,7 +79,7 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
     public async Task<Leader> CreateLeader(string loginEmail, string firstName, string lastName, string password, string? phoneNumber,
         string? address)
     {
-        if (this.Leaders.Any(x => x.LoginEmail.Equals(loginEmail, StringComparison.OrdinalIgnoreCase)))
+        if (this.Leaders.Any(x => x.LoginEmail == loginEmail))
         {
             throw new LeaderAlreadyExistsException(loginEmail);
         }
@@ -94,15 +94,15 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
             Address = address,
 
             Id = Guid.Empty,
-            CreatedAt = DateTimeOffset.Now,
+            CreatedAt = DateTimeOffset.UtcNow,
             CreatedBy = this.CurrentUser.Name,
-            LastModifiedAt = DateTimeOffset.Now,
+            LastModifiedAt = DateTimeOffset.UtcNow,
             LastModifiedBy = this.CurrentUser.Name
         };
 
         var leaderResult = await this.Leaders.AddAsync(leader);
 
-        await this.Database.CommitTransactionAsync();
+        await this.SaveChangesAsync();
 
         return leaderResult.Entity;
     }

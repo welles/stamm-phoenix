@@ -43,9 +43,9 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
             FirstName = "Admin",
             PasswordHash = "admin",
             LoginEmail = "admin@stamm-phoenix.de",
-            CreatedAt = DateTimeOffset.Now,
+            CreatedAt = DateTimeOffset.UtcNow,
             CreatedBy = "SERVER",
-            LastModifiedAt = DateTimeOffset.Now,
+            LastModifiedAt = DateTimeOffset.UtcNow,
             LastModifiedBy = "SERVER"
         };
 
