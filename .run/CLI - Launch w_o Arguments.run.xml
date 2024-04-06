@@ -4,6 +4,13 @@
     <option name="PROGRAM_PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/StammPhoenix.Cli/bin/Debug/net8.0" />
     <option name="PASS_PARENT_ENVS" value="1" />
+    <envs>
+      <env name="DATABASE_HOST" value="localhost" />
+      <env name="DATABASE_PORT" value="5001" />
+      <env name="DATABASE_NAME" value="stamm-phoenix" />
+      <env name="DATABASE_USER" value="postgres" />
+      <env name="DATABASE_PASSWORD" value="mysecretpassword" />
+    </envs>
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <option name="USE_MONO" value="0" />
     <option name="RUNTIME_ARGUMENTS" value="" />

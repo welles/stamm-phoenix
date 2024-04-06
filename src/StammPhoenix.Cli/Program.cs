@@ -7,6 +7,7 @@ using StammPhoenix.Cli.Core;
 using StammPhoenix.Cli.Options.Database;
 using StammPhoenix.Cli.Options.Leaders;
 using StammPhoenix.Infrastructure;
+using StammPhoenix.Infrastructure.Configuration;
 
 namespace StammPhoenix.Cli;
 
@@ -116,6 +117,13 @@ public static class Program
 
     private static CliApp GetAppFromRuntime()
     {
+        if (EnvironmentDatabaseConfiguration.IsValid)
+        {
+            AnsiConsole.MarkupLine("[b]DB connection was loaded from environment[/]");
+
+            return Program.GetApp(new EnvironmentDatabaseConfiguration());
+        }
+
         AnsiConsole.MarkupLine("[b]Enter DB connection parameters[/]");
 
         var host = AnsiConsole.Ask<string>("Enter host:");
@@ -136,7 +144,7 @@ public static class Program
         return Program.GetApp(configuration);
     }
 
-    private static CliApp GetApp(CliDatabaseConfiguration configuration)
+    private static CliApp GetApp(IDatabaseConfiguration configuration)
     {
         var services = new ServiceCollection()
             .AddSingleton<IDatabaseConfiguration>(configuration)
