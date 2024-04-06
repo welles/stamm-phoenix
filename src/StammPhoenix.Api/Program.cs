@@ -1,10 +1,10 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Serilog;
-using StammPhoenix.Api.Core;
 using StammPhoenix.Application;
 using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Infrastructure;
+using StammPhoenix.Infrastructure.Configuration;
 
 namespace StammPhoenix.Api;
 

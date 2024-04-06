@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using StammPhoenix.Application.Interfaces;
+using StammPhoenix.Infrastructure.Configuration;
 
 namespace StammPhoenix.Api.Core;
 

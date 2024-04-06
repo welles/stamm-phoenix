@@ -1,9 +1,16 @@
 using StammPhoenix.Application.Interfaces;
 
-namespace StammPhoenix.Api.Core;
+namespace StammPhoenix.Infrastructure.Configuration;
 
 public class EnvironmentDatabaseConfiguration : IDatabaseConfiguration
 {
+    public static bool IsValid =>
+        Environment.GetEnvironmentVariable(EnvironmentNames.DATABASE_HOST) != null &&
+        Environment.GetEnvironmentVariable(EnvironmentNames.DATABASE_PORT) != null &&
+        Environment.GetEnvironmentVariable(EnvironmentNames.DATABASE_NAME) != null &&
+        Environment.GetEnvironmentVariable(EnvironmentNames.DATABASE_USER) != null &&
+        Environment.GetEnvironmentVariable(EnvironmentNames.DATABASE_PASSWORD) != null;
+
     public EnvironmentDatabaseConfiguration()
     {
         var databaseHost = Environment.GetEnvironmentVariable(EnvironmentNames.DATABASE_HOST);
