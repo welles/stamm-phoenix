@@ -5,7 +5,7 @@ using NJsonSchema.Generation;
 using Serilog;
 using StammPhoenix.Api.Core;
 using StammPhoenix.Api.Endpoints.Auth;
-using StammPhoenix.Api.Endpoints.MetaGroup;
+using StammPhoenix.Api.Endpoints.Meta;
 using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Infrastructure.Configuration;
 

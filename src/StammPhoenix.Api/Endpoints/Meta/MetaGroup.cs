@@ -1,6 +1,6 @@
 ﻿using FastEndpoints;
 
-namespace StammPhoenix.Api.Endpoints.MetaGroup;
+namespace StammPhoenix.Api.Endpoints.Meta;
 
 public sealed class MetaGroup : Group
 {

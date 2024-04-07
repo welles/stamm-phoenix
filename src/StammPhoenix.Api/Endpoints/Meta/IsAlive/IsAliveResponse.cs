@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
-namespace StammPhoenix.Api.Endpoints.MetaGroup.IsAlive;
+namespace StammPhoenix.Api.Endpoints.Meta.IsAlive;
 
 [Description("Contains runtime metadata about the API instance.")]
 public sealed class IsAliveResponse

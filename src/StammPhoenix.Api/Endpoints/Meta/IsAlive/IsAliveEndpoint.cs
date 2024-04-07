@@ -2,7 +2,7 @@ using System.Reflection;
 using FastEndpoints;
 using JetBrains.Annotations;
 
-namespace StammPhoenix.Api.Endpoints.MetaGroup.IsAlive;
+namespace StammPhoenix.Api.Endpoints.Meta.IsAlive;
 
 [PublicAPI]
 public class IsAliveEndpoint : EndpointWithoutRequest<IsAliveResponse>

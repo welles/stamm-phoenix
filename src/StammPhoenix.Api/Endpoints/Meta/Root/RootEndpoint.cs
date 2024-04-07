@@ -3,7 +3,7 @@ using System.Text;
 using FastEndpoints;
 using JetBrains.Annotations;
 
-namespace StammPhoenix.Api.Endpoints.MetaGroup.Root;
+namespace StammPhoenix.Api.Endpoints.Meta.Root;
 
 [PublicAPI]
 public class RootEndpoint : EndpointWithoutRequest
