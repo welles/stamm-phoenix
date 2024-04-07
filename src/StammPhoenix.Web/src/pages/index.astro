@@ -1,14 +1,18 @@
 ---
 import Layout from '@/layouts/Layout.astro'
 import '@/styles/globals.css'
-import { isAlive } from '@/lib/api'
+import { isAlive, getEventsPerYear } from '@/lib/api'
+import type { Events } from '@/lib/api/types.ts'
 import { astroI18n, t } from 'astro-i18n'
 
 console.log(isAlive())
+
+const events: Events = await getEventsPerYear(2024)
 ---
 
 <Layout title={t('index.title')}>
 	<main>
 		<p>{t('index.hello')}</p>
+		<p>{JSON.stringify(events)}</p>
 	</main>
 </Layout>
