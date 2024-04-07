@@ -1,19 +1,7 @@
-﻿using FastEndpoints;
+﻿using JetBrains.Annotations;
+using StammPhoenix.Api.Core;
 
 namespace StammPhoenix.Api.Endpoints.Auth;
 
-public sealed class AuthGroup : Group
-{
-    public const string GroupName = "Auth";
-
-    public AuthGroup()
-    {
-        this.Configure("/auth", ep =>
-        {
-            ep.Description(d =>
-            {
-                d.WithTags(AuthGroup.GroupName);
-            });
-        });
-    }
-}
+[PublicAPI]
+public class AuthGroup() : EndpointGroup("Auth", "/auth", "Endpoints for authorizing with the API");
