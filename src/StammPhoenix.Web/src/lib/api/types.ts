@@ -6,6 +6,21 @@ interface ErrorResponse {
 	}
 }
 
+class APIError extends Error {
+	error: ErrorResponse
+
+	constructor(error: ErrorResponse) {
+		super(error.message)
+		this.error = error
+		// Set the prototype explicitly.
+		Object.setPrototypeOf(this, APIError.prototype)
+	}
+
+	getErrorResponse = (): ErrorResponse => {
+		return this.error
+	}
+}
+
 interface Events {
 	year: number
 	count: number
@@ -19,4 +34,4 @@ interface Event {
 	endDate: string
 }
 
-export type { Events, Event, ErrorResponse }
+export { type Events, type Event, type ErrorResponse, APIError }

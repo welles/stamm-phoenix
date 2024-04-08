@@ -8,26 +8,42 @@ import "@/styles/globals.css"
 import type { AstroCookieSetOptions } from "astro"
 import { t } from "astro-i18n"
 import { Show } from "solid-js"
+import { APIError, type ErrorResponse } from "../../lib/api/types.ts"
+
+// set token and error
+let token_: string | null | undefined = null
+let error_: string | null | undefined = null
 
 const jwtCookie = Astro.cookies.get("jwt")
 const jwt: string = jwtCookie ? jwtCookie.value : ""
-const isTokenValid: boolean = await checkToken(jwt)
+
+const isTokenValid: boolean = await checkToken(jwt).catch((error: unknown) => {
+	return false
+})
+
 if (isTokenValid === true) {
 	return Astro.redirect("/")
 }
+
 const email = ""
 const password = ""
-let token_: string | null = null
-let error_: string | null = null
 if (Astro.request.method === "POST") {
 	try {
 		const data = await Astro.request.formData()
 		const email: string | undefined = data.get("email")?.toString()
 		const password: string | undefined = data.get("password")?.toString()
 		if (email && password) {
-			const { token, error } = await login(email, password)
-			token_ = token
-			error_ = error
+			const loginResponse = await login(email, password).catch(
+				(error: unknown) => {
+					if (error instanceof APIError) {
+						return { token: null, error: error.message }
+					}
+				},
+			)
+
+			token_ = loginResponse?.token
+			error_ = loginResponse?.error
+
 			if (token_) {
 				const expiringDate = Date.now() + 60 * 60 * 24 * 1000 // Expiring in 1 day
 				const options: AstroCookieSetOptions = {

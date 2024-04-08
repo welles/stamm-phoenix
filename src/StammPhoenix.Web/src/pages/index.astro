@@ -7,7 +7,9 @@ import { astroI18n, t } from "astro-i18n"
 
 console.log(isAlive())
 
-const events: Events | ErrorResponse = await getEventsPerYear(2024)
+const events: Events = await getEventsPerYear(2024).catch((error: unknown) => {
+	return {} as Events
+})
 ---
 
 <Layout title={t("index.title")}>

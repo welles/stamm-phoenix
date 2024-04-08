@@ -1,5 +1,5 @@
-import axios, { type AxiosError, type AxiosResponse } from "axios"
-import type { ErrorResponse } from "../types"
+import axios, { type AxiosResponse } from "axios"
+import { APIError, type ErrorResponse } from "../types"
 
 /**
  * This function checks if a jwt token is valid.
@@ -14,7 +14,7 @@ import type { ErrorResponse } from "../types"
  *
  */
 
-const checkToken = async (token: string): Promise<boolean | ErrorResponse> => {
+const checkToken = async (token: string): Promise<boolean> => {
 	try {
 		// send request to check if given token is valid
 		const response: AxiosResponse = await axios.get(
@@ -44,14 +44,14 @@ const checkToken = async (token: string): Promise<boolean | ErrorResponse> => {
 				message: error.message,
 				errors: error.response?.data || {},
 			}
-			return errorResponse
+			throw new APIError(errorResponse)
 		}
 		console.error("An unexpected error occurred:", error)
-		return {
+		throw new APIError({
 			statusCode: 500,
 			message: "An unexpected error occurred",
 			errors: {},
-		}
+		})
 	}
 }
 

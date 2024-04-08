@@ -1,5 +1,5 @@
-import axios, { type AxiosError, type AxiosResponse } from "axios"
-import type { ErrorResponse } from "../types"
+import axios, { type AxiosResponse } from "axios"
+import { APIError, type ErrorResponse } from "../types"
 
 interface Credentials {
 	login_email: string
@@ -22,7 +22,7 @@ interface Credentials {
 const login = async (
 	email: string,
 	password: string,
-): Promise<{ token: string | null; error: string | null } | ErrorResponse> => {
+): Promise<{ token: string | null; error: string | null }> => {
 	// start try block for login
 	try {
 		// set credentials
@@ -52,14 +52,14 @@ const login = async (
 				message: error.message,
 				errors: error.response?.data || {},
 			}
-			return errorResponse
+			throw new APIError(errorResponse)
 		}
 		console.error("An unexpected error occurred:", error)
-		return {
+		throw new APIError({
 			statusCode: 500,
 			message: "An unexpected error occurred",
 			errors: {},
-		}
+		})
 	}
 }
 

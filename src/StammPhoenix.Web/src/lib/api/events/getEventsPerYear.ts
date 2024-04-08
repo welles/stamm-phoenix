@@ -1,5 +1,5 @@
 import axios, { type AxiosResponse } from "axios"
-import type { ErrorResponse, Events } from "../types"
+import { APIError, type ErrorResponse, type Events } from "../types"
 
 /**
  * This function gets all events of a given year from the API.
@@ -12,9 +12,7 @@ import type { ErrorResponse, Events } from "../types"
  * const events: Events | ErrorResponse = await getEventsPerYear(2023);
  * ```
  */
-const getEventsPerYear = async (
-	year: number,
-): Promise<Events | ErrorResponse> => {
+const getEventsPerYear = async (year: number): Promise<Events> => {
 	try {
 		// send request to get all events of a given year
 		const response: AxiosResponse<Events | ErrorResponse> = await axios.get(
@@ -25,7 +23,7 @@ const getEventsPerYear = async (
 		if (response.status === 200) {
 			return response.data as Events
 		}
-		return response.data as ErrorResponse
+		throw new APIError(response.data as ErrorResponse)
 	} catch (error: unknown) {
 		if (axios.isAxiosError(error)) {
 			console.error(
@@ -37,14 +35,18 @@ const getEventsPerYear = async (
 				message: error.message,
 				errors: error.response?.data || {},
 			}
-			return errorResponse
+			throw new APIError(errorResponse)
+		}
+		if (error instanceof APIError) {
+			console.error("An unexpected error occurred:", error.message)
+			throw new APIError(error.getErrorResponse())
 		}
 		console.error("An unexpected error occurred:", error)
-		return {
+		throw new APIError({
 			statusCode: 500,
 			message: "An unexpected error occurred",
 			errors: {},
-		}
+		})
 	}
 }
 

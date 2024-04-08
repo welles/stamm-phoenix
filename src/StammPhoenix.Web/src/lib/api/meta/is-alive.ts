@@ -1,5 +1,5 @@
 import axios, { AxiosError, type AxiosResponse } from "axios"
-import type { ErrorResponse } from "../types"
+import { APIError, type ErrorResponse } from "../types"
 
 interface APIMetaData {
 	status: string
@@ -16,7 +16,7 @@ interface APIMetaData {
  * ```
  *
  */
-const isAlive = async (): Promise<APIMetaData | ErrorResponse> => {
+const isAlive = async (): Promise<APIMetaData> => {
 	try {
 		// send request to check if the api is alive
 		const response: AxiosResponse = await axios.get(
@@ -42,14 +42,14 @@ const isAlive = async (): Promise<APIMetaData | ErrorResponse> => {
 				message: error.message,
 				errors: error.response?.data || {},
 			}
-			return errorResponse
+			throw new APIError(errorResponse)
 		}
 		console.error("An unexpected error occurred:", error)
-		return {
+		throw new APIError({
 			statusCode: 500,
 			message: "An unexpected error occurred",
 			errors: {},
-		}
+		} as ErrorResponse)
 	}
 }
 
