@@ -1,41 +1,41 @@
 {
-  "name": "stamm-phoenix-web",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "bun run i18n:sync && astro dev",
-    "build": "bun run i18n:sync  && astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "produce": "bun run build && bun run ./dist/server/entry.mjs",
-    "lint": "biome lint ./src",
-    "format": "biome check ./src",
-    "fix": "biome ci ./src",
-    "i18n:extract": "astro-i18n extract",
-    "i18n:generate:pages": "astro-i18n generate:pages --purge",
-    "i18n:generate:types": "astro-i18n generate:types",
-    "i18n:sync": "npm run i18n:generate:pages && npm run i18n:generate:types"
-  },
-  "dependencies": {
-    "@astrojs/check": "^0.4.1",
-    "@astrojs/node": "^8.2.3",
-    "@astrojs/solid-js": "^4.0.1",
-    "@astrojs/tailwind": "^5.1.0",
-    "@playwright/test": "^1.42.1",
-    "@tailwindcss/forms": "^0.5.7",
-    "astro": "^4.5.15",
-    "astro-i18n": "^2.2.4",
-    "astro-seo": "^0.8.3",
-    "axios": "^1.6.8",
-    "rollup-plugin-node-polyfills": "^0.2.1",
-    "solid-js": "^1.8.12",
-    "tailwind-merge": "^2.2.1",
-    "tailwindcss": "^3.4.1",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.3.3"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.6.4",
-    "@types/bun": "^1.0.8"
-  }
+	"name": "stamm-phoenix-web",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "bun run i18n:sync && astro dev",
+		"build": "bun run i18n:sync  && astro check && astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"produce": "bun run build && bun run ./dist/server/entry.mjs",
+		"lint": "biome lint ./src",
+		"format": "biome check ./src",
+		"fix": "biome ci ./src",
+		"i18n:extract": "astro-i18n extract",
+		"i18n:generate:pages": "astro-i18n generate:pages --purge",
+		"i18n:generate:types": "astro-i18n generate:types",
+		"i18n:sync": "bun run i18n:generate:pages && bun run i18n:generate:types"
+	},
+	"dependencies": {
+		"@astrojs/check": "^0.4.1",
+		"@astrojs/node": "^8.2.3",
+		"@astrojs/solid-js": "^4.0.1",
+		"@astrojs/tailwind": "^5.1.0",
+		"@playwright/test": "^1.42.1",
+		"@tailwindcss/forms": "^0.5.7",
+		"astro": "^4.5.15",
+		"astro-i18n": "^2.2.4",
+		"astro-seo": "^0.8.3",
+		"axios": "^1.6.8",
+		"rollup-plugin-node-polyfills": "^0.2.1",
+		"solid-js": "^1.8.12",
+		"tailwind-merge": "^2.2.1",
+		"tailwindcss": "^3.4.1",
+		"tailwindcss-animate": "^1.0.7",
+		"typescript": "^5.3.3"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.6.4",
+		"@types/bun": "^1.0.8"
+	}
 }

@@ -1,32 +1,25 @@
 FROM oven/bun:alpine AS base
 
 # Set working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# install node and npm
-RUN ["apk", "add", "--no-cache", "nodejs", "npm"]
+COPY package.json bun.lockb ./
 
-# Copy project files
-COPY /src/StammPhoenix.Web/. .
+FROM base AS prod-deps
+RUN bun install --production
 
-# Expose port
-EXPOSE 80
+FROM base AS build-deps
+RUN bun install --production=false
 
-# Verify bun installation
-RUN ["bun", "--version"]
+FROM build-deps AS build
+COPY . .
+RUN bun run build
 
-# Install dependencies
-RUN ["bun", "install"]
+FROM base AS runtime
+COPY --from=prod-deps /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
 
-# Build the project
-RUN ["bun", "run", "build"]
-
-# Set ENV variables 
-ENV PORT=80
 ENV HOST=0.0.0.0
-
-# expose port
+ENV PORT=80
 EXPOSE 80
-
-# Start the application
-CMD ["bun", "run", "produce"]
+CMD ["bun", "./dist/server/entry.mjs"]
