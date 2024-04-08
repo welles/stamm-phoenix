@@ -1,27 +1,29 @@
-import GlassMorphism from './GlassMorphism'
-import LocaleSwitcher from './LocaleSwitcher'
-import { type Component } from 'solid-js'
-import { astroI18n, t, l } from 'astro-i18n'
+import { astroI18n, l, t } from "astro-i18n"
+import type { Component } from "solid-js"
+import GlassMorphism from "./GlassMorphism"
+import LocaleSwitcher from "./LocaleSwitcher"
 
 const Navbar: Component = () => {
-	const baseURL: string = `${window.location.origin}${astroI18n.locale === 'de' ? '' : '/' + astroI18n.locale}`
+	const baseURL: string = `${window.location.origin}${
+		astroI18n.locale === "de" ? "" : `/${astroI18n.locale}`
+	}`
 
 	const navLinks = [
 		{
-			route: baseURL + l('/'),
-			label: t('navbar.links.home'),
+			route: baseURL + l("/"),
+			label: t("navbar.links.home"),
 		},
 		{
-			route: baseURL + l('/anmeldung'),
-			label: t('navbar.links.login'),
+			route: baseURL + l("/anmeldung"),
+			label: t("navbar.links.login"),
 		},
 		{
-			route: baseURL + l('/datenschutz'),
-			label: t('navbar.links.privacy'),
+			route: baseURL + l("/datenschutz"),
+			label: t("navbar.links.privacy"),
 		},
 		{
-			route: baseURL + l('/impressum'),
-			label: t('navbar.links.legal-notice'),
+			route: baseURL + l("/impressum"),
+			label: t("navbar.links.legal-notice"),
 		},
 	]
 
@@ -30,8 +32,9 @@ const Navbar: Component = () => {
 			<GlassMorphism>
 				<div class="container mx-auto px-4 flex justify-between items-center">
 					<div class="navbar-brand float-left">
-						<a href={baseURL + l('/')} class="text-black font-bold">
+						<a href={baseURL + l("/")} class="text-black font-bold">
 							<img
+								alt="phoenix rising from a flame"
 								data-twe-animation-start="onLoad"
 								class="animate-bounce w-[2rem] z-1"
 								src="/favicon.ico"
@@ -52,7 +55,7 @@ const Navbar: Component = () => {
 						<li class="nav-item">
 							<LocaleSwitcher
 								showCurrent={false}
-								labels={{ de: 'German', en: 'English' }}
+								labels={{ de: "German", en: "English" }}
 							/>
 						</li>
 					</ul>

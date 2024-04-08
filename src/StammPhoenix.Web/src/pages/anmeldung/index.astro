@@ -1,29 +1,29 @@
 ---
-import { Show } from 'solid-js'
-import Layout from '@/layouts/Layout.astro'
-import '@/styles/globals.css'
-import { login, checkToken } from '@/lib/api'
-import GlassMorphism from '@/components/GlassMorphism'
-import Input from '@/components/Input'
-import Button from '@/components/Button'
-import type { AstroCookieSetOptions } from 'astro'
-import { t } from 'astro-i18n'
+import Button from "@/components/Button"
+import GlassMorphism from "@/components/GlassMorphism"
+import Input from "@/components/Input"
+import Layout from "@/layouts/Layout.astro"
+import { checkToken, login } from "@/lib/api"
+import "@/styles/globals.css"
+import type { AstroCookieSetOptions } from "astro"
+import { t } from "astro-i18n"
+import { Show } from "solid-js"
 
-const jwtCookie = Astro.cookies.get('jwt')
-const jwt: string = jwtCookie ? jwtCookie.value : ''
+const jwtCookie = Astro.cookies.get("jwt")
+const jwt: string = jwtCookie ? jwtCookie.value : ""
 const isTokenValid: boolean = await checkToken(jwt)
 if (isTokenValid === true) {
-	return Astro.redirect('/')
+	return Astro.redirect("/")
 }
-let email: string = ''
-let password: string = ''
+const email = ""
+const password = ""
 let token_: string | null = null
 let error_: string | null = null
-if (Astro.request.method === 'POST') {
+if (Astro.request.method === "POST") {
 	try {
 		const data = await Astro.request.formData()
-		const email: string | undefined = data.get('email')?.toString()
-		const password: string | undefined = data.get('password')?.toString()
+		const email: string | undefined = data.get("email")?.toString()
+		const password: string | undefined = data.get("password")?.toString()
 		if (email && password) {
 			const { token, error } = await login(email, password)
 			token_ = token
@@ -32,14 +32,14 @@ if (Astro.request.method === 'POST') {
 				const expiringDate = Date.now() + 60 * 60 * 24 * 1000 // Expiring in 1 day
 				const options: AstroCookieSetOptions = {
 					expires: new Date(expiringDate),
-					sameSite: 'strict',
-					path: '/',
+					sameSite: "strict",
+					path: "/",
 				}
-				Astro.cookies.set('jwt', token_, options)
-				return Astro.redirect('/')
+				Astro.cookies.set("jwt", token_, options)
+				return Astro.redirect("/")
 			}
 		}
-	} catch (err: Error | any) {
+	} catch (err: unknown) {
 		if (err instanceof Error) {
 			console.error(err.message)
 		}

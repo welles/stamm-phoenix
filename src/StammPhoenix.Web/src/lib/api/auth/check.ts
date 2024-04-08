@@ -1,4 +1,5 @@
-import axios, { type AxiosError, type AxiosResponse } from 'axios'
+import axios, { type AxiosError, type AxiosResponse } from "axios"
+import type { ErrorResponse } from "../types"
 
 /**
  * This function checks if a jwt token is valid.
@@ -13,11 +14,11 @@ import axios, { type AxiosError, type AxiosResponse } from 'axios'
  *
  */
 
-const checkToken = async (token: string): Promise<boolean> => {
+const checkToken = async (token: string): Promise<boolean | ErrorResponse> => {
 	try {
 		// send request to check if given token is valid
 		const response: AxiosResponse = await axios.get(
-			'https://dev-api.stamm-phoenix.de/auth/check',
+			"https://dev-api.stamm-phoenix.de/auth/check",
 			{
 				headers: {
 					Authorization: `Bearer ${token}`,
@@ -28,24 +29,29 @@ const checkToken = async (token: string): Promise<boolean> => {
 		// check if response status is 204 (meaning token is valid)
 		if (response.status === 204) {
 			return true
-		} else {
-			return false
 		}
+		return false
 
 		// catch errors
-	} catch (error: AxiosError | any) {
-		// check if error is an axios error
+	} catch (error: unknown) {
 		if (axios.isAxiosError(error)) {
 			console.error(
-				'An error occurred while checking the token:',
+				"An error occurred while fetching events:",
 				error.message,
 			)
-		} else {
-			console.error('An error occurred while checking the token:', error)
+			const errorResponse: ErrorResponse = {
+				statusCode: error.response?.status || 500,
+				message: error.message,
+				errors: error.response?.data || {},
+			}
+			return errorResponse
 		}
-
-		// return false if an error occurred
-		return false
+		console.error("An unexpected error occurred:", error)
+		return {
+			statusCode: 500,
+			message: "An unexpected error occurred",
+			errors: {},
+		}
 	}
 }
 

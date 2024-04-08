@@ -1,4 +1,5 @@
-import axios, { AxiosError, type AxiosResponse } from 'axios'
+import axios, { AxiosError, type AxiosResponse } from "axios"
+import type { ErrorResponse } from "../types"
 
 interface APIMetaData {
 	status: string
@@ -15,37 +16,40 @@ interface APIMetaData {
  * ```
  *
  */
-const isAlive = async (): Promise<APIMetaData> => {
+const isAlive = async (): Promise<APIMetaData | ErrorResponse> => {
 	try {
 		// send request to check if the api is alive
 		const response: AxiosResponse = await axios.get(
-			'https://dev-api.stamm-phoenix.de/is-alive',
+			"https://dev-api.stamm-phoenix.de/is-alive",
 		)
 
 		// check if the api is alive
 		if (response.status === 200) {
 			// return meta data
 			return response.data
-		} else {
-			// throw error if the api is not alive
-			throw new AxiosError('API is not alive')
 		}
+		// throw error if the api is not alive
+		throw new AxiosError("API is not alive")
 		// catch error if an error occurs
-	} catch (error: AxiosError | any) {
+	} catch (error: unknown) {
 		if (axios.isAxiosError(error)) {
 			console.error(
-				'An error occurred while checking if the API is alive:',
+				"An error occurred while fetching events:",
 				error.message,
 			)
-		} else {
-			console.error(
-				'An error occurred while checking if the API is alive:',
-				error,
-			)
+			const errorResponse: ErrorResponse = {
+				statusCode: error.response?.status || 500,
+				message: error.message,
+				errors: error.response?.data || {},
+			}
+			return errorResponse
 		}
-
-		// return error
-		return { status: 'error', startup_time: '', version: '' }
+		console.error("An unexpected error occurred:", error)
+		return {
+			statusCode: 500,
+			message: "An unexpected error occurred",
+			errors: {},
+		}
 	}
 }
 

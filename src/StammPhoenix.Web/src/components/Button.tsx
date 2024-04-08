@@ -1,7 +1,7 @@
-import type { ParentProps } from 'solid-js'
+import type { ParentProps } from "solid-js"
 
 interface ButtonProps extends ParentProps {
-	type: 'button' | 'submit' | 'reset'
+	type: "button" | "submit" | "reset"
 	classes: string
 }
 

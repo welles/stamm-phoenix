@@ -7,30 +7,30 @@ interface ThemeModule {
 const theme: ThemeModule = (() => {
 	function toggleTheme() {
 		const body = document.body
-		const isDarkMode = body.classList.contains('dark')
+		const isDarkMode = body.classList.contains("dark")
 
 		if (isDarkMode) {
-			body.classList.remove('dark')
-			if (typeof window !== 'undefined') {
-				localStorage.setItem('theme', 'light')
+			body.classList.remove("dark")
+			if (typeof window !== "undefined") {
+				localStorage.setItem("theme", "light")
 			}
 		} else {
-			body.classList.add('dark')
-			if (typeof window !== 'undefined') {
-				localStorage.setItem('theme', 'dark')
+			body.classList.add("dark")
+			if (typeof window !== "undefined") {
+				localStorage.setItem("theme", "dark")
 			}
 		}
 	}
 
 	function initTheme() {
-		if (typeof window !== 'undefined') {
-			const storedTheme = localStorage.getItem('theme')
+		if (typeof window !== "undefined") {
+			const storedTheme = localStorage.getItem("theme")
 			const body = document.body
 
-			if (storedTheme === 'dark') {
-				body.classList.add('dark')
+			if (storedTheme === "dark") {
+				body.classList.add("dark")
 			} else {
-				body.classList.remove('dark')
+				body.classList.remove("dark")
 			}
 		}
 	}

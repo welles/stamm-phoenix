@@ -2,7 +2,7 @@ interface ErrorResponse {
 	statusCode: number
 	message: string
 	errors: {
-		[key: string]: any[]
+		[key: string]: string[]
 	}
 }
 

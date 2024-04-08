@@ -1,5 +1,5 @@
-import { astroI18n, l } from 'astro-i18n'
-import { type Component } from 'solid-js'
+import { astroI18n, l } from "astro-i18n"
+import type { Component } from "solid-js"
 
 interface Props {
 	showCurrent: boolean

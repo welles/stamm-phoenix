@@ -1,4 +1,5 @@
-import axios, { type AxiosError, type AxiosResponse } from 'axios'
+import axios, { type AxiosError, type AxiosResponse } from "axios"
+import type { ErrorResponse } from "../types"
 
 interface Credentials {
 	login_email: string
@@ -21,7 +22,7 @@ interface Credentials {
 const login = async (
 	email: string,
 	password: string,
-): Promise<{ token: string | null; error: string | null }> => {
+): Promise<{ token: string | null; error: string | null } | ErrorResponse> => {
 	// start try block for login
 	try {
 		// set credentials
@@ -29,29 +30,35 @@ const login = async (
 
 		// send API request and get response
 		const response: AxiosResponse = await axios.post(
-			'https://dev-api.stamm-phoenix.de/auth/login',
+			"https://dev-api.stamm-phoenix.de/auth/login",
 			credentials,
 		)
 
 		// check if response was successful and return token or error
 		if (response.status === 200) {
 			return { token: response.data.token, error: null }
-		} else {
-			return { token: null, error: response.data.error }
 		}
+		return { token: null, error: response.data.error }
 
 		// catch errors
-	} catch (error: AxiosError | any) {
+	} catch (error: unknown) {
 		if (axios.isAxiosError(error)) {
-			return {
-				token: null,
-				error: `An error occurred while logging in: ${error.message}`,
+			console.error(
+				"An error occurred while fetching events:",
+				error.message,
+			)
+			const errorResponse: ErrorResponse = {
+				statusCode: error.response?.status || 500,
+				message: error.message,
+				errors: error.response?.data || {},
 			}
-		} else {
-			return {
-				token: null,
-				error: `An error occurred while logging in: ${error}`,
-			}
+			return errorResponse
+		}
+		console.error("An unexpected error occurred:", error)
+		return {
+			statusCode: 500,
+			message: "An unexpected error occurred",
+			errors: {},
 		}
 	}
 }

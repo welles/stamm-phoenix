@@ -1,5 +1,5 @@
-import axios, { type AxiosResponse } from 'axios'
-import type { ErrorResponse, Events } from '../types'
+import axios, { type AxiosResponse } from "axios"
+import type { ErrorResponse, Events } from "../types"
 
 /**
  * This function gets all events of a given year from the API.
@@ -24,13 +24,12 @@ const getEventsPerYear = async (
 		// check if response status is 200
 		if (response.status === 200) {
 			return response.data as Events
-		} else {
-			return response.data as ErrorResponse
 		}
+		return response.data as ErrorResponse
 	} catch (error: unknown) {
 		if (axios.isAxiosError(error)) {
 			console.error(
-				'An error occurred while fetching events:',
+				"An error occurred while fetching events:",
 				error.message,
 			)
 			const errorResponse: ErrorResponse = {
@@ -39,13 +38,12 @@ const getEventsPerYear = async (
 				errors: error.response?.data || {},
 			}
 			return errorResponse
-		} else {
-			console.error('An unexpected error occurred:', error)
-			return {
-				statusCode: 500,
-				message: 'An unexpected error occurred',
-				errors: {},
-			}
+		}
+		console.error("An unexpected error occurred:", error)
+		return {
+			statusCode: 500,
+			message: "An unexpected error occurred",
+			errors: {},
 		}
 	}
 }

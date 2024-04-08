@@ -1,4 +1,4 @@
-import { mergeProps, splitProps } from 'solid-js'
+import { mergeProps, splitProps } from "solid-js"
 
 interface InputProps {
 	type: string
@@ -15,18 +15,18 @@ const Input = (props: InputProps) => {
 		mergeProps(
 			{
 				error: false,
-				classes: 'border-dpsg-blue',
+				classes: "border-dpsg-blue",
 			},
 			props,
 		),
-		['error', 'classes'],
+		["error", "classes"],
 	)
 
 	return (
 		<input
 			{...input}
 			class={`${local.classes} ${
-				local.error ? 'border-dpsg-red' : 'border-dpsg-blue'
+				local.error ? "border-dpsg-red" : "border-dpsg-blue"
 			}`}
 		/>
 	)
