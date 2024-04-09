@@ -3,6 +3,7 @@ FROM oven/bun:alpine AS base
 # Set working directory
 WORKDIR /app
 
+RUN ls -a
 COPY src/StammPhoenix.Web/package.json src/StammPhoenix.Web/bun.lockb ./
 
 FROM base AS prod-deps
