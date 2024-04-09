@@ -9,7 +9,7 @@ FROM base AS prod-deps
 RUN bun install --production
 
 FROM base AS build-deps
-RUN bun install --production=false
+RUN bun install
 
 FROM build-deps AS build
 COPY . .
