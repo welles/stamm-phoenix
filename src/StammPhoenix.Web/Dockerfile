@@ -10,13 +10,13 @@ WORKDIR /usr/src/app
 
 FROM base AS install_dev
 RUN mkdir -p /temp/dev
-COPY package.json bun.lockb /temp/dev/
+COPY package.json /temp/dev/
 RUN cd /temp/dev && bun install
 
 # install with --production (exclude devDependencies)
 FROM base AS install_prod
 RUN mkdir -p /temp/prod
-COPY package.json bun.lockb /temp/prod/
+COPY package.json /temp/prod/
 RUN cd /temp/prod && bun install
 
 # copy node_modules from temp directory
