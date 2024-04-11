@@ -2,12 +2,10 @@ FROM node:lts-slim AS base
 # install bun
 RUN npm i -g bun
 
-# COPY package.json and lock
-COPY package.json /usr/src/app/
-COPY bun.lockb /usr/src/app/
-
 # Set working directory
 WORKDIR /usr/src/app
+
+COPY . .
 
 # install dependencies into temp directory
 # this will cache them and speed up future builds
@@ -29,7 +27,6 @@ RUN cd /temp/prod && bun install
 # then copy all (non-ignored) project files into the image
 FROM base AS prerelease
 COPY --from=install_dev /temp/dev/node_modules node_modules
-COPY . .
 
 # [optional] tests & build
 ENV NODE_ENV=production
