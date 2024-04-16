@@ -1,28 +1,37 @@
-FROM oven/bun:alpine AS base
+# FROM oven/bun:alpine AS base
+FROM node:lts AS base
+
+RUN ["npm", "install", "-g", "bun"]
 
 # Set working directory
 WORKDIR /usr/src/app
 
-# install node and npm
-RUN ["apk", "add", "--no-cache", "nodejs", "npm"]
+FROM base AS install
 
-# Copy project files
-COPY /src/StammPhoenix.Web/. .
-
-# Expose port
-EXPOSE 80
+# Copy dependency files
+COPY package.json .
 
 # Install dependencies
-RUN ["bun", "install", "--production"]
+RUN ["bun", "install"]
+
+FROM base AS build
+
+COPY --from=install /usr/src/app/node_modules ./node_modules
+COPY . .
 
 # Build the project
 RUN ["bun", "run", "build"]
 
-# Set ENV variables 
+FROM base AS production
+
+# Copy all files needed for production
+COPY --from=build /usr/src/app/. .
+
+# Set ENV variables
 ENV PORT=80
 ENV HOST=0.0.0.0
 
-# expose port
+# Expose port
 EXPOSE 80
 
 # Start the application
