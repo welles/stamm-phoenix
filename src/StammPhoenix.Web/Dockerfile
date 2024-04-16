@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 FROM base AS install
 
 # Copy dependency files
-COPY package.json .
+COPY src/StammPhoenix.Web/package.json .
 
 # Install dependencies
 RUN ["bun", "install"]
@@ -17,7 +17,7 @@ RUN ["bun", "install"]
 FROM base AS build
 
 COPY --from=install /usr/src/app/node_modules ./node_modules
-COPY . .
+COPY src/StammPhoenix.Web/. .
 
 # Build the project
 RUN ["bun", "run", "build"]
