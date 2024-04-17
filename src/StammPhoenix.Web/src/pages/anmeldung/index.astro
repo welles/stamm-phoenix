@@ -5,7 +5,7 @@ import Input from "@/components/Input"
 import Layout from "@/layouts/Layout.astro"
 import { checkToken, login } from "@/lib/api"
 import "@/styles/globals.css"
-import type { AstroCookieSetOptions } from "astro"
+import type { CookieSetOptions } from "astro"
 import { t } from "astro-i18n"
 import { Show } from "solid-js"
 import { APIError, type ErrorResponse } from "../../lib/api/types.ts"
@@ -46,7 +46,7 @@ if (Astro.request.method === "POST") {
 
 			if (token_) {
 				const expiringDate = Date.now() + 60 * 60 * 24 * 1000 // Expiring in 1 day
-				const options: AstroCookieSetOptions = {
+				const options: CookieSetOptions = {
 					expires: new Date(expiringDate),
 					sameSite: "strict",
 					path: "/",
