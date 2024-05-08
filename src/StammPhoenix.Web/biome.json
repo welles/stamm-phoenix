@@ -29,6 +29,12 @@
 		"formatter": {}
 	},
 	"files": {
-		"ignore": ["./src/env.d.ts"]
+		"ignore": [
+			"./src/env.d.ts",
+			"./dist/**",
+			"./node_modules/**",
+			"./.git/**",
+			"./.vscode/**"
+		]
 	}
 }

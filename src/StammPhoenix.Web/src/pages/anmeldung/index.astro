@@ -50,11 +50,13 @@ if (Astro.request.method === "POST") {
 					expires: new Date(expiringDate),
 					sameSite: "strict",
 					path: "/",
-     domain: "",
-     httpOnly: false,
-     maxAge: 60*60*24*1000,
-     secure: false,
-     encode: (s: string) => { return s },
+					domain: "",
+					httpOnly: false,
+					maxAge: 60 * 60 * 24 * 1000,
+					secure: false,
+					encode: (s: string) => {
+						return s
+					},
 				}
 				Astro.cookies.set("jwt", token_, options)
 				return Astro.redirect("/")
