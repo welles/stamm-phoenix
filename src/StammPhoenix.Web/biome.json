@@ -34,7 +34,8 @@
 			"./dist/**",
 			"./node_modules/**",
 			"./.git/**",
-			"./.vscode/**"
+			"./.vscode/**",
+   "./e2e/**"
 		]
 	}
 }
