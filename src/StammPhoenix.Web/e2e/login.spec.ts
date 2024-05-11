@@ -3,11 +3,13 @@ import { expect, test } from "@playwright/test"
 test("Login Test", async ({ page }) => {
 	// Navigate to the website
 	await page.goto("/")
+const vp_width: int | undefined = page.viewportSize?.width
 
-	if (page.viewportSize()?.width <= 550) {
+if (vp_width != undefined) {
+	if (vp_width <= 550) {
 		return
 		// await page.locator('#menu').click()
-	}
+	}}
 
 	// Click on the Login link in the navbar
 	await page.getByRole("link", { name: "Anmelden" }).click()
