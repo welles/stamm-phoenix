@@ -1,8 +1,9 @@
 import axios, { AxiosError, type AxiosResponse } from "axios"
 import { APIError, type ErrorResponse } from "../types"
 
-interface APIMetaData {
+interface ApiMetaData {
 	status: string
+	// biome-ignore lint: has to be snake_case
 	startup_time: string
 	version: string
 }
@@ -16,7 +17,7 @@ interface APIMetaData {
  * ```
  *
  */
-const isAlive = async (): Promise<APIMetaData> => {
+const isAlive = async (): Promise<ApiMetaData> => {
 	try {
 		// send request to check if the api is alive
 		const response: AxiosResponse = await axios.get(

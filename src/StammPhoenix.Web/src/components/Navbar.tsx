@@ -4,25 +4,25 @@ import GlassMorphism from "./GlassMorphism"
 import LocaleSwitcher from "./LocaleSwitcher"
 
 const Navbar: Component = () => {
-	const baseURL: string = `${window.location.origin}${
+	const baseUrl: string = `${window.location.origin}${
 		astroI18n.locale === "de" ? "" : `/${astroI18n.locale}`
 	}`
 
 	const navLinks = [
 		{
-			route: baseURL + l("/"),
+			route: baseUrl + l("/"),
 			label: t("navbar.links.home"),
 		},
 		{
-			route: baseURL + l("/anmeldung"),
+			route: baseUrl + l("/anmeldung"),
 			label: t("navbar.links.login"),
 		},
 		{
-			route: baseURL + l("/datenschutz"),
+			route: baseUrl + l("/datenschutz"),
 			label: t("navbar.links.privacy"),
 		},
 		{
-			route: baseURL + l("/impressum"),
+			route: baseUrl + l("/impressum"),
 			label: t("navbar.links.legal-notice"),
 		},
 	]
@@ -32,7 +32,7 @@ const Navbar: Component = () => {
 			<GlassMorphism>
 				<div class="container mx-auto px-4 flex justify-between items-center">
 					<div class="navbar-brand float-left">
-						<a href={baseURL + l("/")} class="text-black font-bold">
+						<a href={baseUrl + l("/")} class="text-black font-bold">
 							<img
 								alt="phoenix rising from a flame"
 								data-twe-animation-start="onLoad"

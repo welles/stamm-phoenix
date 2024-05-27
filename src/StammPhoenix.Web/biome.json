@@ -6,12 +6,47 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"all": true,
+			"complexity": {
+				"noUselessFragments": "off"
+			},
+			"style": {
+				"useSingleVarDeclarator": "off",
+				"noParameterAssign": "off",
+				"noNonNullAssertion": "off",
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"strictCase": false
+					}
+				},
+				"noDefaultExport": "off",
+				"useFilenamingConvention": {
+					"options": {
+						"strictCase": false,
+						"filenameCases": [
+							"camelCase",
+							"PascalCase",
+							"snake_case",
+							"kebab-case"
+						]
+					}
+				}
+			},
+			"suspicious": {
+				"noExplicitAny": "off"
+			},
+			"nursery": {
+				"all": false
+			},
+			"correctness": {
+				"useHookAtTopLevel": "off"
+			}
 		}
 	},
 	"formatter": {
 		"enabled": true,
-		"formatWithErrors": false,
+		"formatWithErrors": true,
 		"indentStyle": "tab",
 		"indentWidth": 4,
 		"lineWidth": 80,

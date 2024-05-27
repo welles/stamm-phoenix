@@ -1,23 +1,17 @@
 ---
-import Button from "@/components/Button"
-import GlassMorphism from "@/components/GlassMorphism"
-import Input from "@/components/Input"
-import Layout from "@/layouts/Layout.astro"
 import { checkToken, login } from "@/lib/api"
 import "@/styles/globals.css"
 import type { AstroCookieSetOptions } from "astro"
-import { t } from "astro-i18n"
-import { Show } from "solid-js"
-import { APIError, type ErrorResponse } from "../../lib/api/types.ts"
+import { APIError } from "../../lib/api/types.ts"
 
 // set token and error
 let token_: string | null | undefined = null
-let error_: string | null | undefined = null
+let _error_: string | null | undefined = null
 
 const jwtCookie = Astro.cookies.get("jwt")
 const jwt: string = jwtCookie ? jwtCookie.value : ""
 
-const isTokenValid: boolean = await checkToken(jwt).catch((error: unknown) => {
+const isTokenValid: boolean = await checkToken(jwt).catch((_error: unknown) => {
 	return false
 })
 
@@ -25,8 +19,8 @@ if (isTokenValid === true) {
 	return Astro.redirect("/")
 }
 
-const email = ""
-const password = ""
+const _email = ""
+const _password = ""
 if (Astro.request.method === "POST") {
 	try {
 		const data = await Astro.request.formData()
@@ -42,7 +36,7 @@ if (Astro.request.method === "POST") {
 			)
 
 			token_ = loginResponse?.token
-			error_ = loginResponse?.error
+			_error_ = loginResponse?.error
 
 			if (token_) {
 				const expiringDate = Date.now() + 60 * 60 * 24 * 1000 // Expiring in 1 day

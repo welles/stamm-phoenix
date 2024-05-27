@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test"
+import { test } from "@playwright/test"
 
 test("Login Test", async ({ page }) => {
 	// Navigate to the website
@@ -22,7 +22,6 @@ const vp_width: int | undefined = page.viewportSize?.width
 	const jwtCookie = cookies.find((cookie) => cookie.name === "jwt")
 
 	if (jwtCookie) {
-		console.log("JWT cookie found:", jwtCookie.value)
 	} else {
 		throw new Error("Login failed, no JWT cookie")
 	}

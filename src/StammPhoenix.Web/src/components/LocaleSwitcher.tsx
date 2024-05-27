@@ -15,7 +15,9 @@ const LocaleSwitcher: Component<Props> = (props: Props) => {
 	for (const [key, value] of Object.entries(
 		new URLSearchParams(window.location.search),
 	)) {
-		if (value === undefined) continue
+		if (value === undefined) {
+			continue
+		}
 		params[key] = String(value)
 	}
 
