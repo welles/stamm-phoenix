@@ -3,6 +3,7 @@ import { checkToken, login } from "@/lib/api"
 import "@/styles/globals.css"
 import type { AstroCookieSetOptions } from "astro"
 import { APIError } from "../../lib/api/types.ts"
+import Layout from '../../layouts/Layout.astro'
 
 // set token and error
 let token_: string | null | undefined = null
