@@ -2,7 +2,7 @@
 import { getEventsPerYear } from "@/lib/api"
 import type { Events } from "@/lib/api/types.ts"
 import "@/styles/globals.css"
-import Layout from '../../layouts/Layout.astro'
+import Layout from '@/layouts/Layout.astro'
 
 const _events: Events = await getEventsPerYear(2024).catch(
 	(_error: unknown) => {
