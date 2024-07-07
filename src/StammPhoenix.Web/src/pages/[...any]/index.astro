@@ -2,8 +2,10 @@
 import "@/styles/globals.css"
 import { astroI18n } from "astro-i18n"
 import Layout from '../../layouts/Layout.astro'
+import { t } from 'astro-i18n'
+import { getRelativeLocaleUrl } from 'astro:i18n'
 
-const _locale: string = astroI18n.locale
+const locale: string = astroI18n.locale
 ---
 
 <Layout title={t('404.title')}>

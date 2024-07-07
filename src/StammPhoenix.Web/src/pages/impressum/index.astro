@@ -1,6 +1,7 @@
 ---
 import "@/styles/globals.css"
 import Layout from '../../layouts/Layout.astro'
+import GlassMorphism from '../../components/GlassMorphism.tsx'
 
 interface Contact {
 	name: string
@@ -8,7 +9,7 @@ interface Contact {
 	addressStreet: string
 	addressCity: string
 }
-const _contacts: Contact[] = [
+const contacts: Contact[] = [
 	{
 		name: "Dominik Schmid",
 		phoneNumber: "+49 177 6092939",

@@ -9,7 +9,7 @@ for (const [key, value] of Object.entries(Astro.params)) {
 	params[key] = String(value)
 }
 
-const _hrefLangs = astroI18n.locales.map((locale) => ({
+const hrefLangs = astroI18n.locales.map((locale) => ({
 	href:
 		Astro.url.origin +
 		astroI18n.l(Astro.url.pathname, params, {

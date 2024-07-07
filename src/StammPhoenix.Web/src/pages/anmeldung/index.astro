@@ -4,10 +4,15 @@ import "@/styles/globals.css"
 import type { AstroCookieSetOptions } from "astro"
 import { APIError } from "../../lib/api/types.ts"
 import Layout from '../../layouts/Layout.astro'
+import { t } from 'astro-i18n'
+import GlassMorphism from '../../components/GlassMorphism.tsx'
+import Input from "@/components/Input"
+import { Show } from "solid-js"
+import Button from "@/components/Button"
 
 // set token and error
 let token_: string | null | undefined = null
-let _error_: string | null | undefined = null
+let error_: string | null | undefined = null
 
 const jwtCookie = Astro.cookies.get("jwt")
 const jwt: string = jwtCookie ? jwtCookie.value : ""
@@ -20,8 +25,8 @@ if (isTokenValid === true) {
 	return Astro.redirect("/")
 }
 
-const _email = ""
-const _password = ""
+const email = ""
+const password = ""
 if (Astro.request.method === "POST") {
 	try {
 		const data = await Astro.request.formData()
@@ -37,7 +42,7 @@ if (Astro.request.method === "POST") {
 			)
 
 			token_ = loginResponse?.token
-			_error_ = loginResponse?.error
+			error_ = loginResponse?.error
 
 			if (token_) {
 				const expiringDate = Date.now() + 60 * 60 * 24 * 1000 // Expiring in 1 day

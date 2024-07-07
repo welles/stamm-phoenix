@@ -3,8 +3,9 @@ import { getEventsPerYear } from "@/lib/api"
 import type { Events } from "@/lib/api/types.ts"
 import "@/styles/globals.css"
 import Layout from '@/layouts/Layout.astro'
+import { t } from 'astro-i18n'
 
-const _events: Events = await getEventsPerYear(2024).catch(
+const events: Events = await getEventsPerYear(2024).catch(
 	(_error: unknown) => {
 		return {} as Events
 	},
