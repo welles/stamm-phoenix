@@ -1,81 +1,66 @@
 ---
-import "@/styles/globals.css"
-import type { AstroCookieSetOptions } from "astro"
-import { login, checkToken, setToken } from '@/lib/api';
+import "@/styles/globals.css";
+import type { AstroCookieSetOptions } from "astro";
+import { login, isTokenValid } from '@/lib/api';
 import type { LoginRequest } from '@/lib/api/types';
-import Layout from '../../layouts/Layout.astro'
-import { t } from 'astro-i18n'
-import GlassMorphism from '../../components/GlassMorphism.tsx'
-import Input from "@/components/Input"
-import { Show } from "solid-js"
-import Button from "@/components/Button"
+import Layout from '../../layouts/Layout.astro';
+import { t } from 'astro-i18n';
+import GlassMorphism from '../../components/GlassMorphism.tsx';
+import Input from "@/components/Input";
+import { Show } from "solid-js";
+import Button from "@/components/Button";
 
+// Initialize error variable
+let error_: string | null | undefined = null;
 
-async function checkTokenValidity(token: string): Promise<boolean> {
-    // Step 1: Login to get the token
-    try {
-        // Step 2: Set the token
-        setToken(token);
+// Get JWT token from cookies
+const jwtCookie = Astro.cookies.get("jwt");
+const jwt: string = jwtCookie ? jwtCookie.value : "";
 
-        // Step 3: Check if the token is valid
-        await checkToken();
-        return true;
-    } catch (error) {
-        return false;
-    }
+// Check if the token is valid
+const tokenValidity: boolean = await isTokenValid(jwt);
+
+if (tokenValidity) {
+    return Astro.redirect("/");
 }
 
-// set token and error
-let error_: string | null | undefined = null
-
-const jwtCookie = Astro.cookies.get("jwt")
-const jwt: string = jwtCookie ? jwtCookie.value : ""
-
-setToken(jwt)
-
-const isTokenValid: boolean = await checkTokenValidity(jwt)
-
-if (isTokenValid === true) {
-	return Astro.redirect("/")
-}
-
-let password: string | undefined = ""
+// Initialize login data
 let email: string | undefined = ""
+let password: string | undefined = ""
+let loginData: LoginRequest
 
-let loginData: LoginRequest = {
-    login_email: email,
-    password: password,
-}
-
+// Handle POST request
 if (Astro.request.method === "POST") {
-	try {
-		const data = await Astro.request.formData()
-        loginData = { login_email: data.get("email")?.toString(), password: data.get("email")?.toString() || "" }
-		if (loginData) {
-			await login(loginData).then(response => {
-                setToken(response.token);
-				const expiringDate = Date.now() + 60 * 60 * 24 * 1000 // Expiring in 1 day
-				const options: AstroCookieSetOptions = {
-					expires: new Date(expiringDate),
-					sameSite: "strict",
-					path: "/",
-					domain: "",
-					httpOnly: false,
-					maxAge: 60 * 60 * 24 * 1000,
-					secure: false,
-					encode: (s: string) => {
-						return s
-					},
-				}
-				Astro.cookies.set("jwt", response.token, options)
-				return Astro.redirect("/")
-            });
+    try {
+        const data = await Astro.request.formData();
+        loginData = {
+            login_email: data.get("email")?.toString(),
+            password: data.get("password")?.toString() || "",
+        };
+
+        if (loginData.login_email && loginData.password) {
+            const response = await login(loginData);
+            const token = response.token;
+
+            const expiringDate = Date.now() + 60 * 60 * 24 * 1000; // Expiring in 1 day
+            const options: AstroCookieSetOptions = {
+                expires: new Date(expiringDate),
+                sameSite: "strict",
+                path: "/",
+                httpOnly: true,
+                maxAge: 60 * 60 * 24 * 1000,
+                secure: true,
+            };
+
+            Astro.cookies.set("jwt", token, options);
+            return Astro.redirect("/");
         }
-	} catch (err: unknown) {
-		if (err instanceof Error) {
-			console.error(err.message)
-		}
-	}
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            console.error(err.message);
+            error_ = err.message;
+        }
+    }
 }
 ---
 

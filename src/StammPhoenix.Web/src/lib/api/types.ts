@@ -7,17 +7,11 @@ export interface LoginResponse {
 	token: string
 }
 
-export interface IsAliveResponse {
-	status: string
-	startup_time: string
-	version: string
-}
-
 export interface PostEventRequest {
 	name: string
 	link: string
-	startDate: string
-	endDate?: string
+	startDate: string // format: date
+	endDate?: string // format: date
 }
 
 export interface GetPublicEventsResponse {
@@ -29,6 +23,6 @@ export interface GetPublicEventsResponse {
 export interface PublicEventModel {
 	name: string
 	link: string
-	startDate: string
-	endDate?: string
+	startDate: string // format: date
+	endDate?: string // format: date
 }
