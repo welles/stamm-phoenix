@@ -1,6 +1,11 @@
-import { checkToken } from "./auth/check.ts"
-import { login } from "./auth/login.ts"
-import { getEventsPerYear } from "./events/getEventsPerYear.ts"
-import { isAlive } from "./meta/is-alive.ts"
+export * from "./auth"
+export * from "./events"
+export * from "./meta"
+export type * from "./types"
 
-export { login, checkToken, isAlive, getEventsPerYear }
+import { APIClient } from "./apiClient"
+
+export const setToken = (newToken: string) => {
+	// Update token for all API clients
+	APIClient.prototype.api.defaults.headers.Authorization = `Bearer ${newToken}`
+}

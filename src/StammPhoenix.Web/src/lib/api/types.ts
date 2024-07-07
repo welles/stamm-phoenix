@@ -1,37 +1,34 @@
-interface ErrorResponse {
-	statusCode: number
-	message: string
-	errors: {
-		[key: string]: string[]
-	}
+export interface LoginRequest {
+	login_email?: string
+	password: string
 }
 
-class APIError extends Error {
-	error: ErrorResponse
-
-	constructor(error: ErrorResponse) {
-		super(error.message)
-		this.error = error
-		// Set the prototype explicitly.
-		Object.setPrototypeOf(this, APIError.prototype)
-	}
-
-	getErrorResponse = (): ErrorResponse => {
-		return this.error
-	}
+export interface LoginResponse {
+	token: string
 }
 
-interface Events {
-	year: number
-	count: number
-	events: Event[]
+export interface IsAliveResponse {
+	status: string
+	startup_time: string
+	version: string
 }
 
-interface Event {
+export interface PostEventRequest {
 	name: string
 	link: string
 	startDate: string
-	endDate: string
+	endDate?: string
 }
 
-export { type Events, type Event, type ErrorResponse, APIError }
+export interface GetPublicEventsResponse {
+	year: number
+	count: number
+	events: PublicEventModel[]
+}
+
+export interface PublicEventModel {
+	name: string
+	link: string
+	startDate: string
+	endDate?: string
+}

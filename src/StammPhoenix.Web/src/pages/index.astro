@@ -1,15 +1,11 @@
 ---
-import { getEventsPerYear } from "@/lib/api"
-import type { Events } from "@/lib/api/types.ts"
+import { getPublicEvents } from '@/lib/api';
+import type { PublicEventModel } from '@/lib/api/types';
 import "@/styles/globals.css"
 import Layout from '@/layouts/Layout.astro'
 import { t } from 'astro-i18n'
 
-const events: Events = await getEventsPerYear(2024).catch(
-	(_error: unknown) => {
-		return {} as Events
-	},
-)
+const events: PublicEventModel = await getPublicEvents(2024).then()
 ---
 
 <Layout title={t("index.title")}>

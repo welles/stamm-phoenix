@@ -1,8 +1,8 @@
 ---
-import { checkToken, login } from "@/lib/api"
 import "@/styles/globals.css"
 import type { AstroCookieSetOptions } from "astro"
-import { APIError } from "../../lib/api/types.ts"
+import { login, checkToken, setToken } from '@/lib/api';
+import type { LoginRequest } from '@/lib/api/types';
 import Layout from '../../layouts/Layout.astro'
 import { t } from 'astro-i18n'
 import GlassMorphism from '../../components/GlassMorphism.tsx'
@@ -10,41 +10,50 @@ import Input from "@/components/Input"
 import { Show } from "solid-js"
 import Button from "@/components/Button"
 
+
+async function checkTokenValidity(token: string): Promise<boolean> {
+    // Step 1: Login to get the token
+    try {
+        // Step 2: Set the token
+        setToken(token);
+
+        // Step 3: Check if the token is valid
+        await checkToken();
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
 // set token and error
-let token_: string | null | undefined = null
 let error_: string | null | undefined = null
 
 const jwtCookie = Astro.cookies.get("jwt")
 const jwt: string = jwtCookie ? jwtCookie.value : ""
 
-const isTokenValid: boolean = await checkToken(jwt).catch((_error: unknown) => {
-	return false
-})
+setToken(jwt)
+
+const isTokenValid: boolean = await checkTokenValidity(jwt)
 
 if (isTokenValid === true) {
 	return Astro.redirect("/")
 }
 
-const email = ""
-const password = ""
+let password: string | undefined = ""
+let email: string | undefined = ""
+
+let loginData: LoginRequest = {
+    login_email: email,
+    password: password,
+}
+
 if (Astro.request.method === "POST") {
 	try {
 		const data = await Astro.request.formData()
-		const email: string | undefined = data.get("email")?.toString()
-		const password: string | undefined = data.get("password")?.toString()
-		if (email && password) {
-			const loginResponse = await login(email, password).catch(
-				(error: unknown) => {
-					if (error instanceof APIError) {
-						return { token: null, error: error.message }
-					}
-				},
-			)
-
-			token_ = loginResponse?.token
-			error_ = loginResponse?.error
-
-			if (token_) {
+        loginData = { login_email: data.get("email")?.toString(), password: data.get("email")?.toString() || "" }
+		if (loginData) {
+			await login(loginData).then(response => {
+                setToken(response.token);
 				const expiringDate = Date.now() + 60 * 60 * 24 * 1000 // Expiring in 1 day
 				const options: AstroCookieSetOptions = {
 					expires: new Date(expiringDate),
@@ -58,10 +67,10 @@ if (Astro.request.method === "POST") {
 						return s
 					},
 				}
-				Astro.cookies.set("jwt", token_, options)
+				Astro.cookies.set("jwt", response.token, options)
 				return Astro.redirect("/")
-			}
-		}
+            });
+        }
 	} catch (err: unknown) {
 		if (err instanceof Error) {
 			console.error(err.message)
