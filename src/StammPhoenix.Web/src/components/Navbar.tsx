@@ -1,12 +1,10 @@
-import { astroI18n, l, t } from "astro-i18n"
+import { l, t } from "astro-i18n"
 import type { Component } from "solid-js"
 import GlassMorphism from "./GlassMorphism"
 import LocaleSwitcher from "./LocaleSwitcher"
 
 const Navbar: Component = () => {
-	const baseUrl: string = `${window.location.origin}${
-		astroI18n.locale === "de" ? "" : `/${astroI18n.locale}`
-	}`
+	const baseUrl: string = `${window.location.origin}` // ${ astroI18n.locale === "de" ? "" : `/${astroI18n.locale}` }`
 
 	const navLinks = [
 		{
@@ -45,7 +43,7 @@ const Navbar: Component = () => {
 						{navLinks.map(({ route, label }) => (
 							<li class="nav-item">
 								<a
-									class="nav-link text-black hover:text-gray-600"
+									class="nav-link text-black hover:text-gray-600 hover:underline"
 									href={route}
 								>
 									{label}
@@ -53,10 +51,7 @@ const Navbar: Component = () => {
 							</li>
 						))}
 						<li class="nav-item">
-							<LocaleSwitcher
-								showCurrent={false}
-								labels={{ de: "German", en: "English" }}
-							/>
+							<LocaleSwitcher />
 						</li>
 					</ul>
 				</div>
