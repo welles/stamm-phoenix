@@ -8,7 +8,7 @@ export const getMetadata = async (): Promise<string> => {
 	return response.data
 }
 
-export const isAlive = async (): Promise<void> => {
+export const isAlive = async (): Promise<string> => {
 	const api = createApiClient(BASE_URL)
-	await api.get("/is-alive")
+	return await api.get("/is-alive").data
 }
