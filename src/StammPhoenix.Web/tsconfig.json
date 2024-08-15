@@ -1,15 +1,4 @@
 {
-	"extends": "astro/tsconfigs/strict",
-	"compilerOptions": {
-		"jsx": "preserve",
-		"jsxImportSource": "solid-js",
-		"resolveJsonModule": true,
-		"allowJs": true,
-		"module": "esnext",
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["./src/*"]
-		},
-		"types": ["@types/bun"]
-	}
+	// https://nuxt.com/docs/guide/concepts/typescript
+	"extends": "./.nuxt/tsconfig.json"
 }

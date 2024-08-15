@@ -1,7 +1,5 @@
-# FROM oven/bun:alpine AS base
-FROM node:lts AS base
-
-RUN ["npm", "install", "-g", "bun"]
+FROM oven/bun:alpine AS base
+# FROM node:lts AS base
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -9,7 +7,7 @@ WORKDIR /usr/src/app
 FROM base AS install
 
 # Copy dependency files
-COPY src/StammPhoenix.Web/package.json .
+COPY package.json .
 
 # Install dependencies
 RUN ["bun", "install"]
@@ -17,7 +15,7 @@ RUN ["bun", "install"]
 FROM base AS build
 
 COPY --from=install /usr/src/app/node_modules ./node_modules
-COPY src/StammPhoenix.Web/. .
+COPY . .
 
 # Build the project
 RUN ["bun", "run", "build"]
@@ -35,4 +33,4 @@ ENV HOST=0.0.0.0
 EXPOSE 80
 
 # Start the application
-CMD ["bun", "run", "./dist/server/entry.mjs"]
+CMD ["bun", "run", ".output/server/index.mjs"]
