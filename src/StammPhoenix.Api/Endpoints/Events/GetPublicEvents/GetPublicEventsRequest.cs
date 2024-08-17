@@ -2,5 +2,5 @@
 
 public record GetPublicEventsRequest
 {
-    public int? Year { get; init; }
+    public required int Year { get; init; }
 }

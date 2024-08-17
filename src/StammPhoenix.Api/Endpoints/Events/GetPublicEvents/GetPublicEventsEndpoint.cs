@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using MediatR;
 using StammPhoenix.Api.Core;
 
 namespace StammPhoenix.Api.Endpoints.Events.GetPublicEvents;
@@ -6,6 +7,10 @@ namespace StammPhoenix.Api.Endpoints.Events.GetPublicEvents;
 [PublicAPI]
 public sealed class GetPublicEventsEndpoint : GetEndpoint<GetPublicEventsRequest, GetPublicEventsResponse, EventsGroup>
 {
+    private IMediator Mediator { get; }
+
+    private IMapper Mapper { get; }
+
     public override string EndpointRoute { get; } = "/public/{Year}";
 
     public override string EndpointSummary { get; } = "Get public events";
@@ -13,31 +18,24 @@ public sealed class GetPublicEventsEndpoint : GetEndpoint<GetPublicEventsRequest
     public override string EndpointDescription { get; } =
         "Gets a list of events that have been released to the public";
 
+    public GetPublicEventsEndpoint(IMediator mediator, IMapper mapper)
+    {
+        Mediator = mediator;
+        Mapper = mapper;
+    }
+
     public override async Task<GetPublicEventsResponse> ExecuteAsync(GetPublicEventsRequest req, CancellationToken ct)
     {
-        await Task.Delay(2000);
+        var command = this.Mapper.GetPublicEventsRequestToGetPublicEventsCommand(req);
 
-        return await Task.FromResult(new GetPublicEventsResponse
+        var result = await this.Mediator.Send(command, ct);
+
+        var models = result.Select(x => this.Mapper.EventToGetPublicEventsModel(x)).ToArray();
+
+        return new GetPublicEventsResponse
         {
-            Year = req.Year!.Value,
-            Count = 2,
-            Events = new[]
-            {
-                new PublicEventModel
-                {
-                    Name = $"Stammeslager {req.Year}",
-                    Link = $"stammeslager_{req.Year}",
-                    StartDate = DateOnly.Parse($"{req.Year}-01-01"),
-                    EndDate = DateOnly.Parse($"{req.Year}-01-07"),
-                },
-                new PublicEventModel
-                {
-                    Name = $"Hüttenwochenende {req.Year}",
-                    Link = $"huettenwochenende_{req.Year}",
-                    StartDate = DateOnly.Parse($"{req.Year}-10-15"),
-                    EndDate = DateOnly.Parse($"{req.Year}-10-18"),
-                }
-            }
-        });
+            Year = req.Year,
+            Events = models
+        };
     }
 }
