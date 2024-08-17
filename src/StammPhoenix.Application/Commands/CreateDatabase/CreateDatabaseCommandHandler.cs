@@ -10,7 +10,7 @@ public class CreateDatabaseCommandHandler(IDatabaseManager databaseManager)
 
     public async Task<bool> Handle(CreateDatabaseCommand request, CancellationToken cancellationToken)
     {
-        if (await this.DatabaseManager.EnsureCreatedAsync(cancellationToken) == false)
+        if (await this.DatabaseManager.CanConnectAsync(cancellationToken) == false)
         {
             await this.DatabaseManager.MigrateDatabaseAsync(cancellationToken);
 

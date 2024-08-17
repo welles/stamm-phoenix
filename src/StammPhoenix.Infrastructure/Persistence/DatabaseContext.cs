@@ -66,9 +66,14 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         await this.Database.MigrateAsync(cancellationToken);
     }
 
-    public async Task<bool> EnsureCreatedAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<string>> GetPendingMigrationsAsync(CancellationToken cancellationToken)
     {
-        return await this.Database.EnsureCreatedAsync(cancellationToken);
+        return await this.Database.GetPendingMigrationsAsync(cancellationToken);
+    }
+
+    public async Task<bool> CanConnectAsync(CancellationToken cancellationToken)
+    {
+        return await this.Database.CanConnectAsync(cancellationToken);
     }
 
     public async Task<IReadOnlyCollection<Leader>> GetLeaders(CancellationToken cancellationToken)
