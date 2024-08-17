@@ -21,7 +21,7 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, Eve
 
     public async Task<Event> Handle(CreateEventCommand request, CancellationToken cancellationToken)
     {
-        var result = await this.EventRepository.AddEvent(request.Title, request.Link, request.StartDate, request.EndDate, request.Description);
+        var result = await this.EventRepository.AddEvent(request.Title, request.Link, request.StartDate, request.EndDate, request.Description, cancellationToken);
 
         return result;
     }

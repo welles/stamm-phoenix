@@ -107,7 +107,7 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         return leaderResult.Entity;
     }
 
-    public async Task<Event> AddEvent(string title, string link, DateOnly startDate, DateOnly? endDate, string? description)
+    public async Task<Event> AddEvent(string title, string link, DateOnly startDate, DateOnly? endDate, string? description, CancellationToken ct)
     {
         if (this.Events.Any(x => x.Title == title && x.StartDate.Year == startDate.Year))
         {
@@ -129,9 +129,9 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
             LastModifiedBy = this.CurrentUser.Name
         };
 
-        var eventResult = await this.Events.AddAsync(newEvent);
+        var eventResult = await this.Events.AddAsync(newEvent, ct);
 
-        await this.SaveChangesAsync();
+        await this.SaveChangesAsync(ct);
 
         return eventResult.Entity;
     }
