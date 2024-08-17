@@ -9,6 +9,8 @@ public class CreateEventCommand : IRequest<Event>
 
     public required string Link { get; set; }
 
+    public required bool IsPublic { get; set; }
+
     public required DateOnly StartDate { get; set; }
 
     public DateOnly? EndDate { get; set; }

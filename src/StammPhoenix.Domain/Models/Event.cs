@@ -41,4 +41,9 @@ public sealed class Event : DomainEntity
     /// A simple and short unique name for the event that can be used in URLs.
     /// </summary>
     public required string Link { get; set; }
+
+    /// <summary>
+    /// Whether the event should be displayed on the public facing event calendar.
+    /// </summary>
+    public required bool Public { get; set; }
 }
