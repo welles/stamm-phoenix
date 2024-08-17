@@ -20,6 +20,7 @@ public static class Services
 
         services.AddScoped<IDatabaseManager>(provider => provider.GetRequiredService<DatabaseContext>());
         services.AddScoped<ILeaderRepository>(provider => provider.GetRequiredService<DatabaseContext>());
+        services.AddScoped<IEventRepository>(provider => provider.GetRequiredService<DatabaseContext>());
 
         services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
 

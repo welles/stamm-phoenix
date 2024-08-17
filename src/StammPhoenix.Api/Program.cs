@@ -1,6 +1,7 @@
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Serilog;
+using StammPhoenix.Api.Middlewares;
 using StammPhoenix.Application;
 using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Infrastructure;
@@ -44,6 +45,9 @@ public static class Program
             };
          })
          .UseSwaggerGen();
+
+      app.UseMiddleware<ValidationExceptionHandlingMiddleware>();
+      app.UseMiddleware<DomainExceptionHandlingMiddleware>();
 
       await app.RunAsync();
    }

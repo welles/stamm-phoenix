@@ -1,9 +1,11 @@
-﻿using MediatR;
+﻿using JetBrains.Annotations;
+using MediatR;
 using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Domain.Models;
 
 namespace StammPhoenix.Application.Commands.CreateLeader;
 
+[UsedImplicitly]
 public class CreateLeaderCommandHandler : IRequestHandler<CreateLeaderCommand, Leader>
 {
     private ILeaderRepository LeaderRepository { get; }

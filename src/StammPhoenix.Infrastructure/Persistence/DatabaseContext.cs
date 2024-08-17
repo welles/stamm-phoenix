@@ -9,7 +9,7 @@ using StammPhoenix.Domain.Models;
 
 namespace StammPhoenix.Infrastructure.Persistence;
 
-public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderRepository
+public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderRepository, IEventRepository
 {
     public DatabaseContext(IDatabaseConfiguration databaseConfiguration, IEnumerable<ISaveChangesInterceptor> saveChangesInterceptors, IPasswordHasher passwordHasher, ICurrentUser currentUser)
     {
@@ -105,5 +105,34 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         await this.SaveChangesAsync();
 
         return leaderResult.Entity;
+    }
+
+    public async Task<Event> AddEvent(string title, string link, DateOnly startDate, DateOnly? endDate, string? description)
+    {
+        if (this.Events.Any(x => x.Title == title && x.StartDate.Year == startDate.Year))
+        {
+            throw new EventAlreadyExistsException(title, startDate);
+        }
+
+        var newEvent = new Event
+        {
+            Title = title,
+            Link = link,
+            StartDate = startDate,
+            EndDate = endDate,
+            Description = description,
+
+            Id = Guid.NewGuid(),
+            CreatedAt = DateTimeOffset.UtcNow,
+            CreatedBy = this.CurrentUser.Name,
+            LastModifiedAt = DateTimeOffset.UtcNow,
+            LastModifiedBy = this.CurrentUser.Name
+        };
+
+        var eventResult = await this.Events.AddAsync(newEvent);
+
+        await this.SaveChangesAsync();
+
+        return eventResult.Entity;
     }
 }

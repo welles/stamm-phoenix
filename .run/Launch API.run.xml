@@ -7,11 +7,12 @@
     <envs>
       <env name="ALLOWED_HOSTS" value="http://localhost:5000" />
       <env name="CONFIG_PATH" value=".\bin\Debug\net8.0" />
-      <env name="LOG_PATH" value=".\bin\Debug\net8.0" />
       <env name="DATABASE_HOST" value="localhost" />
-      <env name="DATABASE_PORT" value="5001" />
       <env name="DATABASE_NAME" value="stamm-phoenix" />
       <env name="DATABASE_PASSWORD" value="mysecretpassword" />
+      <env name="DATABASE_PORT" value="5001" />
+      <env name="LOG_PATH" value=".\bin\Debug\net8.0" />
+      <env name="DATABASE_USER" value="postgres" />
     </envs>
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
     <option name="USE_MONO" value="0" />

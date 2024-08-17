@@ -20,6 +20,8 @@ public static class Services
 
         services.AddSingleton<IDatabaseConfiguration, EnvironmentDatabaseConfiguration>();
 
+        services.AddSingleton<IMapper, Mapper>();
+
         services
             .AddFastEndpoints()
             .SwaggerDocument(d =>

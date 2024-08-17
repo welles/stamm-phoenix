@@ -7,12 +7,15 @@ public sealed class PostEventEndpoint : PostEndpoint<PostEventRequest, PostEvent
 {
     private IMediator Mediator { get; }
 
-    public PostEventEndpoint(IMediator mediator)
+    private IMapper Mapper { get; }
+
+    public PostEventEndpoint(IMediator mediator, IMapper mapper)
     {
         this.Mediator = mediator;
+        Mapper = mapper;
     }
 
-    public override string EndpointRoute { get; } = "/";
+    public override string EndpointRoute { get; } = string.Empty;
 
     public override string EndpointSummary { get; } = "Add a new event";
 
@@ -20,9 +23,12 @@ public sealed class PostEventEndpoint : PostEndpoint<PostEventRequest, PostEvent
 
     public override string[] EndpointRoles { get; } = [Domain.Core.Roles.Leader];
 
-    public override Task<PostEventResponse> ExecuteAsync(PostEventRequest req, CancellationToken ct)
+    public override async Task<PostEventResponse> ExecuteAsync(PostEventRequest req, CancellationToken ct)
     {
-        // TODO
-        throw new NotImplementedException();
+        var command = this.Mapper.PostEventRequestToCreateEventCommand(req);
+
+        var result = await this.Mediator.Send(command, ct);
+
+        return this.Mapper.EventToPostEventResponse(result);
     }
 }
