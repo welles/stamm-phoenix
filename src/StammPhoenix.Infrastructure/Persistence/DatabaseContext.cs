@@ -107,6 +107,11 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         return leaderResult.Entity;
     }
 
+    public async Task<IReadOnlyCollection<Event>> GetEvents(CancellationToken ct)
+    {
+        return (await this.Events.ToArrayAsync(ct)).AsReadOnly();
+    }
+
     public async Task<Event> AddEvent(string title, string link, DateOnly startDate, DateOnly? endDate, string? description, CancellationToken ct)
     {
         if (this.Events.Any(x => x.Title == title && x.StartDate.Year == startDate.Year))

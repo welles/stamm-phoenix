@@ -1,5 +1,6 @@
 ﻿using Riok.Mapperly.Abstractions;
 using StammPhoenix.Api.Endpoints.Events.DeleteEvent;
+using StammPhoenix.Api.Endpoints.Events.GetEvents;
 using StammPhoenix.Api.Endpoints.Events.PostEvent;
 using StammPhoenix.Application.Commands.CreateEvent;
 using StammPhoenix.Application.Commands.RemoveEvent;
@@ -15,6 +16,7 @@ public partial class Mapper : IMapper
     public partial PostEventResponse EventToPostEventResponse(Event createdEvent);
 
     public partial DeleteEventCommand DeleteEventRequestToDeleteEventCommand(DeleteEventRequest request);
+    public partial GetEventsModel EventToGetEventsModel(Event eventItem);
 }
 
 public interface IMapper
@@ -24,4 +26,6 @@ public interface IMapper
     PostEventResponse EventToPostEventResponse(Event createdEvent);
 
     DeleteEventCommand DeleteEventRequestToDeleteEventCommand(DeleteEventRequest request);
+
+    GetEventsModel EventToGetEventsModel(Event eventItem);
 }
