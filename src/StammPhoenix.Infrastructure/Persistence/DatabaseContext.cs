@@ -135,4 +135,18 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
 
         return eventResult.Entity;
     }
+
+    public async Task DeleteEvent(Guid id, CancellationToken ct)
+    {
+        var eventToDelete = await this.Events.FindAsync(id, ct);
+
+        if (eventToDelete == null)
+        {
+            throw new EventNotFoundException(id);
+        }
+
+        this.Events.Remove(eventToDelete);
+
+        await this.SaveChangesAsync(ct);
+    }
 }
