@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql;
 using StammPhoenix.Application.Interfaces;
+using StammPhoenix.Domain.Enums;
 using StammPhoenix.Domain.Exceptions;
 using StammPhoenix.Domain.Models;
 
@@ -110,6 +111,35 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         await this.SaveChangesAsync();
 
         return leaderResult.Entity;
+    }
+
+    public async Task<Group> CreateGroup(string name, GroupDesignation designation, string? meetingTime, string? meetingPlace,
+        CancellationToken cancellationToken)
+    {
+        if (this.Groups.Any(x => x.Designation == designation))
+        {
+            throw new GroupWithDesignationAlreadyExistsException(designation);
+        }
+
+        var newGroup = new Group
+        {
+            Name = name,
+            Designation = designation,
+            MeetingTime = meetingTime,
+            MeetingPlace = meetingPlace,
+
+            Id = Guid.Empty,
+            CreatedAt = DateTimeOffset.UtcNow,
+            CreatedBy = this.CurrentUser.Name,
+            LastModifiedAt = DateTimeOffset.UtcNow,
+            LastModifiedBy = this.CurrentUser.Name
+        };
+
+        var groupResult = await this.Groups.AddAsync(newGroup, cancellationToken);
+
+        await this.SaveChangesAsync(cancellationToken);
+
+        return groupResult.Entity;
     }
 
     public async Task AddLeaderToGroup(Guid leaderId, Guid groupId)
