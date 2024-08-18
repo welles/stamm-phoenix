@@ -24,7 +24,7 @@ public sealed class SeedDatabaseCommandHandler(IDatabaseManager databaseManager,
 
         var admin = await this.LeaderRepository.CreateLeader(request.Email, request.FirstName, request.LastName, request.Password, request.PhoneNumber, request.Email, cancellationToken);
 
-        var adminGroup = await this.LeaderRepository.CreateGroup("Admins", GroupDesignation.Admin, null, null, cancellationToken);
+        var adminGroup = await this.LeaderRepository.CreateGroup("Admins", GroupDesignation.Admins, null, null, cancellationToken);
 
         await this.LeaderRepository.AddLeaderToGroup(admin.Id, adminGroup.Id, cancellationToken);
 

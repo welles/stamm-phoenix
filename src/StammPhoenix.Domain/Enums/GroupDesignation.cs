@@ -12,5 +12,5 @@ public enum GroupDesignation
     Rover          = 3,
     Leitende       = 4,
     Vorstand       = 5,
-    Admin          = 6
+    Admins         = 6
 }
