@@ -83,7 +83,7 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
     }
 
     public async Task<Leader> CreateLeader(string loginEmail, string firstName, string lastName, string password, string? phoneNumber,
-        string? address)
+        string? address, CancellationToken cancellationToken)
     {
         if (this.Leaders.Any(x => x.LoginEmail == loginEmail))
         {
@@ -106,9 +106,9 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
             LastModifiedBy = this.CurrentUser.Name
         };
 
-        var leaderResult = await this.Leaders.AddAsync(leader);
+        var leaderResult = await this.Leaders.AddAsync(leader, cancellationToken);
 
-        await this.SaveChangesAsync();
+        await this.SaveChangesAsync(cancellationToken);
 
         return leaderResult.Entity;
     }
@@ -142,9 +142,9 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         return groupResult.Entity;
     }
 
-    public async Task AddLeaderToGroup(Guid leaderId, Guid groupId)
+    public async Task AddLeaderToGroup(Guid leaderId, Guid groupId, CancellationToken cancellationToken)
     {
-        var group = await this.Groups.FindAsync(groupId);
+        var group = await this.Groups.FindAsync(groupId, cancellationToken);
 
         if (group == null)
         {
@@ -160,7 +160,7 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
 
         group.AddMember(leader);
 
-        await this.SaveChangesAsync();
+        await this.SaveChangesAsync(cancellationToken);
     }
 
     public async Task<IReadOnlyCollection<Event>> GetEvents(CancellationToken ct)

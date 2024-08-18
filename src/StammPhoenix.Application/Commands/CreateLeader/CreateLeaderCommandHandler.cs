@@ -18,6 +18,6 @@ public class CreateLeaderCommandHandler : IRequestHandler<CreateLeaderCommand, L
     public async Task<Leader> Handle(CreateLeaderCommand request, CancellationToken cancellationToken)
     {
         return await this.LeaderRepository.CreateLeader(request.LoginEmail, request.FirstName, request.LastName,
-            request.LoginPassword, request.PhoneNumber, request.Address);
+            request.LoginPassword, request.PhoneNumber, request.Address, cancellationToken);
     }
 }
