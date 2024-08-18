@@ -26,11 +26,11 @@ FROM base AS production
 COPY --from=build /usr/src/app/. .
 
 # Set ENV variables
-ENV PORT=80
-ENV HOST=0.0.0.0
+ENV STAMM_PHOENIX_PORT=80
+ENV STAMM_PHOENIX_HOST=0.0.0.0
 
 # Expose port
 EXPOSE 80
 
 # Start the application
-CMD ["bun", "run", ".output/server/index.mjs"]
+CMD ["bun", "build/index.js"]
