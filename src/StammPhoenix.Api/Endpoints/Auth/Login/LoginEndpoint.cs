@@ -1,14 +1,14 @@
 ﻿using System.Security.Claims;
-using FastEndpoints;
 using FastEndpoints.Security;
 using JetBrains.Annotations;
+using StammPhoenix.Api.Core;
 using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Domain.Models;
 
 namespace StammPhoenix.Api.Endpoints.Auth.Login;
 
 [PublicAPI]
-public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
+public sealed class LoginEndpoint : PostEndpoint<LoginRequest, LoginResponse, AuthGroup>
 {
     public IAppConfiguration AppConfiguration { get; }
 
@@ -17,22 +17,11 @@ public sealed class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
         this.AppConfiguration = appConfiguration;
     }
 
-    public override void Configure()
-    {
-        this.Verbs(Http.POST);
-        this.Post("/login");
-        this.Group<AuthGroup>();
-        this.AllowAnonymous();
-        this.Summary(s =>
-        {
-            s.Summary = "Authorize with the API";
-            s.Description = "Returns a JWT token on successful authorization.";
-        });
-        this.Description(d =>
-        {
-            d.Produces(StatusCodes.Status401Unauthorized);
-        });
-    }
+    public override string EndpointRoute => "/login";
+
+    public override string EndpointSummary => "Authorize with the API";
+
+    public override string EndpointDescription => "Returns a JWT token on successful authorization.";
 
     public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
     {
