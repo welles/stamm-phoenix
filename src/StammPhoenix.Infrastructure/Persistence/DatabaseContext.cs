@@ -129,6 +129,11 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
             throw new EventAlreadyExistsException(title, startDate);
         }
 
+        if (this.Events.Any(x => x.Link == link))
+        {
+            throw new EventLinkAlreadyExistsException(link);
+        }
+
         var newEvent = new Event
         {
             Title = title,
