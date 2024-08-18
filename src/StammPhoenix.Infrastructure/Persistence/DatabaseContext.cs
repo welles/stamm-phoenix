@@ -112,6 +112,27 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         return leaderResult.Entity;
     }
 
+    public async Task AddLeaderToGroup(Guid leaderId, Guid groupId)
+    {
+        var group = await this.Groups.FindAsync(groupId);
+
+        if (group == null)
+        {
+            throw new GroupNotFoundException(groupId);
+        }
+
+        var leader = await this.Leaders.FindAsync(leaderId);
+
+        if (leader == null)
+        {
+            throw new LeaderNotFoundException(leaderId);
+        }
+
+        group.AddMember(leader);
+
+        await this.SaveChangesAsync();
+    }
+
     public async Task<IReadOnlyCollection<Event>> GetEvents(CancellationToken ct)
     {
         return (await this.Events.ToArrayAsync(ct)).AsReadOnly();
