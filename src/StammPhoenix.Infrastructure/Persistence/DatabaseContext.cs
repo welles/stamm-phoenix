@@ -113,6 +113,11 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         return leaderResult.Entity;
     }
 
+    public async Task<IReadOnlyCollection<Group>> GetGroups(CancellationToken cancellationToken)
+    {
+        return (await this.Groups.ToArrayAsync(cancellationToken)).AsReadOnly();
+    }
+
     public async Task<Group> CreateGroup(string name, GroupDesignation designation, string? meetingTime, string? meetingPlace,
         CancellationToken cancellationToken)
     {

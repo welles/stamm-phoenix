@@ -9,6 +9,8 @@ public interface ILeaderRepository
 
     Task<Leader> CreateLeader(string loginEmail, string firstName, string lastName, string password, string? phoneNumber, string? address, CancellationToken cancellationToken);
 
+    Task<IReadOnlyCollection<Group>> GetGroups(CancellationToken cancellationToken);
+
     Task<Group> CreateGroup(string name, GroupDesignation designation, string? meetingTime, string? meetingPlace, CancellationToken cancellationToken);
 
     Task AddLeaderToGroup(Guid leaderId, Guid groupId, CancellationToken cancellationToken);
