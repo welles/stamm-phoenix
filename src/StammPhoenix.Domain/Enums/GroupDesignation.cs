@@ -11,5 +11,6 @@ public enum GroupDesignation
     Pfadfinder     = 2,
     Rover          = 3,
     Leitende       = 4,
-    Vorstand       = 5
+    Vorstand       = 5,
+    Admin          = 6
 }
