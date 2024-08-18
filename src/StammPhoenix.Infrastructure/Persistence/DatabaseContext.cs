@@ -82,6 +82,13 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         return (await this.Leaders.ToArrayAsync(cancellationToken)).AsReadOnly();
     }
 
+    public async Task<Leader?> FindLeaderByEmail(string email, CancellationToken cancellationToken)
+    {
+        return await this.Leaders
+            .Include(l => l.Groups)
+            .SingleOrDefaultAsync(x => x.LoginEmail == email, cancellationToken);
+    }
+
     public async Task<Leader> CreateLeader(string loginEmail, string firstName, string lastName, string password, string? phoneNumber,
         string? address, CancellationToken cancellationToken)
     {

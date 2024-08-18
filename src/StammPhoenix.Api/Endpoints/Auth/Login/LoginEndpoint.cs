@@ -3,19 +3,18 @@ using FastEndpoints.Security;
 using JetBrains.Annotations;
 using StammPhoenix.Api.Core;
 using StammPhoenix.Application.Interfaces;
-using StammPhoenix.Domain.Models;
+using StammPhoenix.Domain.Exceptions;
 
 namespace StammPhoenix.Api.Endpoints.Auth.Login;
 
 [PublicAPI]
-public sealed class LoginEndpoint : PostEndpoint<LoginRequest, LoginResponse, AuthGroup>
+public sealed class LoginEndpoint(IPasswordHasher passwordHasher, IAppConfiguration appConfiguration, ILeaderRepository leaderRepository) : PostEndpoint<LoginRequest, LoginResponse, AuthGroup>
 {
-    public IAppConfiguration AppConfiguration { get; }
+    private IPasswordHasher PasswordHasher { get; } = passwordHasher;
 
-    public LoginEndpoint(IAppConfiguration appConfiguration)
-    {
-        this.AppConfiguration = appConfiguration;
-    }
+    private IAppConfiguration AppConfiguration { get; } = appConfiguration;
+
+    private ILeaderRepository LeaderRepository { get; } = leaderRepository;
 
     public override string EndpointRoute => "/login";
 
@@ -25,40 +24,38 @@ public sealed class LoginEndpoint : PostEndpoint<LoginRequest, LoginResponse, Au
 
     public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
     {
-        var admin = new Leader
-        {
-            Id = Guid.Parse("c852035e-43c1-4f22-9e8f-1527ec825608"),
-            LastName = "Adminson",
-            FirstName = "Admin",
-            PasswordHash = "admin",
-            LoginEmail = "admin@stamm-phoenix.de",
-            CreatedAt = DateTimeOffset.UtcNow,
-            CreatedBy = "SERVER",
-            LastModifiedAt = DateTimeOffset.UtcNow,
-            LastModifiedBy = "SERVER"
-        };
+        var leader = await this.LeaderRepository.FindLeaderByEmail(req.LoginEmail, ct);
 
-        //if (await authService.CredentialsAreValid(req.Username, req.Password, ct))
-        if (req.LoginEmail == admin.LoginEmail && req.Password == admin.PasswordHash)
+        if (leader == null)
         {
-            var jwtToken = JwtBearer.CreateToken(
+            await Task.Delay(3000, ct);
+
+            throw new IncorrectUsernameOrPasswordException();
+        }
+
+        if (this.PasswordHasher.VerifyPassword(req.Password, leader.PasswordHash))
+        {
+            var token = JwtBearer.CreateToken(
                 o =>
                 {
                     o.SigningKey = this.AppConfiguration.PrivateSigningKey;
                     o.SigningStyle = TokenSigningStyle.Asymmetric;
                     o.KeyIsPemEncoded = true;
                     o.ExpireAt = DateTime.UtcNow.AddDays(1);
-                    o.User.Roles.Add("Leader");
-                    o.User.Claims.Add((ClaimTypes.Email, req.LoginEmail));
-                    o.User.Claims.Add((ClaimTypes.NameIdentifier, admin.Id.ToString()));
-                    o.User.Claims.Add((ClaimTypes.Name, $"{admin.FirstName} {admin.LastName}"));
+                    foreach (var designation in leader.Groups.Where(x => x.Designation != null).Select(x => x.Designation))
+                    {
+                        o.User.Roles.Add(designation.ToString() ?? throw new ArgumentNullException(nameof(designation)));
+                    }
+                    o.User.Claims.Add((ClaimTypes.Email, leader.LoginEmail));
+                    o.User.Claims.Add((ClaimTypes.NameIdentifier, leader.Id.ToString()));
+                    o.User.Claims.Add((ClaimTypes.Name, $"{leader.FirstName} {leader.LastName}"));
                 });
 
-            await this.SendAsync(new LoginResponse { Token = jwtToken });
+            await this.SendAsync(new LoginResponse { Token = token }, cancellation: ct);
         }
         else
         {
-            this.ThrowError("Username or password was not correct.", StatusCodes.Status401Unauthorized);
+            throw new IncorrectUsernameOrPasswordException();
         }
     }
 }

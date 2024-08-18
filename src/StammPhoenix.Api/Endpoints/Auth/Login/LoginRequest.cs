@@ -10,9 +10,9 @@ public sealed class LoginRequest
 {
     [JsonPropertyName("login_email")]
     [Description("The e-mail address of the leader")]
-    public string? LoginEmail { get; init; }
+    public required string LoginEmail { get; init; }
 
     [JsonPropertyName("password")]
     [Description("The password of the leader")]
-    public string? Password { get; init; }
+    public required string Password { get; init; }
 }

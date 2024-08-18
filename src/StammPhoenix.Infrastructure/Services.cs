@@ -1,6 +1,4 @@
-﻿using System.Data.Common;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using StammPhoenix.Application.Interfaces;
 using StammPhoenix.Infrastructure.Core;
