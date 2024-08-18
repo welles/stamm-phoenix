@@ -1,4 +1,5 @@
 ﻿using StammPhoenix.Api.Core;
+using StammPhoenix.Domain.Exceptions;
 
 namespace StammPhoenix.Api.Middlewares;
 
@@ -12,15 +13,22 @@ public sealed class GenericExceptionHandlingMiddleware(RequestDelegate next)
         }
         catch (Exception e)
         {
+            int statusCode = StatusCodes.Status500InternalServerError;
+
+            if (e is StatusCodeException statusCodeException)
+            {
+                statusCode = statusCodeException.StatusCode;
+            }
+
             var errorData = new ProblemData
             {
                 Type = e.GetType().Name,
-                Code = StatusCodes.Status500InternalServerError,
+                Code = statusCode,
                 Message = e.Message,
                 Data = e.Data
             };
 
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            context.Response.StatusCode = statusCode;
 
             await context.Response.WriteAsJsonAsync(errorData);
 
