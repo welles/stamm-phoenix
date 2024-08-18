@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using MediatR;
 using StammPhoenix.Api.Core;
+using StammPhoenix.Domain.Enums;
 
 namespace StammPhoenix.Api.Endpoints.Events.DeleteEvent;
 
@@ -17,7 +18,7 @@ public class DeleteEventEndpoint : DeleteEndpoint<DeleteEventRequest, EventsGrou
 
     public override string EndpointDescription => "Deletes the event with the specified ID";
 
-    public override string[] EndpointRoles => [Domain.Core.Roles.Leader];
+    public override GroupDesignation[] EndpointRoles => [ GroupDesignation.Leitende ];
 
     public DeleteEventEndpoint(IMediator mediator, IMapper mapper)
     {

@@ -2,6 +2,7 @@
 using MediatR;
 using StammPhoenix.Api.Core;
 using StammPhoenix.Application.Commands.GetEvents;
+using StammPhoenix.Domain.Enums;
 
 namespace StammPhoenix.Api.Endpoints.Events.GetEvents;
 
@@ -17,7 +18,7 @@ public class GetEventsEndpoint : GetEndpoint<EmptyRequest, GetEventsResponse, Ev
 
     public override string EndpointDescription => "Get a list of all events, even events that are not visible to the public";
 
-    public override string[] EndpointRoles => [Domain.Core.Roles.Leader];
+    public override GroupDesignation[] EndpointRoles => [ GroupDesignation.Leitende ];
 
     public GetEventsEndpoint(IMediator mediator, IMapper mapper)
     {

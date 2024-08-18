@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using StammPhoenix.Api.Core;
+using StammPhoenix.Domain.Enums;
 
 namespace StammPhoenix.Api.Endpoints.Events.PostEvent;
 
@@ -21,7 +22,7 @@ public sealed class PostEventEndpoint : PostEndpoint<PostEventRequest, PostEvent
 
     public override string EndpointDescription { get; } = "Adds a new event to the list of events, public or private";
 
-    public override string[] EndpointRoles { get; } = [Domain.Core.Roles.Leader];
+    public override GroupDesignation[] EndpointRoles { get; } = [ GroupDesignation.Leitende ];
 
     public override async Task<PostEventResponse> ExecuteAsync(PostEventRequest req, CancellationToken ct)
     {

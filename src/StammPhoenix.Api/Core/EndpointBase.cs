@@ -1,5 +1,6 @@
 ﻿using FastEndpoints;
 using Microsoft.IdentityModel.Tokens;
+using StammPhoenix.Domain.Enums;
 
 namespace StammPhoenix.Api.Core;
 
@@ -7,7 +8,7 @@ public abstract class EndpointBase<TRequest, TResponse, TGroup> : Endpoint<TRequ
     where TRequest : notnull
     where TGroup : EndpointGroup, new()
 {
-    public virtual string[] EndpointRoles { get; } = [];
+    public virtual GroupDesignation[] EndpointRoles { get; } = [];
 
     public abstract string EndpointRoute { get; }
 
@@ -37,7 +38,7 @@ public abstract class EndpointBase<TRequest, TResponse, TGroup> : Endpoint<TRequ
         }
         else
         {
-            this.Roles(this.EndpointRoles);
+            this.Roles(this.EndpointRoles.Select(x => x.ToString()).ToArray());
         }
     }
 }
