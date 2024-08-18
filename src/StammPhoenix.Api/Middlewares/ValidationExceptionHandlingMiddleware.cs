@@ -1,39 +1,33 @@
-﻿using FastEndpoints;
-using FluentValidation;
+﻿using FluentValidation;
+using StammPhoenix.Api.Core;
 
 namespace StammPhoenix.Api.Middlewares;
 
-public sealed class ValidationExceptionHandlingMiddleware
+public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public ValidationExceptionHandlingMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
         }
         catch (ValidationException exception)
         {
-            var problemDetails = new ProblemDetails
-            {
-                Status = StatusCodes.Status400BadRequest,
-                Detail = "One or more validation errors has occurred",
-            };
+            var validationErrors = exception.Errors.ToDictionary(x => x.PropertyName, x => x.ErrorMessage);
 
-            if (exception.Errors is not null)
+            var errorData = new ProblemData
             {
-                problemDetails.Errors = exception.Errors.Select(x => new ProblemDetails.Error(x));
-            }
+                Type = nameof(ValidationException),
+                Code = StatusCodes.Status400BadRequest,
+                Message = "One or more validation errors has occurred",
+                Data = validationErrors
+            };
 
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-            await context.Response.WriteAsJsonAsync(problemDetails);
+            await context.Response.WriteAsJsonAsync(errorData);
+
+            throw;
         }
     }
 }

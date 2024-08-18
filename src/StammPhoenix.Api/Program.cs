@@ -50,7 +50,7 @@ public static class Program
          .UseSwaggerGen();
 
       app.UseMiddleware<ValidationExceptionHandlingMiddleware>();
-      app.UseMiddleware<DomainExceptionHandlingMiddleware>();
+      app.UseMiddleware<GenericExceptionHandlingMiddleware>();
 
       await app.RunAsync();
    }
