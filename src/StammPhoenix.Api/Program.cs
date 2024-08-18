@@ -1,3 +1,4 @@
+using System.Text.Json;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Serilog;
@@ -43,6 +44,8 @@ public static class Program
             {
                ep.DontAutoTag();
             };
+
+            c.Serializer.Options.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
          })
          .UseSwaggerGen();
 
