@@ -38,7 +38,14 @@ public abstract class EndpointBase<TRequest, TResponse, TGroup> : Endpoint<TRequ
         }
         else
         {
-            this.Roles(this.EndpointRoles.Select(x => x.ToString()).ToArray());
+            var roles = this.EndpointRoles.ToList();
+
+            if (!roles.Contains(GroupDesignation.Admins))
+            {
+                roles.Add(GroupDesignation.Admins);
+            }
+
+            this.Roles(roles.Select(x => x.ToString()).ToArray());
         }
     }
 }
