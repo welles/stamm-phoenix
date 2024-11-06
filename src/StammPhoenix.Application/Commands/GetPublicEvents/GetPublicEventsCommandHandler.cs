@@ -4,7 +4,8 @@ using StammPhoenix.Domain.Models;
 
 namespace StammPhoenix.Application.Commands.GetPublicEvents;
 
-public class GetPublicEventsCommandHandler : IRequestHandler<GetPublicEventsCommand, IReadOnlyCollection<Event>>
+public class GetPublicEventsCommandHandler
+    : IRequestHandler<GetPublicEventsCommand, IReadOnlyCollection<Event>>
 {
     private IEventRepository EventRepository { get; }
 
@@ -13,7 +14,10 @@ public class GetPublicEventsCommandHandler : IRequestHandler<GetPublicEventsComm
         EventRepository = eventRepository;
     }
 
-    public async Task<IReadOnlyCollection<Event>> Handle(GetPublicEventsCommand request, CancellationToken cancellationToken)
+    public async Task<IReadOnlyCollection<Event>> Handle(
+        GetPublicEventsCommand request,
+        CancellationToken cancellationToken
+    )
     {
         return await this.EventRepository.GetPublicEventsForYear(request.Year, cancellationToken);
     }

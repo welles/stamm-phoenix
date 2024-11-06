@@ -15,7 +15,8 @@ public class RootEndpoint : EndpointWithoutRequest
         this.Summary(s =>
         {
             s.Summary = "Show metadata";
-            s.Description = "Produces plain text containing metadata about the running instance of the API.";
+            s.Description =
+                "Produces plain text containing metadata about the running instance of the API.";
         });
         this.Group<MetaGroup>();
         this.Description(d =>
@@ -26,10 +27,12 @@ public class RootEndpoint : EndpointWithoutRequest
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var versionText = Assembly.GetAssembly(typeof(Program))?
-            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-            .InformationalVersion.Split("+")
-            .FirstOrDefault() ?? "???";
+        var versionText =
+            Assembly
+                .GetAssembly(typeof(Program))
+                ?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion.Split("+")
+                .FirstOrDefault() ?? "???";
 
         var sb = new StringBuilder();
         sb.AppendLine("STAMM PHOENIX API");

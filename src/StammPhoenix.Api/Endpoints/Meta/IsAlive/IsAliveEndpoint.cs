@@ -25,18 +25,22 @@ public class IsAliveEndpoint : EndpointWithoutRequest<IsAliveResponse>
 
     public override async Task<IsAliveResponse> ExecuteAsync(CancellationToken ct)
     {
-        var versionText = Assembly.GetAssembly(typeof(Program))?
-            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-            .InformationalVersion.Split("+")
-            .FirstOrDefault() ?? "???";
+        var versionText =
+            Assembly
+                .GetAssembly(typeof(Program))
+                ?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                ?.InformationalVersion.Split("+")
+                .FirstOrDefault() ?? "???";
 
         var startupTime = Program.StartupTime.ToString("O");
 
-        return await Task.FromResult(new IsAliveResponse
-        {
-            Version = versionText,
-            Status = "OK",
-            StartupTime = startupTime
-        });
+        return await Task.FromResult(
+            new IsAliveResponse
+            {
+                Version = versionText,
+                Status = "OK",
+                StartupTime = startupTime,
+            }
+        );
     }
 }

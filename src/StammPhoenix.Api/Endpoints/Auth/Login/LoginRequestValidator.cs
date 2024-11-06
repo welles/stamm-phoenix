@@ -15,8 +15,6 @@ public class LoginRequestValidator : Validator<LoginRequest>
             .EmailAddress()
             .WithMessage("E-Mail-Adresse muss eine gültige E-Mail-Adresse sein.");
 
-        this.RuleFor(x => x.Password)
-            .NotEmpty()
-            .WithMessage("Password darf nicht leer sein.");
+        this.RuleFor(x => x.Password).NotEmpty().WithMessage("Password darf nicht leer sein.");
     }
 }

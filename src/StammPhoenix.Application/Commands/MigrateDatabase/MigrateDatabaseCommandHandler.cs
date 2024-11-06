@@ -3,7 +3,8 @@ using StammPhoenix.Application.Interfaces;
 
 namespace StammPhoenix.Application.Commands.MigrateDatabase;
 
-public class MigrateDatabaseCommandHandler(IDatabaseManager databaseManager) : IRequestHandler<MigrateDatabaseCommand>
+public class MigrateDatabaseCommandHandler(IDatabaseManager databaseManager)
+    : IRequestHandler<MigrateDatabaseCommand>
 {
     private IDatabaseManager DatabaseManager { get; } = databaseManager;
 

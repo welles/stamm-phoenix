@@ -15,15 +15,14 @@ namespace StammPhoenix.Infrastructure.Persistence.Migrations
                 table: "events",
                 type: "boolean",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: false
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "public",
-                table: "events");
+            migrationBuilder.DropColumn(name: "public", table: "events");
         }
     }
 }

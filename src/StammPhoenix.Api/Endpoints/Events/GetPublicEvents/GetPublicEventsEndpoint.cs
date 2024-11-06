@@ -5,7 +5,8 @@ using StammPhoenix.Api.Core;
 namespace StammPhoenix.Api.Endpoints.Events.GetPublicEvents;
 
 [PublicAPI]
-public sealed class GetPublicEventsEndpoint : GetEndpoint<GetPublicEventsRequest, GetPublicEventsResponse, EventsGroup>
+public sealed class GetPublicEventsEndpoint
+    : GetEndpoint<GetPublicEventsRequest, GetPublicEventsResponse, EventsGroup>
 {
     private IMediator Mediator { get; }
 
@@ -24,7 +25,10 @@ public sealed class GetPublicEventsEndpoint : GetEndpoint<GetPublicEventsRequest
         Mapper = mapper;
     }
 
-    public override async Task<GetPublicEventsResponse> ExecuteAsync(GetPublicEventsRequest req, CancellationToken ct)
+    public override async Task<GetPublicEventsResponse> ExecuteAsync(
+        GetPublicEventsRequest req,
+        CancellationToken ct
+    )
     {
         var command = this.Mapper.GetPublicEventsRequestToGetPublicEventsCommand(req);
 
@@ -32,10 +36,6 @@ public sealed class GetPublicEventsEndpoint : GetEndpoint<GetPublicEventsRequest
 
         var models = result.Select(x => this.Mapper.EventToGetPublicEventsModel(x)).ToArray();
 
-        return new GetPublicEventsResponse
-        {
-            Year = req.Year,
-            Events = models
-        };
+        return new GetPublicEventsResponse { Year = req.Year, Events = models };
     }
 }

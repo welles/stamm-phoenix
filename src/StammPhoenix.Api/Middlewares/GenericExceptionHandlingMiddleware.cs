@@ -25,7 +25,7 @@ public sealed class GenericExceptionHandlingMiddleware(RequestDelegate next)
                 Type = e.GetType().Name,
                 Code = statusCode,
                 Message = e.Message,
-                Data = e.Data
+                Data = e.Data,
             };
 
             context.Response.StatusCode = statusCode;

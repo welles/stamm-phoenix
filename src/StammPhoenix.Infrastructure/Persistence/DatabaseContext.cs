@@ -10,9 +10,18 @@ using StammPhoenix.Domain.Models;
 
 namespace StammPhoenix.Infrastructure.Persistence;
 
-public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderRepository, IEventRepository
+public sealed class DatabaseContext
+    : DbContext,
+        IDatabaseManager,
+        ILeaderRepository,
+        IEventRepository
 {
-    public DatabaseContext(IDatabaseConfiguration databaseConfiguration, IEnumerable<ISaveChangesInterceptor> saveChangesInterceptors, IPasswordHasher passwordHasher, ICurrentUser currentUser)
+    public DatabaseContext(
+        IDatabaseConfiguration databaseConfiguration,
+        IEnumerable<ISaveChangesInterceptor> saveChangesInterceptors,
+        IPasswordHasher passwordHasher,
+        ICurrentUser currentUser
+    )
     {
         this.DatabaseConfiguration = databaseConfiguration;
         this.Interceptors = saveChangesInterceptors.OfType<IInterceptor>().ToArray();
@@ -51,15 +60,13 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         var connectionString = new NpgsqlConnectionStringBuilder
         {
             Host = this.DatabaseConfiguration.Host,
-            Port =  this.DatabaseConfiguration.Port,
+            Port = this.DatabaseConfiguration.Port,
             Database = this.DatabaseConfiguration.Database,
             Username = this.DatabaseConfiguration.User,
-            Password = this.DatabaseConfiguration.Password
+            Password = this.DatabaseConfiguration.Password,
         };
 
-        optionsBuilder
-            .UseNpgsql(connectionString.ConnectionString)
-            .UseSnakeCaseNamingConvention();
+        optionsBuilder.UseNpgsql(connectionString.ConnectionString).UseSnakeCaseNamingConvention();
     }
 
     public async Task MigrateDatabaseAsync(CancellationToken cancellationToken)
@@ -67,7 +74,9 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         await this.Database.MigrateAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<string>> GetPendingMigrationsAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<string>> GetPendingMigrationsAsync(
+        CancellationToken cancellationToken
+    )
     {
         return await this.Database.GetPendingMigrationsAsync(cancellationToken);
     }
@@ -84,13 +93,20 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
 
     public async Task<Leader?> FindLeaderByEmail(string email, CancellationToken cancellationToken)
     {
-        return await this.Leaders
-            .Include(l => l.Groups)
+        return await this
+            .Leaders.Include(l => l.Groups)
             .SingleOrDefaultAsync(x => x.LoginEmail == email, cancellationToken);
     }
 
-    public async Task<Leader> CreateLeader(string loginEmail, string firstName, string lastName, string password, string? phoneNumber,
-        string? address, CancellationToken cancellationToken)
+    public async Task<Leader> CreateLeader(
+        string loginEmail,
+        string firstName,
+        string lastName,
+        string password,
+        string? phoneNumber,
+        string? address,
+        CancellationToken cancellationToken
+    )
     {
         if (this.Leaders.Any(x => x.LoginEmail == loginEmail))
         {
@@ -110,7 +126,7 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
             CreatedAt = DateTimeOffset.UtcNow,
             CreatedBy = this.CurrentUser.Name,
             LastModifiedAt = DateTimeOffset.UtcNow,
-            LastModifiedBy = this.CurrentUser.Name
+            LastModifiedBy = this.CurrentUser.Name,
         };
 
         var leaderResult = await this.Leaders.AddAsync(leader, cancellationToken);
@@ -125,8 +141,13 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         return (await this.Groups.ToArrayAsync(cancellationToken)).AsReadOnly();
     }
 
-    public async Task<Group> CreateGroup(string name, GroupDesignation designation, string? meetingTime, string? meetingPlace,
-        CancellationToken cancellationToken)
+    public async Task<Group> CreateGroup(
+        string name,
+        GroupDesignation designation,
+        string? meetingTime,
+        string? meetingPlace,
+        CancellationToken cancellationToken
+    )
     {
         if (this.Groups.Any(x => x.Designation == designation))
         {
@@ -144,7 +165,7 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
             CreatedAt = DateTimeOffset.UtcNow,
             CreatedBy = this.CurrentUser.Name,
             LastModifiedAt = DateTimeOffset.UtcNow,
-            LastModifiedBy = this.CurrentUser.Name
+            LastModifiedBy = this.CurrentUser.Name,
         };
 
         var groupResult = await this.Groups.AddAsync(newGroup, cancellationToken);
@@ -154,7 +175,11 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         return groupResult.Entity;
     }
 
-    public async Task AddLeaderToGroup(Guid leaderId, Guid groupId, CancellationToken cancellationToken)
+    public async Task AddLeaderToGroup(
+        Guid leaderId,
+        Guid groupId,
+        CancellationToken cancellationToken
+    )
     {
         var group = await this.Groups.FindAsync(groupId, cancellationToken);
 
@@ -180,12 +205,25 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
         return (await this.Events.ToArrayAsync(ct)).AsReadOnly();
     }
 
-    public async Task<IReadOnlyCollection<Event>> GetPublicEventsForYear(int year, CancellationToken ct)
+    public async Task<IReadOnlyCollection<Event>> GetPublicEventsForYear(
+        int year,
+        CancellationToken ct
+    )
     {
-        return (await this.Events.Where(x => x.StartDate.Year == year && x.Public).ToListAsync(ct)).AsReadOnly();
+        return (
+            await this.Events.Where(x => x.StartDate.Year == year && x.Public).ToListAsync(ct)
+        ).AsReadOnly();
     }
 
-    public async Task<Event> AddEvent(string title, string link, bool isPublic, DateOnly startDate, DateOnly? endDate, string? description, CancellationToken ct)
+    public async Task<Event> AddEvent(
+        string title,
+        string link,
+        bool isPublic,
+        DateOnly startDate,
+        DateOnly? endDate,
+        string? description,
+        CancellationToken ct
+    )
     {
         if (this.Events.Any(x => x.Title == title && x.StartDate.Year == startDate.Year))
         {
@@ -210,7 +248,7 @@ public sealed class DatabaseContext : DbContext, IDatabaseManager, ILeaderReposi
             CreatedAt = DateTimeOffset.UtcNow,
             CreatedBy = this.CurrentUser.Name,
             LastModifiedAt = DateTimeOffset.UtcNow,
-            LastModifiedBy = this.CurrentUser.Name
+            LastModifiedBy = this.CurrentUser.Name,
         };
 
         var eventResult = await this.Events.AddAsync(newEvent, ct);

@@ -5,7 +5,13 @@ namespace StammPhoenix.Cli.Core;
 
 public class CliDatabaseConfiguration : IDatabaseConfiguration
 {
-    public CliDatabaseConfiguration(string host, int port, string database, string user, string password)
+    public CliDatabaseConfiguration(
+        string host,
+        int port,
+        string database,
+        string user,
+        string password
+    )
     {
         this.Host = host;
         this.Port = port;

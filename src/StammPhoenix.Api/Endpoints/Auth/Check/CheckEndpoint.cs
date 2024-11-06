@@ -14,7 +14,8 @@ public sealed class CheckEndpoint : EndpointWithoutRequest
         this.Summary(s =>
         {
             s.Summary = "Check if the JWT token is valid";
-            s.Description = "Checks if the given bearer token is valid. Returns a 204 No Content response if validation was successful.";
+            s.Description =
+                "Checks if the given bearer token is valid. Returns a 204 No Content response if validation was successful.";
         });
         this.Description(d =>
         {

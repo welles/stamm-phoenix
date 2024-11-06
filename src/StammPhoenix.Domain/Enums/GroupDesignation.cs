@@ -6,11 +6,11 @@
 /// </summary>
 public enum GroupDesignation
 {
-    Woelflinge     = 0,
+    Woelflinge = 0,
     Jungpfadfinder = 1,
-    Pfadfinder     = 2,
-    Rover          = 3,
-    Leitende       = 4,
-    Vorstand       = 5,
-    Admins         = 6
+    Pfadfinder = 2,
+    Rover = 3,
+    Leitende = 4,
+    Vorstand = 5,
+    Admins = 6,
 }

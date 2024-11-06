@@ -15,15 +15,21 @@ namespace StammPhoenix.Api;
 [Mapper]
 public partial class Mapper : IMapper
 {
-    public partial CreateEventCommand PostEventRequestToCreateEventCommand(PostEventRequest request);
+    public partial CreateEventCommand PostEventRequestToCreateEventCommand(
+        PostEventRequest request
+    );
 
     public partial PostEventResponse EventToPostEventResponse(Event createdEvent);
 
-    public partial DeleteEventCommand DeleteEventRequestToDeleteEventCommand(DeleteEventRequest request);
+    public partial DeleteEventCommand DeleteEventRequestToDeleteEventCommand(
+        DeleteEventRequest request
+    );
 
     public partial GetEventsModel EventToGetEventsModel(Event eventItem);
 
-    public partial GetPublicEventsCommand GetPublicEventsRequestToGetPublicEventsCommand(GetPublicEventsRequest request);
+    public partial GetPublicEventsCommand GetPublicEventsRequestToGetPublicEventsCommand(
+        GetPublicEventsRequest request
+    );
 
     public partial GetPublicEventsModel EventToGetPublicEventsModel(Event eventItem);
 
@@ -40,7 +46,9 @@ public interface IMapper
 
     GetEventsModel EventToGetEventsModel(Event eventItem);
 
-    GetPublicEventsCommand GetPublicEventsRequestToGetPublicEventsCommand(GetPublicEventsRequest request);
+    GetPublicEventsCommand GetPublicEventsRequestToGetPublicEventsCommand(
+        GetPublicEventsRequest request
+    );
 
     GetPublicEventsModel EventToGetPublicEventsModel(Event eventItem);
 

@@ -13,7 +13,10 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, Eve
 
     private IValidator<CreateEventCommand> Validator { get; }
 
-    public CreateEventCommandHandler(IEventRepository eventRepository, IValidator<CreateEventCommand> validator)
+    public CreateEventCommandHandler(
+        IEventRepository eventRepository,
+        IValidator<CreateEventCommand> validator
+    )
     {
         EventRepository = eventRepository;
         Validator = validator;
@@ -21,7 +24,15 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, Eve
 
     public async Task<Event> Handle(CreateEventCommand request, CancellationToken cancellationToken)
     {
-        var result = await this.EventRepository.AddEvent(request.Title, request.Link, request.IsPublic, request.StartDate, request.EndDate, request.Description, cancellationToken);
+        var result = await this.EventRepository.AddEvent(
+            request.Title,
+            request.Link,
+            request.IsPublic,
+            request.StartDate,
+            request.EndDate,
+            request.Description,
+            cancellationToken
+        );
 
         return result;
     }

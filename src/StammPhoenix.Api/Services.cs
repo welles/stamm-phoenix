@@ -34,7 +34,8 @@ public static class Services
                     s.SchemaSettings.SchemaNameGenerator = new DefaultSchemaNameGenerator();
                 };
 
-                var endpointGroups = Assembly.GetAssembly(typeof(Services))!
+                var endpointGroups = Assembly
+                    .GetAssembly(typeof(Services))!
                     .GetTypes()
                     .Where(x => x.IsSubclassOf(typeof(EndpointGroup)))
                     .Select(g => Activator.CreateInstance(g) as EndpointGroup)
@@ -62,13 +63,13 @@ public static class Services
 
         services.AddCors(options =>
         {
-            options.AddPolicy(name: EnvironmentNames.ALLOWED_HOSTS,
-                policy  =>
+            options.AddPolicy(
+                name: EnvironmentNames.ALLOWED_HOSTS,
+                policy =>
                 {
-                    policy.WithOrigins(environment.AllowedHosts)
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
+                    policy.WithOrigins(environment.AllowedHosts).AllowAnyHeader().AllowAnyMethod();
+                }
+            );
         });
 
         return services;

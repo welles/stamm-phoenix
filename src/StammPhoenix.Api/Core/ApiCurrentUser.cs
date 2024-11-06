@@ -12,5 +12,6 @@ public class ApiCurrentUser : ICurrentUser
         this.HttpContextAccessor = httpContextAccessor;
     }
 
-    public string Name => this.HttpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Email) ?? "Anonymous";
+    public string Name =>
+        this.HttpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Email) ?? "Anonymous";
 }

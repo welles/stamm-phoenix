@@ -13,14 +13,17 @@ public sealed class ValidationExceptionHandlingMiddleware(RequestDelegate next)
         }
         catch (ValidationException exception)
         {
-            var validationErrors = exception.Errors.ToDictionary(x => x.PropertyName, x => x.ErrorMessage);
+            var validationErrors = exception.Errors.ToDictionary(
+                x => x.PropertyName,
+                x => x.ErrorMessage
+            );
 
             var errorData = new ProblemData
             {
                 Type = nameof(ValidationException),
                 Code = StatusCodes.Status400BadRequest,
                 Message = "One or more validation errors has occurred",
-                Data = validationErrors
+                Data = validationErrors,
             };
 
             context.Response.StatusCode = StatusCodes.Status400BadRequest;

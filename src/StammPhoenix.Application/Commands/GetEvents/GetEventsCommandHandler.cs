@@ -13,7 +13,10 @@ public class GetEventsCommandHandler : IRequestHandler<GetEventsCommand, IEnumer
         EventRepository = eventRepository;
     }
 
-    public async Task<IEnumerable<Event>> Handle(GetEventsCommand request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Event>> Handle(
+        GetEventsCommand request,
+        CancellationToken cancellationToken
+    )
     {
         return await this.EventRepository.GetEvents(cancellationToken);
     }

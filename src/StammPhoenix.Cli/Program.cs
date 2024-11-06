@@ -17,9 +17,11 @@ public static class Program
     {
         if (args.Length == 0 || args.All(string.IsNullOrWhiteSpace))
         {
-            var category = AnsiConsole.Prompt(new SelectionPrompt<string>()
-                .Title("Select resource to handle:")
-                .AddChoices("Database", "Leaders"));
+            var category = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title("Select resource to handle:")
+                    .AddChoices("Database", "Leaders")
+            );
 
             switch (category)
             {
@@ -34,7 +36,9 @@ public static class Program
             return 0;
         }
 
-        var result = Parser.Default.ParseArguments<CreateDatabaseOptions, UpdateDatabaseOptions>(args);
+        var result = Parser.Default.ParseArguments<CreateDatabaseOptions, UpdateDatabaseOptions>(
+            args
+        );
 
         var databaseOptions = result.Value as DatabaseOptionsBase;
 
@@ -57,7 +61,14 @@ public static class Program
 
         if (databaseOptions is CreateLeaderOptions options)
         {
-            return await app.CreateLeader(options.LoginEmail, options.FirstName, options.LastName, options.LoginPassword, options.Address, options.PhoneNumber);
+            return await app.CreateLeader(
+                options.LoginEmail,
+                options.FirstName,
+                options.LastName,
+                options.LoginPassword,
+                options.Address,
+                options.PhoneNumber
+            );
         }
 
         return 255;
@@ -67,9 +78,9 @@ public static class Program
     {
         AnsiConsole.MarkupLine("[b]Handling Database[/]");
 
-        var action = AnsiConsole.Prompt(new SelectionPrompt<string>()
-            .Title("Select action:")
-            .AddChoices("Create", "Migrate"));
+        var action = AnsiConsole.Prompt(
+            new SelectionPrompt<string>().Title("Select action:").AddChoices("Create", "Migrate")
+        );
 
         await Task.CompletedTask; // TODO
         throw new NotImplementedException();
@@ -79,9 +90,9 @@ public static class Program
     {
         AnsiConsole.MarkupLine("[b]Handling Leaders[/]");
 
-        var action = AnsiConsole.Prompt(new SelectionPrompt<string>()
-            .Title("Select action:")
-            .AddChoices("Create"));
+        var action = AnsiConsole.Prompt(
+            new SelectionPrompt<string>().Title("Select action:").AddChoices("Create")
+        );
 
         switch (action)
         {
@@ -106,7 +117,9 @@ public static class Program
         {
             address = null;
         }
-        var phoneNumber = AnsiConsole.Prompt(new TextPrompt<string?>("Enter phone number:").AllowEmpty());
+        var phoneNumber = AnsiConsole.Prompt(
+            new TextPrompt<string?>("Enter phone number:").AllowEmpty()
+        );
         if (string.IsNullOrWhiteSpace(phoneNumber))
         {
             phoneNumber = null;

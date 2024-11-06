@@ -16,9 +16,10 @@ public class GetEventsEndpoint : GetEndpoint<EmptyRequest, GetEventsResponse, Ev
 
     public override string EndpointSummary => "Get a list of all events";
 
-    public override string EndpointDescription => "Get a list of all events, even events that are not visible to the public";
+    public override string EndpointDescription =>
+        "Get a list of all events, even events that are not visible to the public";
 
-    public override GroupDesignation[] EndpointRoles => [ GroupDesignation.Leitende ];
+    public override GroupDesignation[] EndpointRoles => [GroupDesignation.Leitende];
 
     public GetEventsEndpoint(IMediator mediator, IMapper mapper)
     {
@@ -26,13 +27,16 @@ public class GetEventsEndpoint : GetEndpoint<EmptyRequest, GetEventsResponse, Ev
         Mapper = mapper;
     }
 
-    public override async Task<GetEventsResponse> ExecuteAsync(EmptyRequest req, CancellationToken ct)
+    public override async Task<GetEventsResponse> ExecuteAsync(
+        EmptyRequest req,
+        CancellationToken ct
+    )
     {
         var command = new GetEventsCommand();
 
         var result = await this.Mediator.Send(command, ct);
 
-        var models = result.Select(x => this.Mapper.EventToGetEventsModel(x) ).ToList();
+        var models = result.Select(x => this.Mapper.EventToGetEventsModel(x)).ToList();
 
         var response = new GetEventsResponse(models);
 

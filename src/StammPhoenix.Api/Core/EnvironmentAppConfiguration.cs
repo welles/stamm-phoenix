@@ -12,14 +12,20 @@ public class EnvironmentAppConfiguration : IAppConfiguration
 
         if (string.IsNullOrWhiteSpace(logPath))
         {
-            throw new ArgumentNullException(EnvironmentNames.LOG_PATH, "Environment variable must be set.");
+            throw new ArgumentNullException(
+                EnvironmentNames.LOG_PATH,
+                "Environment variable must be set."
+            );
         }
 
         var configPath = Environment.GetEnvironmentVariable(EnvironmentNames.CONFIG_PATH);
 
         if (string.IsNullOrWhiteSpace(configPath))
         {
-            throw new ArgumentNullException(EnvironmentNames.CONFIG_PATH, "Environment variable must be set.");
+            throw new ArgumentNullException(
+                EnvironmentNames.CONFIG_PATH,
+                "Environment variable must be set."
+            );
         }
 
         this.LogPath = logPath;
@@ -51,7 +57,10 @@ public class EnvironmentAppConfiguration : IAppConfiguration
 
         if (string.IsNullOrWhiteSpace(allowedHosts))
         {
-            throw new ArgumentNullException(EnvironmentNames.ALLOWED_HOSTS, "Environment variable must be set.");
+            throw new ArgumentNullException(
+                EnvironmentNames.ALLOWED_HOSTS,
+                "Environment variable must be set."
+            );
         }
 
         this.AllowedHosts = allowedHosts.Split(';');

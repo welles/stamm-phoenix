@@ -18,12 +18,15 @@ public abstract class EndpointGroup : Group
         this.RoutePrefix = routePrefix;
         this.Description = description;
 
-        this.Configure(routePrefix, ep =>
-        {
-            ep.Description(d =>
+        this.Configure(
+            routePrefix,
+            ep =>
             {
-                d.WithTags(groupName);
-            });
-        });
+                ep.Description(d =>
+                {
+                    d.WithTags(groupName);
+                });
+            }
+        );
     }
 }

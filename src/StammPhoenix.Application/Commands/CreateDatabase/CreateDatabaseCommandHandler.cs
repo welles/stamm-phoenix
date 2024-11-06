@@ -8,7 +8,10 @@ public class CreateDatabaseCommandHandler(IDatabaseManager databaseManager)
 {
     private IDatabaseManager DatabaseManager { get; } = databaseManager;
 
-    public async Task<bool> Handle(CreateDatabaseCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(
+        CreateDatabaseCommand request,
+        CancellationToken cancellationToken
+    )
     {
         if (await this.DatabaseManager.CanConnectAsync(cancellationToken) == false)
         {

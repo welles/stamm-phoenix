@@ -11,8 +11,11 @@ public class BCryptPasswordHasher : IPasswordHasher
 
     public string HashPassword(string password)
     {
-        return BCrypt.Net.BCrypt.EnhancedHashPassword(password, BCryptPasswordHasher.HashType,
-            BCryptPasswordHasher.WorkFactor);
+        return BCrypt.Net.BCrypt.EnhancedHashPassword(
+            password,
+            BCryptPasswordHasher.HashType,
+            BCryptPasswordHasher.WorkFactor
+        );
     }
 
     public bool VerifyPassword(string password, string hash)

@@ -18,7 +18,7 @@ public class DeleteEventEndpoint : DeleteEndpoint<DeleteEventRequest, EventsGrou
 
     public override string EndpointDescription => "Deletes the event with the specified ID";
 
-    public override GroupDesignation[] EndpointRoles => [ GroupDesignation.Leitende ];
+    public override GroupDesignation[] EndpointRoles => [GroupDesignation.Leitende];
 
     public DeleteEventEndpoint(IMediator mediator, IMapper mapper)
     {

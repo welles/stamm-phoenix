@@ -20,7 +20,7 @@ public class DesignTimeContextFactory : IDesignTimeDbContextFactory<DatabaseCont
             Port = 5000,
             Database = string.Empty,
             Password = string.Empty,
-            User = string.Empty
+            User = string.Empty,
         };
 
         return new DatabaseContext(databaseConfiguration, [], passwordhasher, currentUser);

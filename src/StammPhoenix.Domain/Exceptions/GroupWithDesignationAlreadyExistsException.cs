@@ -2,4 +2,5 @@
 
 namespace StammPhoenix.Domain.Exceptions;
 
-public class GroupWithDesignationAlreadyExistsException(GroupDesignation designation) : DomainException($"Group with designation {designation} already exists");
+public class GroupWithDesignationAlreadyExistsException(GroupDesignation designation)
+    : DomainException($"Group with designation {designation} already exists");
