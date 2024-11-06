@@ -2,7 +2,7 @@
   <configuration default="false" name="Launch Local Postgres DB" type="docker-deploy" factoryName="docker-image" server-name="Docker">
     <deployment type="docker-image">
       <settings>
-        <option name="imageTag" value="postgres:16.2" />
+        <option name="imageTag" value="postgres:17.0" />
         <option name="containerName" value="stamm-phoenix-db" />
         <option name="envVars">
           <list>
